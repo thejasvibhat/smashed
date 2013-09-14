@@ -1,0 +1,15 @@
+application: smashedat
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /MEMEHTML
+  static_dir: MEMEHTML
+  
+- url: /meme
+  script: helloworld.application
+  
+- url: /actions/.*
+  script: store.application
