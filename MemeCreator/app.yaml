@@ -9,7 +9,7 @@ handlers:
   static_dir: MEMEHTML
   
 - url: /meme
-  script: helloworld.application
+  static_dir: views
   
 - url: /actions/.*
   script: store.application

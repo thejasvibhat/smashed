@@ -8,12 +8,12 @@
     /* required settings */
     position:relative;
     overflow:hidden;
-    width: 550px;
+    width: 90%;
     height:120px;
 
     /* custom decorations */
     border:1px solid #ccc;
-    background:url(/media/img/gradient/h300.png) repeat-x;
+    background-color:#ffffff;
 }
  
 /*
@@ -38,7 +38,7 @@
 .scrollable img {
     float:left;
     margin:20px 5px 20px 21px;
-    background-color:#fff;
+    background-color:#eee;
     padding:2px;
     border:1px solid #ccc;
     width:100px;
@@ -46,6 +46,9 @@
 
     -moz-border-radius:4px;
     -webkit-border-radius:4px;
+      -moz-box-shadow: 0 0 3px 3px #BBB;
+    -webkit-box-shadow: 0 0 3px 3px #BBB;
+    box-shadow: 0 0 3px 3px #BBB;
 }
 
 /* active item */

@@ -2,7 +2,7 @@ import webapp2
 
 MAIN_PAGE_HTML = """\
 <html lang="en">
-<head>
+<head> 
 	<meta charset="utf-8">
 	<title>Meme Creator</title>
       <link rel="stylesheet" href="./MEMEHTML/jquery-ui.css" />
@@ -12,7 +12,7 @@ MAIN_PAGE_HTML = """\
     <link rel="stylesheet" href="./MEMEHTML/style.css"> 
     <link rel="stylesheet" href="./MEMEHTML/scrollable-buttons.css">   
     <link rel="stylesheet" href="./MEMEHTML/scrollable-horizontal.css">   
-    <script  src="./MEMEHTML/meme.js"></script>
+    <script  src="./MEMEHTML/meme.js"></script> 
 </head> 
 <body>    
       
@@ -24,8 +24,8 @@ MAIN_PAGE_HTML = """\
         <span class="textClass" style="font-size:20px;color:#b9b9b9;">&nbsp;&nbsp;Drag an image from image roller or upload new</span>
     </div> 
          
-    <div style="margin:0 auto; width: 634px; height:120px;">
-<!-- "previous page" action -->
+    <div style="margin:0 auto; width: 634px; height:120px;"> 
+<!-- "previous page" action --> 
 <a class="prev browse left"></a>
  
 <!-- root element for scrollable -->
@@ -36,8 +36,8 @@ MAIN_PAGE_HTML = """\
  
     <!-- 1-5 -->
    
-      <!--img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg" />
-      <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg" />
+      <!--img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg" draggable="true"  ondragstart="DragMeme(event)"/-->
+      <!--img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg" />
       <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg" />
       <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg" /-->
     
@@ -63,13 +63,13 @@ MAIN_PAGE_HTML = """\
 </div>
  
 <!-- "next page" action -->
-<a class="next browse right"></a>
+<a class="next browse right"></a>  
 </div>
 <table class="Main" width="1000" height="800" style="align:center;border:solid;" >
    <tr width="100%" height="100%"  >
         <td width="50%" height="100%"  style="border:solid;">
             
-            <div id="BaseCanvas"  class="layout_canvasClass  style_canvasClass displayBlock" >
+            <div id="BaseCanvas"  class="layout_canvasClass  style_canvasClass displayBlock" dropzone="copy" ondrop="DropMeme(event)" ondragover="allowDrop(event)" > 
                 <img id="backImage" class="displayBlock" style="width:100%;height:100%;">
             </div>
             

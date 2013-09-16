@@ -10,7 +10,7 @@ function ChangeBackground()
 
         reader.readAsDataURL(file);
         reader.onloadend = function(e) {
-            $("#image").attr('src', e.target.result);  
+            $("#backImage").attr('src', e.target.result);  
         } 
 
             
@@ -20,12 +20,18 @@ function ChangeBackground()
 var isDragging = false;
 var i = 0;
 var cuTextBox;
+var curColor = 0;
+var curFontSize = 30;
 function AddCaption()
 {
     i++;
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:100px'><input type='text'  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:40px'></div>");  
+    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px'><input type='text'  id='myText"+i+"' class='displayBlock' value='caption' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px'></div>");  
  $('.demo'+i+'').resizable();
+    cuTextBox = $('.demo'+i+'');
+    
     applyMovement(i); 
+    ColorChanged(curColor);
+    FontSizeChange(curFontSize);
     
 
    } 
@@ -55,7 +61,7 @@ function Apply()
 
 $(function() {
   // initialize scrollable
- 
+  $('#color1').colorPicker();
   $(".scrollable").scrollable();
   GetThumbnails();
 });
@@ -82,3 +88,28 @@ function GetThumbnails()
     return false;
 }
 
+function DropMeme(ev)
+{
+    var data=ev.dataTransfer.getData("Text");
+    $("#backImage").attr('src', data);  
+}
+function DragMeme(ev)
+{
+    
+    ev.dataTransfer.setData("Text",ev.target.src);
+}
+function allowDrop(ev)
+{
+ev.preventDefault();
+}
+function FontSizeChange(val)
+{
+    curFontSize = val;
+    cuTextBox.css("font-size",val);
+}
+
+function ColorChanged(val)
+{
+    curColor = val;
+     cuTextBox.css("color",val);
+}
