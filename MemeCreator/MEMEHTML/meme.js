@@ -91,7 +91,8 @@ function GetThumbnails()
 function DropMeme(ev)
 {
     var data=ev.dataTransfer.getData("Text");
-    $("#backImage").attr('src', data);  
+    $("#backImage").attr('src', data);
+    ev.preventDefault();
 }
 function DragMeme(ev)
 {
