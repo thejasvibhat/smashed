@@ -22,20 +22,30 @@ var i = 0;
 var cuTextBox;
 var curColor = 0;
 var curFontSize = 30;
+var curfontFamily = "Arial";
+var curfontWeight = "Normal";
+var curfontStyle = "Normal";
 function AddCaption()
 {
     i++;
-    $("#BaseCanvas").append("<div class='demo"+i+" ui-widget-content' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px'><input type='text'  id='myText"+i+"' class='displayBlock' value='caption' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;'></div>");  
+    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' value='caption' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;overflow:hidden;'></textarea></div>");  
     $('.demo'+i+'').resizable();
     $('.demo'+i+'').draggable();
     cuTextBox = $('.demo'+i+'');     
     ColorChanged(curColor);
     FontSizeChange(curFontSize);
+    UpdateFamily(curfontFamily);
+    UpdateFontweight(curfontWeight);
+    UpdateFontStyle(curfontStyle);
     var textBox = $('#myText'+i+'');
     var demoBox = $('.demo'+i+'');
-    textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;  textBox.addClass("pointerNone");});
+    demoBox.addClass("backgroundTransparent");
+    textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;  textBox.addClass("pointerNone");
+                                        demoBox.removeClass("backgroundTransparent");});
     textBox.focusout(function(){
         textBox.removeClass("pointerNone");
+        demoBox.addClass("backgroundTransparent");
+       
     });
 
    } 
@@ -97,7 +107,22 @@ function FontSizeChange(val)
     curFontSize = val;
     cuTextBox.css("font-size",val);
 }
-
+function UpdateFamily(val)
+{
+    curfontFamily = val;
+    cuTextBox.css("font-family",val);
+}
+function UpdateFontweight(val)
+{
+    curfontWeight = val;
+    cuTextBox.css("font-weight",val);
+    
+}
+function UpdateFontStyle(val)
+{
+    curfontStyle = val;
+    cuTextBox.css("font-style",val);
+}
 function ColorChanged(val)
 {
     curColor = val;
