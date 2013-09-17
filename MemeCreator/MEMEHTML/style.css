@@ -75,3 +75,11 @@ padding-bottom:10px;}
     color:#FFF;
     font-size:16;
 }
+.pointerAuto
+{
+    pointer-events:auto;
+}
+.pointerNone
+{
+    pointer-events:none;
+}

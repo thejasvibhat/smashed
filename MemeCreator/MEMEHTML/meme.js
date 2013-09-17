@@ -25,33 +25,22 @@ var curFontSize = 30;
 function AddCaption()
 {
     i++;
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px'><input type='text'  id='myText"+i+"' class='displayBlock' value='caption' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px'></div>");  
- $('.demo'+i+'').resizable();
-    cuTextBox = $('.demo'+i+'');
-    
-    applyMovement(i); 
+    $("#BaseCanvas").append("<div class='demo"+i+" ui-widget-content' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px'><input type='text'  id='myText"+i+"' class='displayBlock' value='caption' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;'></div>");  
+    $('.demo'+i+'').resizable();
+    $('.demo'+i+'').draggable();
+    cuTextBox = $('.demo'+i+'');     
     ColorChanged(curColor);
     FontSizeChange(curFontSize);
-    
+    var textBox = $('#myText'+i+'');
+    var demoBox = $('.demo'+i+'');
+    textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;  textBox.addClass("pointerNone");});
+    textBox.focusout(function(){
+        textBox.removeClass("pointerNone");
+    });
 
    } 
 
-function applyMovement(i){
-    var textBox = $('#myText'+i+'');
-    var demoBox = $('.demo'+i+'');
-        textBox.mousedown(function down(){cuTextBox = textBox; isDragging = true;demoBox.trigger('mousedown');});
-    textBox.mouseup(function up(){isDragging = false;demoBox.trigger('mouseup');});
-    $("#myText").mousemove(function move(){demoBox.trigger('mousemove');});
-    demoBox.mousemove(function moveall(event){
-        
-        if(isDragging)
-        {
-            
-            demoBox.css("top",event.pageY - 30);
-            demoBox.css("left",event.pageX - 30);
-        }
-    });
-}
+
 function Apply()
 {
 
