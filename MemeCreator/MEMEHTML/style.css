@@ -97,4 +97,11 @@ padding-bottom:10px;}
     background-color:transparent;
     border-color:#ff0;
 }
-
+.backgroundLoad
+{
+    background-image:url('./assets/drunk.gif');
+}
+.imagehide
+{
+  visibility:hidden;
+}
