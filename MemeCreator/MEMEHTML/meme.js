@@ -74,6 +74,11 @@ $(function() {
   // initialize scrollable
   $('#color1').colorPicker();
   $(".scrollable").scrollable();
+  $("#BaseCanvas").droppable({
+      drop: function( event, ui ) {
+         $("#backImage").attr('src', ui.draggable.find("img").context.src);
+      }
+  });
   GetThumbnails();
 });
 function GetThumbnails()
@@ -89,33 +94,31 @@ function GetThumbnails()
 			   var theRow = $(theXmlDoc).find('url').get();
 			   $(theRow).each(function(i) 
 				{
-				    var test = '<img src="'+$(this).text()+'"/>';
+				    var test = '<img  id="image'+i+'" src="'+$(this).text()+'"/>';                    
 					var api = $(".scrollable").data("scrollable");
 					api.addItem(test);
+                    $( "#image"+i+"" ).draggable({
+                      revert: "invalid", // when not dropped, the item will revert back to its initial position
+                      containment: "document",
+                      helper: "clone",
+                        start: function (e, ui) {
+                        ui.helper.animate({
+                            width: 120,
+                            height: 120,
+                        },200);
+                    },
+                        cursorAt: {left:0, top:0},
+                      cursor: "move",
+                    zIndex:10000,
+                    appendTo:$("#BaseCanvas")
+                    });
 				});
     });
 	 
 	
     return false;
 }
-function DragStart(event) {
-    event.dataTransfer.setData('Text', null); //cannot be empty string
-}
-function DropMeme(ev)
-{
-    var data=ev.dataTransfer.getData("Text");
-    $("#backImage").attr('src', data);
-    ev.preventDefault();
-}
-function DragMeme(ev)
-{
-    
-    ev.dataTransfer.setData("Text",ev.target.src);
-}
-function allowDrop(ev)
-{
-ev.preventDefault();
-}
+
 function FontSizeChange(val)
 {
     curFontSize = val;
