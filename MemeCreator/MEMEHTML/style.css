@@ -11,7 +11,11 @@ body
   src: url('./assets/rockwell.ttf'),
   url('./assets/rockwell.eot'); /* IE9 */
 }
-
+.stepper_widget {vertical-align:top;}
+.stepper_widget input{width:25px;}
+.stepper_widget button{margin:0;padding:0;border:0;background-color:transparent;width:20px;cursor:pointer;}
+.stepper_widget .upbutton{position:relative;top:-6px;}
+.stepper_widget .dnbutton{position:relative;top:5px;left:-24px;}
 .transClass {
   background-color: rgba(255, 0, 0, 0);
   position: absolute;

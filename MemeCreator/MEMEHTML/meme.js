@@ -128,3 +128,31 @@ function ColorChanged(val)
     curColor = val;
      cuTextBox.css("color",val);
 }
+function Save()
+{
+    
+}
+
+function UpdateStepperUp()
+{
+    var targInput = $("#fontSizeText");
+    var value = targInput.val();
+    value++;
+    var min = 20;
+    var max = 100;
+    if ((value > min)&&(value <= max))
+        targInput.val(value);
+    FontSizeChange(targInput.val());
+}
+function UpdateStepperDown()
+{
+    var targInput = $("#fontSizeText");
+    var value = targInput.val();
+    value--;
+    var min = 20;
+    var max = 100;
+    if ((value < max)&&(value >= min))
+        targInput.val(value);
+    FontSizeChange(targInput.val());
+}
+
