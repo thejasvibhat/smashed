@@ -98,7 +98,9 @@ function GetThumbnails()
 	
     return false;
 }
-
+function DragStart(event) {
+    event.dataTransfer.setData('Text', null); //cannot be empty string
+}
 function DropMeme(ev)
 {
     var data=ev.dataTransfer.getData("Text");
