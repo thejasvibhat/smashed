@@ -17,6 +17,14 @@ function ChangeBackground()
         
     });  
 }
+function reset()
+{
+    curColor = 0;
+    curFontSize = 30;
+    curfontFamily = "Arial";
+    curfontWeight = "Normal";
+    curfontStyle = "Normal";
+}
 var isDragging = false;
 var i = 0;
 var cuTextBox;
@@ -27,11 +35,14 @@ var curfontWeight = "Normal";
 var curfontStyle = "Normal";
 function AddCaption()
 {
+    reset();
     i++;
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' value='caption' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;overflow:hidden;'></textarea></div>");  
+    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;overflow:hidden;'>Add caption here</textarea></div>");  
     $('.demo'+i+'').resizable();
     $('.demo'+i+'').draggable();
+    
     cuTextBox = $('.demo'+i+'');     
+    
     ColorChanged(curColor);
     FontSizeChange(curFontSize);
     UpdateFamily(curfontFamily);
@@ -39,6 +50,7 @@ function AddCaption()
     UpdateFontStyle(curfontStyle);
     var textBox = $('#myText'+i+'');
     var demoBox = $('.demo'+i+'');
+    textBox.focus();
     demoBox.addClass("backgroundTransparent");
     textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;  textBox.addClass("pointerNone");
                                         demoBox.removeClass("backgroundTransparent");});
