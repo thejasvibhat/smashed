@@ -79,7 +79,9 @@ $(function() {
       drop: function( event, ui ) {
           curImage =  $("#backImage");
           curImage.addClass('imagehide');
-         $("#backImage").attr('src', ui.draggable.find("img").context.src);
+          var iconsrc = ui.draggable.find("img").context.src;
+          var src = iconsrc.replace("icon","file");
+         $("#backImage").attr('src', src);
       }
   });
   GetThumbnails();
@@ -97,7 +99,7 @@ function GetThumbnails()
 			   var theRow = $(theXmlDoc).find('url').get();
 			   $(theRow).each(function(i) 
 				{
-				    var test = '<img  id="image_'+i+'" src="'+$(this).text()+'"/>';                    
+				    var test = '<div class="scrollableDiv" ><img class="widthCLass"  id="image_'+i+'"  src="'+$(this).text()+'"/></div>';                    
 					var api = $(".scrollable").data("scrollable");
 					api.addItem(test);
                     $( "#image_"+i+"" ).draggable({
@@ -115,6 +117,21 @@ function GetThumbnails()
                     zIndex:10000,
                     appendTo:$("#BaseCanvas")
                     });
+                    $( "#image_"+i+"" ).load(function (){
+                        
+                        if((this.height) > (this.width))
+                        {       
+                             $(this).removeClass("widthCLass");
+                            $(this).addClass("heightCLass");
+                            
+                        }
+                        else
+                        {
+                            var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
+                            $(this).attr('style',margin);
+                        }
+                    });
+
 				});
     });
 	 

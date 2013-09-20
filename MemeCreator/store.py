@@ -7,6 +7,10 @@ from google.appengine.api import users
 
 from google.appengine.ext import ndb
 
+from google.appengine.api import images
+
+from google.appengine.ext import db
+
 MEME_DB_NAME = 'meme_db'
 
 
@@ -19,6 +23,7 @@ def meme_dbkey(meme_dbname=MEME_DB_NAME):
 class MemeDb(ndb.Model):
     """Models an individual Guestbook entry with author, content, and date."""
     content = ndb.BlobProperty()
+    icon    = ndb.BlobProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
     myid   = ndb.StringProperty()
 
@@ -33,7 +38,7 @@ class ListFiles(webapp2.RequestHandler):
         self.response.write('<head>')
         for meme in memes:
             self.response.write('<url>')
-            self.response.write('/actions/files?id=%s' %
+            self.response.write('/actions/icon?id=%s' %
                                 meme.myid)
             self.response.write('</url>')
         self.response.write('</head>')
@@ -67,7 +72,7 @@ class MainPageStore(webapp2.RequestHandler):
 
         for meme in memes:
             query_params = {'id': meme.myid}				
-            self.response.write('<img src="/actions/files?' + urllib.urlencode(query_params) + '"/>')
+            self.response.write('<img src="/actions/icon?' + urllib.urlencode(query_params) + '"/>')
 
 			# Write the submission form and the footer of the page
         sign_query_params = urllib.urlencode({'meme_db': MEME_DB_NAME})
@@ -90,6 +95,8 @@ class Store(webapp2.RequestHandler):
 
         meme.myid = self.request.get('id')
         meme.content = self.request.get('content')
+        icon = images.resize(meme.content, 200, 200)
+        meme.icon = db.Blob(icon)
         meme.put()
 
         query_params = {'id': meme.myid}
@@ -108,13 +115,27 @@ class GetFile(webapp2.RequestHandler):
         for meme in memes:
             if meme.myid == myId:
                 self.response.write('%s' %
+                                meme.icon)
+
+class GetIcon(webapp2.RequestHandler):
+
+    def get(self):
+        myId=self.request.get('id')
+        
+        meme_dbname = self.request.get('meme_db',MEME_DB_NAME)
+        meme_query = MemeDb.query(ancestor=meme_dbkey(meme_dbname)).order(-MemeDb.date)
+        memes = meme_query.fetch(10)
+
+
+        for meme in memes:
+            if meme.myid == myId:
+                self.response.write('%s' %
                                 meme.content)
-
-
 								
 application = webapp2.WSGIApplication([
     ('/actions/storeview', MainPageStore),
 	('/actions/list',ListFiles),
 	('/actions/store', Store),
-	('/actions/files',GetFile),
+	('/actions/icon',GetFile),
+    	('/actions/file',GetIcon),
 ], debug=True)
