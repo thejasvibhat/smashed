@@ -94,10 +94,10 @@ function GetThumbnails()
 			   var theRow = $(theXmlDoc).find('url').get();
 			   $(theRow).each(function(i) 
 				{
-				    var test = '<img  id="image'+i+'" src="'+$(this).text()+'"/>';                    
+				    var test = '<img  id="image_'+i+'" src="'+$(this).text()+'"/>';                    
 					var api = $(".scrollable").data("scrollable");
 					api.addItem(test);
-                    $( "#image"+i+"" ).draggable({
+                    $( "#image_"+i+"" ).draggable({
                       revert: "invalid", // when not dropped, the item will revert back to its initial position
                       containment: "document",
                       helper: "clone",
@@ -105,9 +105,9 @@ function GetThumbnails()
                         ui.helper.animate({
                             width: 120,
                             height: 120,
-                        },200);
+                        },0);
                     },
-                        cursorAt: {left:0, top:0},
+                        //cursorAt: {left:0, top:0},
                       cursor: "move",
                     zIndex:10000,
                     appendTo:$("#BaseCanvas")
