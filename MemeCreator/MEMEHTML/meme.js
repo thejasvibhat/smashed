@@ -33,6 +33,7 @@ var curFontSize = 30;
 var curfontFamily = "Arial";
 var curfontWeight = "Normal";
 var curfontStyle = "Normal";
+var curImage;
 function AddCaption()
 {
     reset();
@@ -76,6 +77,8 @@ $(function() {
   $(".scrollable").scrollable();
   $("#BaseCanvas").droppable({
       drop: function( event, ui ) {
+          curImage =  $("#backImage");
+          curImage.addClass('imagehide');
          $("#backImage").attr('src', ui.draggable.find("img").context.src);
       }
   });
@@ -172,4 +175,7 @@ function UpdateStepperDown()
         targInput.val(value);
     FontSizeChange(targInput.val());
 }
-
+function OnImageLoad()
+{
+    curImage.removeClass('imagehide');
+}
