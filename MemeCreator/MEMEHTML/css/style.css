@@ -9,7 +9,7 @@ body,html
 @font-face
 {
   font-family: rockwell;
-  src: url('./assets/Rockwell.ttf'),
+  src: url('../assets/Rockwell.ttf'),
   url('./assets/Rockwell.eot'); /* IE9 */
 }
 .stepper_widget {vertical-align:top;}
@@ -153,3 +153,24 @@ padding-bottom:10px;}
     width:100px;
     height:auto;    
 }
+
+.heightCLassImg
+{
+    height:100%;
+    width:auto;
+}
+.widthCLassImg
+{
+    width:100%;
+    height:auto;    
+}
+.imgParent {
+    float:left;
+    width:100%;
+    height:100%;
+    line-height: 100%; 
+    font-size: 100%; 
+    text-align: center;
+}
+
+

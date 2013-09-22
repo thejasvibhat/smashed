@@ -34,16 +34,15 @@ var curfontFamily = "Arial";
 var curfontWeight = "Normal";
 var curfontStyle = "Normal";
 var curImage;
+
 function AddCaption()
 {
     reset();
     i++;
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:200px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;overflow:hidden;'>Add caption here</textarea></div>");  
-    $('.demo'+i+'').resizable();
-    $('.demo'+i+'').draggable();
-    
+    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:250px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;overflow:hidden;'>Add caption here</textarea></div>");  
+
     cuTextBox = $('.demo'+i+'');     
-    
+
     ColorChanged(curColor);
     FontSizeChange(curFontSize);
     UpdateFamily(curfontFamily);
@@ -53,14 +52,21 @@ function AddCaption()
     var demoBox = $('.demo'+i+'');
     textBox.focus();
     demoBox.addClass("backgroundTransparent");
-    textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;  textBox.addClass("pointerNone");
+    textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;
                                         demoBox.removeClass("backgroundTransparent");});
-    textBox.focusout(function(){
-        textBox.removeClass("pointerNone");
-        demoBox.addClass("backgroundTransparent");
-       
-    });
-
+  
+   $("#BaseCanvas").mousemove(function moveall(event){
+        
+        if(isDragging)
+        {
+            
+            demoBox.css("top",event.pageY - 30);
+            demoBox.css("left",event.pageX - 30);
+        }
+   });
+    demoBox.mouseup(function up(ev){cuTextBox = textBox;isDragging = false;
+                                        demoBox.removeClass("backgroundTransparent");});
+  
    } 
 
 
@@ -84,8 +90,13 @@ $(function() {
          $("#backImage").attr('src', src);
       }
   });
+
   GetThumbnails();
 });
+function SelectCrop(div,selection)
+{
+    console.log(selection);
+}
 function GetThumbnails()
 {
     $.ajax({
@@ -167,7 +178,17 @@ function ColorChanged(val)
 }
 function Save()
 {
-    
+    removeSelection();
+}
+function Crop()
+{
+     $('#BaseCanvas').imgAreaSelect({
+        handles: true,
+        onSelectEnd: SelectCrop
+    });
+    var xx1 = ($("#BaseCanvas").width() - curImage.width())/2;
+    var yy1 = ($("#BaseCanvas").height() - curImage.height())/2;
+    $('#BaseCanvas').imgAreaSelect({ x1: xx1, y1:yy1 , x2: xx1 + curImage.width() , y2: yy1 + curImage.height()});
 }
 
 function UpdateStepperUp()
@@ -194,5 +215,27 @@ function UpdateStepperDown()
 }
 function OnImageLoad()
 {
+    //alert($("#BaseCanvas").height());
+    curImage = $("#backImage");
     curImage.removeClass('imagehide');
+    if((curImage.height()) > (curImage.width()))
+    {     
+        curImage.removeClass("widthCLassImg");
+        curImage.addClass("heightCLassImg");
+              var margin = 'margin: 0px 0px 0px '+($("#BaseCanvas").width() - curImage.width())/2+'px;';                            
+        curImage.attr('style',margin);
+        
+    }
+    else
+    {
+                curImage.addClass("widthCLassImg");
+        curImage.removeClass("heightCLassImg");
+
+        var margin = 'margin: '+($("#BaseCanvas").height() - curImage.height())/2+'px 0px 0px 0px;';                            
+        curImage.attr('style',margin);
+    }
+}
+function removeSelection()
+{
+    $('#BaseCanvas').imgAreaSelect({remove:true});
 }

@@ -13,3 +13,6 @@ handlers:
   
 - url: /actions/.*
   script: store.application
+  
+- url: /download/.*
+  script: store.application
