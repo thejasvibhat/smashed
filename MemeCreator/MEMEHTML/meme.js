@@ -28,8 +28,9 @@ function reset()
 var isDragging = false;
 var i = 0;
 var cuTextBox;
+var curDemoBox;
 var curColor = 0;
-var curFontSize = 30;
+var curFontSize = 20;
 var curfontFamily = "Arial";
 var curfontWeight = "Normal";
 var curfontStyle = "Normal";
@@ -39,17 +40,19 @@ function AddCaption()
 {
     reset();
     i++;
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:250px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;font-size:20px;overflow:hidden;'>Add caption here</textarea></div>");  
+    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;top:250px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;'>Add caption here</textarea></div>");  
 
-    cuTextBox = $('.demo'+i+'');     
+    cuTextBox = $('#myText'+i+'');     
 
     ColorChanged(curColor);
+    curFontSize = 20;
     FontSizeChange(curFontSize);
     UpdateFamily(curfontFamily);
     UpdateFontweight(curfontWeight);
     UpdateFontStyle(curfontStyle);
     var textBox = $('#myText'+i+'');
     var demoBox = $('.demo'+i+'');
+    curDemoBox = demoBox;
     textBox.focus();
     demoBox.addClass("backgroundTransparent");
     textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;
@@ -60,12 +63,12 @@ function AddCaption()
         if(isDragging)
         {
             
-            demoBox.css("top",event.pageY - 30);
-            demoBox.css("left",event.pageX - 30);
+            curDemoBox.css("top",event.pageY - 30);
+            curDemoBox.css("left",event.pageX - 40);
         }
    });
-    demoBox.mouseup(function up(ev){cuTextBox = textBox;isDragging = false;
-                                        demoBox.removeClass("backgroundTransparent");});
+    demoBox.mouseup(function up(ev){curDemoBox = demoBox;isDragging = false;});
+    demoBox.mousedown(function updown(ev){curDemoBox = demoBox;});
   
    } 
 
