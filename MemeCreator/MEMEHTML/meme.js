@@ -250,7 +250,8 @@ function Save()
         },
 
     }).done(function ( datanew ) {
-        alert(datanew);
+        window.location.href = '/actions/storeview';
+        //alert(datanew);
     });
 }
 function XMLToString(oXML)

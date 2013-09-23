@@ -216,7 +216,7 @@ class SaveHandler(webapp2.RequestHandler):
                 with files.open(file_name, 'a') as f:
                     f.write(merged)
                 files.finalize(file_name)
-                self.response.write(file_name)
+                self.redirect('/actions/storeview')
         
 
     
