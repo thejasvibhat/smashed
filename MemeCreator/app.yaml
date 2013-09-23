@@ -16,3 +16,7 @@ handlers:
   
 - url: /download/.*
   script: store.application
+  
+libraries:
+- name: PIL
+  version: latest
