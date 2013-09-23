@@ -267,9 +267,15 @@ function XMLToString(oXML)
  }
 function Crop()
 {
+    $('#BaseCanvas').click(function (){removeSelection();});
      $('#BaseCanvas').imgAreaSelect({
         handles: true,
-        onSelectEnd: SelectCrop
+        onSelectEnd: SelectCrop,
+        onSelectChange:function (img, selection) {
+        if(selection.width == 0)
+            removeSelection();
+    }
+         
     });
     var xx1 = ($("#BaseCanvas").width() - curImage.width())/2;
     var yy1 = ($("#BaseCanvas").height() - curImage.height())/2;
