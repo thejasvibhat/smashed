@@ -31,19 +31,22 @@
 
 .items div {
     float:left;
-    width:680px;
+    width:100px;
 }
 
 /* single scrollable item */
-.scrollable img {
+
+.scrollableDiv {
     float:left;
-    margin:20px 5px 20px 21px;
+    margin:10px 5px 0 10px;
     background-color:#eee;
     padding:2px;
     border:1px solid #ccc;
     width:100px;
-    height:75px;
-
+    height:100px;
+    line-height: 100px; 
+    font-size: 100px; 
+    text-align: center;
     -moz-border-radius:4px;
     -webkit-border-radius:4px;
       -moz-box-shadow: 0 0 3px 3px #BBB;
