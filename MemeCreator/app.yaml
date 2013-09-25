@@ -8,8 +8,14 @@ handlers:
 - url: /MEMEHTML
   static_dir: MEMEHTML
   
+- url: /reviewhtml
+  static_dir: Reviews/reviewhtml
+  
 - url: /meme
   static_dir: views
+  
+- url: /reviews
+  static_dir: Reviews/views
   
 - url: /actions/.*
   script: store.application
