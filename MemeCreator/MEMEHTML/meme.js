@@ -125,7 +125,7 @@ function SelectCrop(div,selection)
 function GetThumbnails()
 {
     $.ajax({
-        url: "/actions/list",
+        url: "/meme/actions/list",
         type: 'GET',
         crossDomain: true,
 
@@ -243,14 +243,14 @@ function Save()
     $.ajax({
       type: "POST",
       crossDomain: true,
-      url: '/actions/save',
+      url: '/meme/actions/save',
         data : {
             method : "Save",
             data : XMLToString(xmlDocument)
         },
 
     }).done(function ( datanew ) {
-        window.location.href = '/actions/storeview';
+        window.location.href = '/meme/index.html';
         //alert(datanew);
     });
 }
