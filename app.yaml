@@ -1,0 +1,42 @@
+application: smashedat
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+
+- url: /meme/actions/.*
+  script: MemeCreator.meme.application
+
+- url: /meme/store/.*
+  script: MemeCreator.storeimage.application
+
+- url: /reviews/scenes/.*
+  script: Reviews.review.application
+
+- url: /reviews/store/.*
+  script: Reviews.storereview.application
+  
+- url: /download/.*
+  script: DataDump.download.application
+  
+- url: /MEMEHTML
+  static_dir: MemeCreator/MEMEHTML
+  
+- url: /reviewhtml
+  static_dir: Reviews/reviewhtml
+  
+- url: /meme
+  static_dir: MemeCreator/views
+  
+- url: /reviews/.*
+  static_dir: Reviews/views
+  
+
+  
+libraries:
+- name: PIL
+  version: latest
+- name: jinja2
+  version: latest
