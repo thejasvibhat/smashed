@@ -25,7 +25,7 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
 class SceneHandler(webapp2.RequestHandler):
     def get(self, resource):
         bid = resource 
-        t = JINJA_ENVIRONMENT.get_template('views/index.html')
+        t = JINJA_ENVIRONMENT.get_template('index.html')
         c = {}
         review_query = ReviewDb.query(ancestor=review_dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
         reviews = review_query.fetch(10)

@@ -119,6 +119,7 @@ padding-bottom:10px;}
 .screen1k
 {
     width:1020px;
+    overflow:hidden;
 }
 
 .marginauto
@@ -173,4 +174,86 @@ padding-bottom:10px;}
     text-align: center;
 }
 
+.memeIndvItem
+{
+    width:600px;
+    padding:20px;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+    background:#ffffff;
+    margin:20px 0 20px 0;
+}
 
+.memeIndvItem img
+{
+    max-width:600px;
+}
+
+.memeTicker 
+{
+    width:350px;
+    padding:10px;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+    background:#ffffff;
+    min-height:500px;
+    margin:20px 0 0 0;
+}
+
+.rockwellHeading
+{
+    color:#707070;
+    font-family:"rockwell",helvetica;
+    text-transform:uppercase;
+    font-size:25px;
+}
+
+.separator
+{
+    margin:5px 0 5px 0;
+    background:#dddddd;
+    border-bottom:1px solid #e5e5e5;
+}
+
+.tickerIndvItem
+{
+    background:#e5e5e5;
+    padding:10px;
+}
+
+.tickerPhoto
+{
+    width:70px;
+    height:70px;
+    padding:5px;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+    background:#fff;
+    border-radius:100px;
+    -webkit-border-radius:100px;
+    margin-right:10px;
+    
+}
+
+.tickerPhoto img
+{
+    max-width:100%;
+    max-height:100%;
+    border-radius:100px;
+    -webkit-border-radius:100px;
+    vertical-align:middle;
+}
+
+.tickerContent
+{
+    color:#666666;
+    font-family:helvetica;
+    font-size:14px;
+    width:210px;
+}
+
+.tickerContent .bold
+{
+    font-weight:bold;
+    color:#000000;
+}

@@ -17,24 +17,22 @@ handlers:
 
 - url: /reviews/store/.*
   script: Reviews.storereview.application
-  
+
 - url: /download/.*
   script: DataDump.download.application
-  
+
 - url: /MEMEHTML
   static_dir: MemeCreator/MEMEHTML
-  
+
 - url: /reviewhtml
   static_dir: Reviews/reviewhtml
-  
+
 - url: /meme
   static_dir: MemeCreator/views
-  
-- url: /reviews/.*
-  static_dir: Reviews/views
-  
 
-  
+- url: /reviews1/
+  static_dir: Reviews
+
 libraries:
 - name: PIL
   version: latest

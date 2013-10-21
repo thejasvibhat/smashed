@@ -1,7 +1,7 @@
 <html lang="en">
     <head> 
         <meta charset="utf-8">
-        <title>Smashed.in :: Prasanna Bar</title>
+        <title>Smashed.in :: Write a Review</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="/MEMEHTML/jquery-ui.js"></script>
         <script src="/MEMEHTML/colorbox.js"></script>
@@ -14,24 +14,20 @@
     
     <script type= "text/javascript">
         
-    $(document).ready(function()
-    {
-        $('a').colorbox({rel:'gal'});
-    });
-  function initialize() {
-        var myLatLng = new google.maps.LatLng({{lat}},{{lon}});
-        var map_canvas = document.getElementById('map_canvas');
-        var map_options = {
-          center: myLatLng,
-           zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        }
-        var map = new google.maps.Map(map_canvas, map_options)
-        var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: '{{name}}' 
-  }); 
+      function initialize() {
+            var myLatLng = new google.maps.LatLng({{lat}},{{lon}});
+            var map_canvas = document.getElementById('map_canvas');
+            var map_options = {
+              center: myLatLng,
+               zoom: 16,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(map_canvas, map_options)
+            var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: '{{name}}' 
+      }); 
       }
       google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -51,8 +47,8 @@
     <div class = "whitestrip">
         <div class = "screen1k marginauto">
             <div class = "breadcrumb floatleft">
-                <span>Browse >> </span>
-                <span class = "u">Prasanna</span>
+                <span>Home >> </span>
+                <span class = "u">Upload</span>
             </div>
             
             <div class = "searchbox floatright">
@@ -71,7 +67,7 @@
          <div class = "screen1k marginauto">
              
             <div class = "floatleft reviewHeadingBig">
-                {{name}}
+                Bar Name...
             </div>
             
              <div class = "floatright reviewScreenShotContainer">
@@ -125,7 +121,7 @@
     <div class = "screen1k marginauto">
         <div class = "floatleft">
             <div class = "reviewSubHeading">
-                {{name}}
+                Bar Name...
             </div>
             
             <div class = "margintopfive"></div>
@@ -134,13 +130,13 @@
                 <h4>Address:</h4>
                 <div class = "margintopten" style="width:100px;"></div>
                 <span>
-                    {{address}}
+                    Click to add...
                 </span>
                 <div class = "margintopten">
                     <h4>Phone:</h4>
                     <div class = "margintopten"></div>
                     <span>
-                        {{phone}}
+                        Add a phone number
                     </span>
                 </div>
             </div>
@@ -193,7 +189,7 @@
                         <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
                     </span>
                     <span class = "UspItem">
-                        {{usp1}}
+                        usp1...
                     </span>
                 </div>
                 <div class = "reviewUspContainer">
@@ -201,7 +197,7 @@
                         <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
                     </span>
                     <span class = "UspItem">
-                        {{usp2}}
+                        usp2...
                     </span>
                 </div>
             </div>
@@ -219,7 +215,7 @@
         
         <div class = "margintwenty"></div>
         <h3 class = "coreHeading">
-            Not enough details? Lets get into core then!
+            Core Details
         </h3>
         
         <div class = "margintopten"></div>
