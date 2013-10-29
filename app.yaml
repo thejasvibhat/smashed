@@ -33,6 +33,9 @@ handlers:
 - url: /reviews1/
   static_dir: Reviews
 
+- url: /home/
+  static_dir: smashedlanding
+
 libraries:
 - name: PIL
   version: latest

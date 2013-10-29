@@ -6,6 +6,7 @@ jQuery(document).ready(function(){
 	  layoutMode : 'fitRows'
 	});
 	jQuery('.option-set').find('a').click(function(){
+        
 		  if ( jQuery(this).hasClass('selected') ) {
 			  return false;
 			}

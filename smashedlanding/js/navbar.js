@@ -1,5 +1,4 @@
 $(function() {
-
 	// Do our DOM lookups beforehand
 	var nav_container = $("header");
 	var nav = $(".navbar");
@@ -17,8 +16,7 @@ $(function() {
 	var navigation_links = $(".nav a");
 	
 	sections.waypoint({
-		handler: function(event, direction) {
-		
+		handler: function(event, direction) {		
 			var active_section;
 			active_section = $(this);
 			if (direction === "up") active_section = active_section.prev();
@@ -26,6 +24,8 @@ $(function() {
 			var active_link = $('.nav a[href="#' + active_section.attr("id") + '"]');
 			navigation_links.removeClass("selected");
 			active_link.addClass("selected");
+            if(active_section[0].id == "reviews")
+                ListPromoScenes();
 
 		},
 		offset: '15'

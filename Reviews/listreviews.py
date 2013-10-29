@@ -45,7 +45,7 @@ class ListScenesHandler(webapp2.RequestHandler):
             self.response.write('/reviews/scenes/%s' % review.bid)
             self.response.write('</url>')
             self.response.write('</review>')
-            self.response.write('</reviews>')
+        self.response.write('</reviews>')
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
