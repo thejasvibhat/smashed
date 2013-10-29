@@ -1,0 +1,141 @@
+/* ==============================================================
+
+Template name : BekkoQ Multi purposes landing page template
+Categorie : Landing page
+Author : Nce18cex
+Version : v1.0.0
+Created : 30 September 2013
+Last update : 2 Oktober 2013
+
+-----------------------------------------------------------------
+CSS structure
+-----------------------------------------------------------------
+
+01. Color
+02. Background color
+03. Background image
+04. Border color
+05. Shadow color
+
+============================================================== */
+
+/*
+Color
+================================================== */
+
+a, a:hover, .color, .navbar-nav > li > a:hover, .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus, 
+.nav li a:hover, .nav li a.selected, .nav li a.active, #filter-bar ul#filters li a.selected, #filter-bar ul#filters li a:hover, .social-network:hover i{
+	color:#1fb4da;
+}
+
+/*
+Background color
+================================================== */
+.default-bg, .icon-square:hover, .icon-circle:hover, .social-icon i, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .pricing-table li.featured ul li.plan_name, .pricing-table li.featured ul li.plan_price {
+	background-color:#1fb4da;
+}
+
+/*
+Background image
+================================================== */
+.home-contain{
+	background:url(img/bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#about{
+	background:url(img/pattern1.png) repeat top left, url(img/green-bg.png) repeat top left;
+}
+
+#feature{
+	background:#472546 url(img/pattern2.png) repeat 0 0;
+}
+
+#gallery{
+	background:url(img/pattern1.png) repeat top left, url(img/green-bg.png) repeat top left;
+}
+
+#pricing{
+	background:url(img/pricing-bg.jpg) repeat-x bottom left, url(img/pattern2.png) repeat 0 0;
+	background-color:#472546;
+}
+
+#testimoni{
+	background:url(img/pattern1.png) repeat top left, url(img/green-bg.png) repeat top left;
+}
+
+#contact{
+	background: url(img/blue-bg.png) repeat top left, url(img/contact-bg.jpg) no-repeat top center;
+}
+
+#action{
+	background:#472546 url(img/pattern2.png) repeat 0 0;
+}
+
+#inner-head{
+	background:#472546 url(img/pattern2.png) repeat 0 0;
+}
+
+#inner-page{
+	background:url(img/pattern1.png) repeat top left, url(img/green-bg.png) repeat top left;
+}
+
+.error{
+	background:url(img/blue-bg.png) repeat 0 0;
+}
+	
+/*
+Border color
+================================================== */
+.icon-rounded:hover{
+	border-color:#1fb4da;
+}
+
+/*
+Shadow color
+================================================== */
+.stand-out-form{
+	position:relative;
+	margin-top:60px;
+	background:#fff;
+	-webkit-box-shadow: 15px 15px 0 #1c98b9;
+	   -moz-box-shadow: 15px 15px 0 #1c98b9;
+	        box-shadow: 15px 15px 0 #1c98b9;	
+}
+
+.video-wrapper{
+	-webkit-box-shadow: 15px 15px 0 #1c98b9;
+	   -moz-box-shadow: 15px 15px 0 #1c98b9;
+	        box-shadow: 15px 15px 0 #1c98b9;
+}
+
+.tab-feature{
+	-webkit-box-shadow: 15px 15px 0 #331b32;
+	   -moz-box-shadow: 15px 15px 0 #331b32;
+	        box-shadow: 15px 15px 0 #331b32;
+}
+
+.testimo-avatar{
+	-webkit-box-shadow: 5px 5px 0 #156353;
+	   -moz-box-shadow: 5px 5px 0 #156353;
+	        box-shadow: 5px 5px 0 #156353;	
+}
+
+ul.listForm .form-control{
+	-webkit-box-shadow: 8px 8px 0 #2699b8;
+	   -moz-box-shadow: 8px 8px 0 #2699b8;
+	        box-shadow: 8px 8px 0 #2699b8;		
+}
+
+.comment-wrapper{
+	-webkit-box-shadow: 10px 15px 0 #2f9983;
+	   -moz-box-shadow: 10px 15px 0 #2f9983;
+	        box-shadow: 10px 15px 0 #2f9983;
+}
+
+.error h2{
+	text-shadow: 15px 15px 0 #1c98b9;	
+}
