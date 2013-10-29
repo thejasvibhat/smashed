@@ -6,9 +6,10 @@ REVIEW_DB_NAME = 'bars_db'
 class ListScenesHandler(webapp2.RequestHandler):
     def get(self):
         review_query = ReviewDb.query(ancestor=ndb.Key('bars_db',REVIEW_DB_NAME)).order(-ReviewDb.date)
-        reviews = review_query.fetch(10)
-            
-        self.response.write('<reviews>');
+        limit = self.request.get("limit")
+        offset = self.request.get("offset")
+        reviews = review_query.fetch(limit,offset)
+        self.response.write('<reviews>')
         for review in reviews:
             self.response.write('<review>')
             self.response.write('<name>')
@@ -44,7 +45,7 @@ class ListScenesHandler(webapp2.RequestHandler):
             self.response.write('/reviews/scenes/%s' % review.bid)
             self.response.write('</url>')
             self.response.write('</review>')
-        self.response.write('</reviews>')
+            self.response.write('</reviews>')
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
