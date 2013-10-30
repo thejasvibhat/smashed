@@ -266,6 +266,23 @@ ul#gallery-list li {
 	margin-bottom:30px;
 }
 
+ul#gallery-list-reviews{
+	float:left;
+	width:100%;
+	list-style:none;
+	position:relative;
+	margin:0;
+	padding:0;
+}
+
+ul#gallery-list-reviews li {
+	position:relative;
+	overflow:hidden;
+	display:block;	
+	height:auto;	
+	margin-bottom:30px;
+}
+
 .image-wrapper{
 	display:block;
 	width:100%;

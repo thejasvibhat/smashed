@@ -24,7 +24,8 @@ $(function() {
 			var active_link = $('.nav a[href="#' + active_section.attr("id") + '"]');
 			navigation_links.removeClass("selected");
 			active_link.addClass("selected");
-            if(active_section[0].id == "reviews")
+            var listReviewsLoaded = $('#listReviewsLoaded').val();
+            if ( (active_section[0].id == "reviews") && (listReviewsLoaded == "false") )
                 ListPromoScenes();
 
 		},
