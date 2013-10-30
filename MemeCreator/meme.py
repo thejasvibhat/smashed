@@ -1,7 +1,7 @@
 import webapp2
 import urllib
 from google.appengine.ext import ndb
-
+import uuid
 from google.appengine.api import images
 
 from PIL import Image, ImageDraw, ImageFont
@@ -19,13 +19,50 @@ from google.appengine.api import files
 import xml.etree.ElementTree as ET
 
 from MemeCreator.storeimage import MemeDb
-
+from MemeCreator.storeimage import UserMemeDb
 
 MEME_DB_NAME = 'meme_db'
+
+USER_MEME_DB_NAME = 'user_meme_db'
 
 def meme_dbkey(meme_dbname=MEME_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('meme_db', meme_dbname)
+
+def user_meme_dbkey(meme_userdbname=USER_MEME_DB_NAME):
+    """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
+    return ndb.Key('user_meme_db', meme_userdbname)
+
+def SaveFinalMeme(file_name):
+    usermeme = UserMemeDb(parent=user_meme_dbkey(USER_MEME_DB_NAME))
+    usermeme.resid = str(uuid.uuid4()) 
+    usermeme.blobid = file_name;
+    usermeme.put();
+    return;
+
+class ListMeme(webapp2.RequestHandler):
+    def get(self):
+        meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+        oLimit = int(self.request.get("limit"))
+        oOffset = int(self.request.get("offset"))
+        memes = meme_query.fetch(oLimit,offset=oOffset)
+        self.response.write('<memes>')
+        for meme in memes:
+            self.response.write('<meme>')
+            self.response.write('<icon>')
+            self.response.write('/meme/actions/getmeme/%s' %meme.resid)
+            self.response.write('</icon>')
+            self.response.write('</meme>')
+        self.response.write('</memes>')
+            
+class GetMeme(blobstore_handlers.BlobstoreDownloadHandler):
+    def get(self, resource):
+        resid = resource 
+        meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
+        memes = meme_query.fetch(1)
+        for meme in memes:
+            blob_info = blobstore.BlobInfo.get(meme.blobid)
+            self.send_blob(blob_info)
 
 class ListFiles(webapp2.RequestHandler):
 
@@ -116,7 +153,9 @@ class SaveHandler(webapp2.RequestHandler):
                 file_name = files.blobstore.create(mime_type='image/png')
                 with files.open(file_name, 'a') as f:
                     f.write(merged)
-                files.finalize(file_name)
+                files.finalize(file_name)     
+                blob_key = files.blobstore.get_blob_key(file_name)           
+                SaveFinalMeme(blob_key)
                 self.redirect('/meme/index.html')
         
 
@@ -151,6 +190,8 @@ def GetFontName(oFamily,oStyle,oWeight):
     
 application = webapp2.WSGIApplication([
     ('/meme/actions/list',ListFiles),
+    ('/meme/actions/listmeme',ListMeme),
+    ('/meme/actions/getmeme/([^/]+)?',GetMeme),
     ('/meme/actions/save', SaveHandler),
     
 #    ('/actions/serve/([^/]+)?', ServeHandler)

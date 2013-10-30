@@ -42,7 +42,13 @@ class MemeDb(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
     myid   = ndb.StringProperty()
 
-        
+class UserMemeDb(ndb.Model):
+    """Models an individual Guestbook entry with author, content, and date."""
+    resid = ndb.StringProperty()
+    blobid = ndb.BlobKeyProperty();
+    date = ndb.DateTimeProperty(auto_now_add=True)
+    userid   = ndb.StringProperty()
+       
 class MainPageStore(webapp2.RequestHandler):
 
     def get(self):

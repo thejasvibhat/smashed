@@ -25,8 +25,12 @@ $(function() {
 			navigation_links.removeClass("selected");
 			active_link.addClass("selected");
             var listReviewsLoaded = $('#listReviewsLoaded').val();
+            var listMemesLoaded = $('#listMemesLoaded').val();
             if ( (active_section[0].id == "reviews") && (listReviewsLoaded == "false") )
                 ListPromoScenes();
+            if ( (active_section[0].id == "memes") && (listMemesLoaded == "false") )
+                ListPromoMemes();
+
 
 		},
 		offset: '15'
