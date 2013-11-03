@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <div id="header">
+      <p id="logo">
+	SMASHED
+      </p>
+      <p id="user">
+#if $user_loggedin
+        <p>Hi $username</p>
+	<a href="$logout_url">Logout</a>
+#else
+        <a href="/auth/google" class="btn">Login with Google</a><br/>
+        <a href="/auth/facebook" class="btn">Login with Facebook</a>
+#end if
+      </p>
+    </div>
+    <hr />
+  </body>
+</html>
+

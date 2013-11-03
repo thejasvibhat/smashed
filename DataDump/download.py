@@ -3,7 +3,7 @@ from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
 from MemeCreator.meme import MemeDb
-from Reviews.review import ReviewDb
+from Barreviews.review import ReviewDb
 MEME_DB_NAME = 'meme_db'
 REVIEW_DB_NAME = 'bars_db'
 def dbkey(dbname):
@@ -84,9 +84,9 @@ class GetIconReview(webapp2.RequestHandler):
 
 
 
-application = webapp2.WSGIApplication([
-    ('/download/meme/icon',GetIcon),
-    ('/download/meme/file',GetFile),
-    ('/download/review/icon/([^/]+)?',GetIconReview),
-    ('/download/review/file/([^/]+)?',GetFileReview),    
-], debug=True)
+# application = webapp2.WSGIApplication([
+#     ('/download/meme/icon',GetIcon),
+#     ('/download/meme/file',GetFile),
+#     ('/download/review/icon/([^/]+)?',GetIconReview),
+#     ('/download/review/file/([^/]+)?',GetFileReview),    
+# ], debug=True)

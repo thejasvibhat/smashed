@@ -109,8 +109,10 @@ class SaveHandler(webapp2.RequestHandler):
                                            (merged, 0, 0, 1.0, images.TOP_LEFT)], 
                                            450, 450)
 
-                #merged = images.crop(merged,float(selectionx),float(selectiony),float(selectionwidth),float(selectionheight))
-                merged = images.crop(merged,float(selectionx),float(selectiony),float(selectionwidth),float(selectionheight))
+                #merged = images.crop(merged,float(selectionx),float(selectiony),
+                #                     float(selectionwidth),float(selectionheight))
+                merged = images.crop(merged,float(selectionx),float(selectiony),
+                                     float(selectionwidth),float(selectionheight))
                 
                 # save
                 file_name = files.blobstore.create(mime_type='image/png')
@@ -149,9 +151,9 @@ def GetFontName(oFamily,oStyle,oWeight):
         
        
     
-application = webapp2.WSGIApplication([
-    ('/meme/actions/list',ListFiles),
-    ('/meme/actions/save', SaveHandler),
+# application = webapp2.WSGIApplication([
+#     ('/meme/actions/list',ListFiles),
+#     ('/meme/actions/save', SaveHandler),
     
-#    ('/actions/serve/([^/]+)?', ServeHandler)
-], debug=True)
+# #    ('/actions/serve/([^/]+)?', ServeHandler)
+# ], debug=True)

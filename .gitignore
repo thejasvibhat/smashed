@@ -1,0 +1,4 @@
+*.pyc
+TAGS
+.emacs.desktop
+secrets/secrets.py

@@ -10,6 +10,8 @@ from google.appengine.ext import db
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 
+from User.handlers import AuthHandler
+
 MEME_DB_NAME = 'meme_db'
 
 MAIN_PAGE_FOOTER_TEMPLATE = """\
@@ -43,7 +45,7 @@ class MemeDb(ndb.Model):
     myid   = ndb.StringProperty()
 
         
-class MainPageStore(webapp2.RequestHandler):
+class MainPageStore(AuthHandler):
 
     def get(self):
         upload_url = blobstore.create_upload_url('/meme/store/upload')
@@ -60,7 +62,7 @@ class MainPageStore(webapp2.RequestHandler):
         self.response.write(MAIN_PAGE_FOOTER_TEMPLATE %
                             (upload_url))
 
-class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
+class UploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
   def post(self):
     upload_files = self.get_uploads('content')  # 'file' is file upload field in the form
     blob_info = upload_files[0]
@@ -78,8 +80,8 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
 
     self.redirect('/meme/store/storeview') 
     
-application = webapp2.WSGIApplication([
-    ('/meme/store/storeview', MainPageStore),
-    ('/meme/store/upload', UploadHandler),    
-#    ('/actions/serve/([^/]+)?', ServeHandler)
-], debug=True)
+# application = webapp2.WSGIApplication([
+#     ('/meme/store/storeview', MainPageStore),
+#     ('/meme/store/upload', UploadHandler),    
+# #    ('/actions/serve/([^/]+)?', ServeHandler)
+# ], debug=True)

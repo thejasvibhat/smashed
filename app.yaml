@@ -1,5 +1,5 @@
-application: smashedat
-version: 1
+application: testsmashed
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: false
@@ -7,19 +7,19 @@ threadsafe: false
 handlers:
 
 - url: /meme/actions/.*
-  script: MemeCreator.meme.application
+  script: smashed.application
 
 - url: /meme/store/.*
-  script: MemeCreator.storeimage.application
+  script: smashed.application
 
 - url: /reviews/scenes/.*
-  script: Reviews.review.application
+  script: smashed.application
 
 - url: /reviews/store/.*
-  script: Reviews.storereview.application
+  script: smashed.application
 
 - url: /download/.*
-  script: DataDump.download.application
+  script: smashed.application
 
 - url: /MEMEHTML
   static_dir: MemeCreator/MEMEHTML
@@ -36,8 +36,23 @@ handlers:
 - url: /home/
   static_dir: smashedlanding
 
+- url: /static
+  static_dir: static
+
+- url: /res
+  static_dir: res
+
+- url: /auth/.*
+  script: User.um.application
+
+- url: .*
+  script: smashed.application
+
+
 libraries:
 - name: PIL
   version: latest
 - name: jinja2
+  version: latest
+- name: webapp2
   version: latest
