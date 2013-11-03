@@ -16,6 +16,8 @@ from MemeCreator.storeimage import UploadHandler
 
 from MemeCreator.meme import ListFiles
 from MemeCreator.meme import SaveHandler
+from MemeCreator.meme import ListMeme
+from MemeCreator.meme import GetMeme
 
 #import Barreviews.listreviews
 #logging.info ("%s" % Reviews)
@@ -54,8 +56,10 @@ routes = [
   webapp2.Route ('/meme/store/upload', UploadHandler),    
 
   #MemeCreator/meme.py
-  webapp2.Route ('/meme/actions/list',ListFiles),
+  webapp2.Route ('/meme/actions/list', ListFiles),
   webapp2.Route ('/meme/actions/save', SaveHandler),
+  webapp2.Route ('/meme/actions/listmeme', ListMeme),
+  webapp2.Route ('/meme/actions/getmeme/([^/]+)?', GetMeme),
 
   # #Reviews/review.py
   webapp2.Route ('/reviews/scenes/listscenes', ListScenesHandler),
