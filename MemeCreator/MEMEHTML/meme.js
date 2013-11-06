@@ -1,4 +1,7 @@
-
+function UploadSkeleton()
+{
+    
+}
 function ChangeBackground()
 {
     $("#myFile").click();    
@@ -11,6 +14,7 @@ function ChangeBackground()
         reader.readAsDataURL(file);
         reader.onloadend = function(e) {
             $("#backImage").attr('src', e.target.result);  
+            UploadSkeleton();
         } 
 
             
