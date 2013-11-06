@@ -11,7 +11,7 @@ from Cheetah.Template import Template
 from User.handlers import AuthHandler
 from secrets import secrets
 
-from MemeCreator.creatememe import CreateMemeHandler
+from MemeCreator.creatememe import *
 
 from MemeCreator.storeimage import MainPageStore
 from MemeCreator.storeimage import UploadHandler
@@ -57,6 +57,7 @@ routes = [
   webapp2.Route ('/meme/store/storeview', MainPageStore),
   webapp2.Route ('/meme/store/upload', UploadHandler),    
   webapp2.Route ('/meme/store/create', CreateMemeHandler),    
+  webapp2.Route ('/meme/store/uploadskeleton', UploadMemeHandler),
 
   #MemeCreator/meme.py
   webapp2.Route ('/meme/actions/list', ListFiles),

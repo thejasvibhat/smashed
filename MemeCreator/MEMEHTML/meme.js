@@ -1,25 +1,62 @@
 function UploadSkeleton()
 {
-    
+    var options = {
+            success:       SkeletonUploaded
+            };
+            $('#uploadNewForm').ajaxForm(options);
+            $('#uploadNewForm').submit();
+
+}
+function SkeletonUploaded(data)
+{
+    $('#uploadNewForm').remove();
+    var api = $(".items").empty();
+    GetThumbnails();
+    GetUploadURL();
+}
+function UploadUrlSkeleton(data)
+{
+
+   var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> </form>';
+    $('body').append(html);     
+
+       
+
+}
+function GetUploadURL()
+{
+    $.ajax({
+        url: "/meme/store/uploadskeleton",
+        type: 'GET',
+        crossDomain: true,
+        
+    }).done(function ( data ) {
+       // alert(data);
+        $("#uploadNewForm").attr('action',data);
+        UploadUrlSkeleton(data);
+        
+    });
 }
 function ChangeBackground()
 {
-    $("#myFile").click();    
+    
+    $("#myFile").click();      
     $('#myFile').change(function(input)
     {
         
-        var file = input.target.files[0];
-        var reader = new FileReader();
-
-        reader.readAsDataURL(file);
-        reader.onloadend = function(e) {
-            $("#backImage").attr('src', e.target.result);  
+     //   var file = input.target.files[0];
+      //  var reader = new FileReader();
+    
+    //     reader.readAsDataURL(file);
+      //  reader.onloadend = function(e) {
+           // $("#backImage").attr('src', e.target.result);  
             UploadSkeleton();
-        } 
-
+       // } 
+    
             
         
-    });  
+    }); 
+
 }
 function reset()
 {
@@ -99,6 +136,7 @@ function Apply()
 }
 
 $(function() {
+    GetUploadURL();
   // initialize scrollable
   $('#color1').colorPicker();
   $(".scrollable").scrollable();
