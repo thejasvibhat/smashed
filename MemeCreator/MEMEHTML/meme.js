@@ -292,7 +292,7 @@ function Save()
         },
 
     }).done(function ( datanew ) {
-        window.location.href = '/meme/index.html';
+        window.location = '/meme/store/memeview/'+datanew;
         //alert(datanew);
     });
 }

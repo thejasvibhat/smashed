@@ -1,5 +1,6 @@
 import webapp2
 import urllib
+import os
 from google.appengine.ext import ndb
 import uuid
 from google.appengine.api import images
@@ -20,6 +21,9 @@ import xml.etree.ElementTree as ET
 
 from MemeCreator.storeimage import MemeDb
 from MemeCreator.storeimage import UserMemeDb
+from User.handlers import AuthHandler
+from Cheetah.Template import Template
+
 
 MEME_DB_NAME = 'meme_db'
 
@@ -33,12 +37,13 @@ def user_meme_dbkey(meme_userdbname=USER_MEME_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('user_meme_db', meme_userdbname)
 
-def SaveFinalMeme(file_name):
+def SaveFinalMeme(userid,file_name):
     usermeme = UserMemeDb(parent=user_meme_dbkey(USER_MEME_DB_NAME))
     usermeme.resid = str(uuid.uuid4()) 
-    usermeme.blobid = file_name;
+    usermeme.blobid = file_name
+    usermeme.userid = userid
     usermeme.put();
-    return;
+    return usermeme.resid;
 
 class ListMeme(webapp2.RequestHandler):
     def get(self):
@@ -57,12 +62,25 @@ class ListMeme(webapp2.RequestHandler):
             
 class GetMeme(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):
-        resid = resource 
+        resid = resource
         meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
         memes = meme_query.fetch(1)
         for meme in memes:
             blob_info = blobstore.BlobInfo.get(meme.blobid)
             self.send_blob(blob_info)
+
+class GetShareMemeView(AuthHandler):
+    def get(self, resource):
+        resid = resource 
+        meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
+        memes = meme_query.fetch(1)
+        for meme in memes:
+            template_values = {'memeurl':'/meme/actions/getmeme/%s' %meme.resid}
+            path = os.path.join(os.path.dirname(__file__),'views/memeview.tmpl')
+            tclass = Template.compile (file = path)
+            t = tclass(searchList=template_values)
+            self.response.out.write(t)
+
 
 class ListFiles(webapp2.RequestHandler):
 
@@ -78,8 +96,9 @@ class ListFiles(webapp2.RequestHandler):
             self.response.write('</url>')
         self.response.write('</head>')
               
-class SaveHandler(webapp2.RequestHandler):
+class SaveHandler(AuthHandler):
     def post(self):
+        userId = ''#self.current_user;
         root = ET.fromstring(self.request.get('data'))
         imgId = ''
         family = ''
@@ -157,8 +176,9 @@ class SaveHandler(webapp2.RequestHandler):
                     f.write(merged)
                 files.finalize(file_name)     
                 blob_key = files.blobstore.get_blob_key(file_name)           
-                SaveFinalMeme(blob_key)
-                self.redirect('/meme/index.html')
+                memeid = SaveFinalMeme(userId,blob_key)
+                self.response.write('%s' %memeid)
+                #self.redirect('/meme/store/memeview/%s' %memeid)
         
 
     

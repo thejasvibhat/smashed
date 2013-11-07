@@ -20,6 +20,7 @@ from MemeCreator.meme import ListFiles
 from MemeCreator.meme import SaveHandler
 from MemeCreator.meme import ListMeme
 from MemeCreator.meme import GetMeme
+from MemeCreator.meme import GetShareMemeView
 
 #import Barreviews.listreviews
 #logging.info ("%s" % Reviews)
@@ -58,17 +59,18 @@ routes = [
   webapp2.Route ('/meme/store/upload', UploadHandler),    
   webapp2.Route ('/meme/store/create', CreateMemeHandler),    
   webapp2.Route ('/meme/store/uploadskeleton', UploadMemeHandler),
+  webapp2.Route ('/meme/store/memeview/<resource>', GetShareMemeView),
 
   #MemeCreator/meme.py
   webapp2.Route ('/meme/actions/list', ListFiles),
   webapp2.Route ('/meme/actions/save', SaveHandler),
   webapp2.Route ('/meme/actions/listmeme', ListMeme),
-  webapp2.Route ('/meme/actions/getmeme/([^/]+)?', GetMeme),
+  webapp2.Route ('/meme/actions/getmeme/<resource>', GetMeme),
 
   # #Reviews/review.py
   webapp2.Route ('/reviews/scenes/listscenes', ListScenesHandler),
   webapp2.Route ('/reviews/scenes/search', SearchHandler),
-  webapp2.Route ('/reviews/scenes/([^/]+)?', SceneHandler),    
+  webapp2.Route ('/reviews/scenes/<resource>', SceneHandler),    
 
   # #Reviews/storereview.py
   webapp2.Route ('/reviews/store/uploadreview', MainPageStore1),
@@ -77,8 +79,8 @@ routes = [
   # #DataDump.download.py
   webapp2.Route ('/download/meme/icon', GetIcon),
   webapp2.Route ('/download/meme/file', GetFile),
-  webapp2.Route ('/download/review/icon/([^/]+)?', GetIconReview),
-  webapp2.Route ('/download/review/file/([^/]+)?', GetFileReview)
+  webapp2.Route ('/download/review/icon/<resource>', GetIconReview),
+  webapp2.Route ('/download/review/file/<resource>', GetFileReview)
 
 ]
 
