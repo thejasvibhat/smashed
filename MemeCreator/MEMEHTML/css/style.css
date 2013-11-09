@@ -1,5 +1,6 @@
 @import url("reset.css");
-
+.disabled {opacity:.2;}
+.enabled {opacity:1;}
 body,html
 {
     margin:0;

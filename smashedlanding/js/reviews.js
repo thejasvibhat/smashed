@@ -3,7 +3,7 @@ function ListPromoScenes()
 {
     $.ajax({
                type: "GET",
-               url: "http://localhost:8080/reviews/scenes/listscenes?limit=2&offset=0",
+               url: "/reviews/scenes/listscenes?limit=2&offset=0",
                //url: "/reviews/scenes/listscenes?limit=2&offset=0",
                success: function(response){
                     theXmlDoc = $.parseXML(response);
@@ -32,7 +32,7 @@ function ListPromoMemes()
 {
     $.ajax({
                type: "GET",
-               url: "http://localhost:8080/meme/actions/listmeme?limit=10&offset=0",
+               url: "/meme/actions/listmeme?limit=10&offset=0",
                //url: "/reviews/scenes/listscenes?limit=2&offset=0",
                success: function(response){
                     theXmlDoc = $.parseXML(response);

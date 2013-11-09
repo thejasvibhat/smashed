@@ -27,9 +27,6 @@ handlers:
 - url: /reviewhtml
   static_dir: Reviews/reviewhtml
 
-- url: /meme
-  static_dir: MemeCreator/views
-
 - url: /reviews1/
   static_dir: Reviews
 

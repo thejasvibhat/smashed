@@ -106,7 +106,8 @@ class SaveHandler(AuthHandler):
         color = ''
         style = ''
         weight = ''
-        
+        textlayers = []
+    
         for objects in root:
             selectionx = objects.get('x')
             selectiony = objects.get('y')
@@ -117,6 +118,30 @@ class SaveHandler(AuthHandler):
                     imgId = texts.get('id')
                     imgwidth = texts.get('width')
                     imgheight = texts.get('height')
+                            # read background image
+                    meme_query =  MemeDb.query(MemeDb.myid == imgId)
+                    #meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
+                    memes = meme_query.fetch(1)
+                    for meme in memes:
+                        blob_reader = blobstore.BlobReader(meme.resid)
+                        background = images.Image(blob_reader.read())
+                        
+                        background.resize(width=int(imgwidth), height=int(imgheight))
+                        background.im_feeling_lucky()
+                        thumbnail = background.execute_transforms(output_encoding=images.JPEG)
+                        back_layer = Image.new('RGBA', (450,450), (100, 0, 0, 100))
+                        output = StringIO.StringIO()
+                        back_layer.save(output, format="png")
+                        back_layer = output.getvalue()
+                        output.close()               
+                                # merge
+                
+                
+                        merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
+                                                   (thumbnail, (450-int(imgwidth))/2, (450 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
+                                                   450, 450)
+
+
                 for child in texts.iter('{http://www.w3.org/1999/xhtml}text'):
                     for props in child:
                         family = props.get('name')
@@ -128,57 +153,36 @@ class SaveHandler(AuthHandler):
                         left = props.get('left')
                         width = props.get('width')
                         height = props.get('height')
-                        textVal = props.get('textVal')
-                        
-# create new image
-        back_layer = Image.new('RGBA', (450,450), (100, 0, 0, 100))
-        text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
-        draw = ImageDraw.Draw(text_img)
-        draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
-
-        # no write access on GAE
-        output = StringIO.StringIO()
-        text_img.save(output, format="png")
-        text_layer = output.getvalue()
-        output.close()
-        output = StringIO.StringIO()
-        back_layer.save(output, format="png")
-        back_layer = output.getvalue()
-        output.close()
-        # read background image
-        meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
-        memes = meme_query.fetch(10)
-        for meme in memes:
-            if meme.myid == imgId:
-                blob_reader = blobstore.BlobReader(meme.resid)
-                background = images.Image(blob_reader.read())
-
-                background.resize(width=int(imgwidth), height=int(imgheight))
-                background.im_feeling_lucky()
-                thumbnail = background.execute_transforms(output_encoding=images.JPEG)
-                # merge
-                merged = images.composite([(thumbnail, (450-int(imgwidth))/2, (450 - int(imgheight))/2, 1.0, images.TOP_LEFT), 
-                                           (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
-                                           450, 450)
-
-                merged = images.composite([(back_layer, 0, 0, 1.0, images.TOP_LEFT), 
-                                           (merged, 0, 0, 1.0, images.TOP_LEFT)], 
-                                           450, 450)
-
-                #merged = images.crop(merged,float(selectionx),float(selectiony),
-                #                     float(selectionwidth),float(selectionheight))
-                merged = images.crop(merged,float(selectionx),float(selectiony),
-                                     float(selectionwidth),float(selectionheight))
+                        textVal = props.get('textVal')                        
+                        text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
+                        draw = ImageDraw.Draw(text_img)
+                        draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
                 
-                # save
-                file_name = files.blobstore.create(mime_type='image/png')
-                with files.open(file_name, 'a') as f:
-                    f.write(merged)
-                files.finalize(file_name)     
-                blob_key = files.blobstore.get_blob_key(file_name)           
-                memeid = SaveFinalMeme(userId,blob_key)
-                self.response.write('%s' %memeid)
-                #self.redirect('/meme/store/memeview/%s' %memeid)
+                        # no write access on GAE
+                        output = StringIO.StringIO()
+                        text_img.save(output, format="png")
+                        text_layer = output.getvalue()
+                        output.close()
+                        textlayers.append(text_layer)
+                        merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
+                                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
+                                                   450, 450)
+
+                        
+        #merged = images.crop(merged,float(selectionx),float(selectiony),
+        #                     float(selectionwidth),float(selectionheight))
+        merged = images.crop(merged,float(selectionx),float(selectiony),
+                             float(selectionwidth),float(selectionheight))
+        
+        # save
+        file_name = files.blobstore.create(mime_type='image/png')
+        with files.open(file_name, 'a') as f:
+            f.write(merged)
+        files.finalize(file_name)     
+        blob_key = files.blobstore.get_blob_key(file_name)           
+        memeid = SaveFinalMeme(userId,blob_key)
+        self.response.write('%s' %memeid)
+        #self.redirect('/meme/store/memeview/%s' %memeid)
         
 
     

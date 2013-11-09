@@ -152,6 +152,10 @@ $(function() {
          $("#backImage").attr('src', src);
           
           $("#backImage").attr('value', value);
+          
+          $('#saveButton').removeClass("disabled");   
+          $('#saveButton').addClass("enabled");   
+          $("#saveButton").removeAttr("disabled");
       }
   });
 
@@ -259,6 +263,7 @@ function Save()
     oImages.setAttribute("id",curImage.val());
     oImages.setAttribute("width",curImage.width());
     oImages.setAttribute("height",curImage.height());
+    oObjetcs.appendChild(oImages);
     var oTextBoxes = document.createElement('texts')
     for(var i=0; i < m_arrTextBoxes.length ; i++)
     {
@@ -280,7 +285,7 @@ function Save()
         
     }
     oObjetcs.appendChild(oTextBoxes);
-    oObjetcs.appendChild(oImages);
+   
     xmlDocument.documentElement.appendChild(oObjetcs);
     $.ajax({
       type: "POST",
