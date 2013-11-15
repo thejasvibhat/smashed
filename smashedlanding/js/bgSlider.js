@@ -8,11 +8,11 @@ var slideshowSpeed = 8000;
 // Variable to store the images we need to set as background
 // which also includes some text and url's.
 var photos = [ {
-		"image" : "../img/slider/bgslider/bg1.jpg",
+		"image" : "../img/bg.jpg",
 	}, {
-		"image" : "../img/slider/bgslider/bg2.jpg",
+		"image" : "../img/bg.jpg",
 	}, {
-		"image" : "../img/slider/bgslider/bg3.jpg",
+		"image" : "../img/bg.jpg",
 	}
 ];
 

@@ -37,6 +37,15 @@ CSS structure
 
 ============================================================== */
 
+@font-face
+{
+  font-family: rockwell;
+  src: url('/assets/Rockwell.ttf'),
+  url('/assets/Rockwell.eot'); /* IE9 */
+}
+
+
+
 /*
 Home
 ======================================= */
@@ -281,6 +290,7 @@ ul#gallery-list-reviews li {
 	display:block;	
 	height:auto;	
 	margin-bottom:30px;
+	cursor:pointer;
 }
 
 ul#gallery-list-memes{
@@ -298,12 +308,14 @@ ul#gallery-list-memes li {
 	display:block;	
 	height:auto;	
 	margin-bottom:30px;
+	cursor:pointer;
 }
 
 .image-wrapper{
 	display:block;
 	width:100%;
 	height:auto;
+	max-height:300px;
 }
 
 .img-title{
@@ -1329,4 +1341,162 @@ Custom responsive
 .target1:hover .target4{
 	opacity: 0.50;
 	filter: alpha(opacity=50);   
+}
+
+/* Custom stuff */
+
+.whitestrip
+{
+    background:#ffffff;
+    height:60px;
+    line-height:60px;
+    -webkit-box-shadow:1px 1px 2px #aaa;
+    box-shadow:1px 1px 2px #aaa;
+}
+
+ul#review-list-main{
+        float:left;
+        width:100%;
+        list-style:none;
+        position:relative;
+        margin:0;
+        padding:0;
+}
+
+ul#review-list-main li {
+        position:relative;
+        overflow:hidden;
+        display:block;
+        height:auto;
+        margin-bottom:30px;
+}
+
+.review-image-wrapper
+{
+    background:#ffffff;
+    padding:10px;
+    color:#2b2b2b;
+    -webkit-box-shadow:1px 1px 2px #aaa;
+    box-shadow:1px 1px 2px #aaa;
+    color:#707070;
+    font-size:14px;
+    font-family:helvetica;
+}
+
+.gridDetailContainer
+{
+    width:100%;
+    margin-top:5px;
+}
+
+.gridDetailContainer h3
+{
+    font-family:"rockwell",helvetica;
+    font-size:20px;
+    line-height:normal;
+}
+
+.gridRatingContainer img
+{
+    width:100px;
+}
+
+.gridGoogleMapContainer
+{
+    bottom: 75px;
+    left: 85%;
+    position: relative;
+}
+
+/* Meme Creator */
+
+.dottedBorder
+{
+    border:6px dashed #707070;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+}
+
+#backImage
+{
+    max-width:100%;
+}
+
+.marginTopTwenty
+{
+    margin-top:20px;
+}
+
+.labelBig
+{
+    display:block;
+    margin-bottom:10px;
+    font-family:'rockwell',helvetica;
+    font-size:22px;
+    color:#707070;
+    padding:5px;
+    background:#ffffff;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+}
+
+.sep
+{
+    margin:14px 0 14px 0;
+    background:#dddddd;
+    border-bottom:1px solid #ffffff;
+    height:2px;
+}
+
+.marginTopTen
+{
+    margin:10px 0 0px 0;
+}
+
+.footer
+{
+    margin:20px 0 0 0;
+    width:100%;
+    background:#2b2b2b;
+    color:#ffffff;
+}
+
+.footer h3
+{
+    font-family:"rockwell",helvetica;
+    font-size:30px;
+    text-transform:uppercase;
+}
+
+.memeCreateHead
+{
+    background:#ffffff;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+    padding:10px;
+    font-family:'rockwell',helvetica;
+    font-size:22px;
+    color:#777;
+}
+
+.cursorPointer
+{
+    cursor:pointer;
+}
+
+.widthClass
+{
+    width:100%;
+    height:auto;
+}
+
+.heightClass
+{
+    height:100%;
+    width:auto;
+}
+
+#baseCanvas
+{
+    height:570px;
 }

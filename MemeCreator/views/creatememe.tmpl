@@ -1,101 +1,130 @@
 <html>
 <head> 
 	<meta charset="utf-8">
-	<title>Meme Creator</title>
-      <link rel="stylesheet" href="/MEMEHTML/css/jquery-ui.css" />
+	<title>Smashed.in :: Meme Creator</title>
+    <link rel="stylesheet" href="/MEMEHTML/css/jquery-ui.css" />
     <script src="/MEMEHTML/jquery.tools.min.js"></script>
-  <!--script src="http://code.jquery.com/jquery-1.9.1.js"></script!-->
-   <script src="http://malsup.github.com/jquery.form.js"></script> 
-  <script src="/MEMEHTML/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/MEMEHTML/css/style.css"> 
-      <link rel="stylesheet" type="text/css" href="/MEMEHTML/css/imgareaselect-default.css" />
-  <script type="text/javascript" src="/MEMEHTML/jquery.imgareaselect.pack.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+    <script src="/MEMEHTML/jquery-ui.js"></script>
+    <!--<link rel="stylesheet" href="/MEMEHTML/css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="/MEMEHTML/css/imgareaselect-default.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="/MEMEHTML/jquery.imgareaselect.pack.js"></script>
+    
+    <link rel="stylesheet" href="/home/css/bootstrap.css"> 
+    <link rel="stylesheet" href="/home/css/overwrite.css"> 
+	<link href="/home/css/font-awesome.css" rel="stylesheet">
+	<link href="/home/css/font-awesome-set.css" rel="stylesheet">
+    <link rel="stylesheet" href="/home/css/style.css"> 
+    <link rel="stylesheet" href="/home/skin/default.css"> 
+
+    
     <link rel="stylesheet" href="/MEMEHTML/css/scrollable-buttons.css">   
     <link rel="stylesheet" href="/MEMEHTML/css/colorPicker.css">   
-    <link rel="stylesheet" href="/MEMEHTML/css/scrollable-horizontal.css">   
+    <link rel="stylesheet" href="/MEMEHTML/css/scrollable-horizontal.css"> 
     <script  src="/MEMEHTML/meme.js"></script>  
     
     <script language="javascript" type="text/javascript" src="/MEMEHTML/jquery.colorPicker.js"></script> 
+    <script src="/home/js/custom.js"></script>
 </head>               
 <body>      
 <!--form action="" id="uploadNewForm" method="POST" enctype="multipart/form-data">                        
      <input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> 
 </form-->
 
-<div class = "blacktopbar">  
-    <div class = "screen1k marginauto"> 
-       <span class = "logotext">SMASHED.IN</span> 
-    </div>
-</div>
+
+<header>
+                <div class="navbar">
+                        <div class="container">
+                                <a class="navbar-brand" href="index.html"><img src="/home/img/slogotmp.png" alt="Smashed.in" /></a>
+                                <div class="nav-collapse collapse navbar-responsive-collapse">
+                                        <ul class="nav navbar-nav">
+                                                <li><a href="/home/index.html">Home</a></li>
+                                                <li><a href="/list/reviews.html">Reviews</a></li>
+                                                <li><a href="/reviews/store/uploadreview">Write a Review</a></li>
+                                                <li><a href="/list/memes.html">Memes</a></li>
+                                                <li><a href="/meme/store/create">Create Meme</a></li>
+                                                <li><a href="#contact">Contact</a></li>
+                                        </ul>
+                                </div><!-- End nav-collapse -->
+                        </div><!-- End container -->
+                </div><!-- End navbar -->
+        </header>
+        <!-- End header -->
+
+
      
-<div class="backgroundClass" style="margin:0 auto;" >  
-    <div class="autoClass" align="center"> 
-        <span class="textClass inlineBlock" style="font-weight:bold;color:#b9b9b9;">MEME CREATOR</span>
-        <span class="textClass" style="font-size:20px;color:#b9b9b9;">&nbsp;&nbsp;Drag an image from image roller or upload new</span>
-        <span class="textClass" style="font-size:18px;color:#777; font-weight:bold;cursor:default;" onclick="ChangeBackground();">&nbsp;&nbsp;UPLOAD NEW ( + )</span>
+<div class="memeCreateHead">
+    <div class="container"> 
+        <span>Drag an image from image roller or </span>
+        <span class = "cursorPointer" onclick="ChangeBackground();"> upload new ( + )</span>
     </div> 
-          
-    <div style="margin:0 auto; width: 100%; height:120px; padding-top:10px;"> 
-<!-- "previous page" action --> 
-<a class="prev browse left"></a>
+</div>
+
+<div class = "marginTopTwenty"></div>    
+   
+<div class = "container"> 
+
+	<a class="prev browse left"></a>
  
-<!-- root element for scrollable -->
-<div class="scrollable dropShadowed" id="scrollable"> 
+	<!-- root element for scrollable -->
+	<div class="scrollable dropShadowed" id="scrollable"> 
   
-  <!-- root element for the items -->
-  <div class="items"> 
-      <!--img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"   draggable="true"  ondragstart="DragMeme(event)"/-->
-  </div>  
- 
+  		<!-- root element for the items -->
+  		<div class="items"> 
+     		<!--img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg"   draggable="true"  ondragstart="DragMeme(event)"/-->
+  		</div>  
+	</div>   
+	<a class="next browse right"></a>  
 </div> 
       
-<!-- "next page" action --> 
-<a class="next browse right"></a>    
-</div>
-<div class="Main centerAlign"  style="width:90%;height:70%;padding-top:10px;padding-right:12px;" >
-        <div class="inlineBlock"  style="width:50%;height:100%;float:left;">
-            
-            <div id="BaseCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#ababab;width:450px;height;450px"  > 
-                <img id="backImage" class="displayBlock widthCLassImg" src="/MEMEHTML/assets/drophere.jpg" onload="OnImageLoad()" > 
+<div class = "marginTopTwenty"></div> 
+
+<div class="container">
+        <div class="row">
+            <div class = "col-lg-6">
+            	<div id="BaseCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#ababab;"> 
+                	<img id="backImage" src="/MEMEHTML/assets/drophere.jpg" onload="OnImageLoad()" > 
+            	</div>
             </div>
-              
-       </div>           
-       <div class="inlineBlock"  style="width:50%;height:100%;float:right;">
-            <div  width="100%" height="100%" style="width:100%;height:16%;padding-left:18px;padding-botton:5px">
-                <span class="textClass label" style="font-weight:bold;font-size:18px;">Font Size</span>
-                <dd class='stepper_widget' ><input type='text' id='fontSizeText' value='20' class='min_20_max_100' onblur="FontSizeChange(this.value);">   
-                    <button class="upbutton" onclick="UpdateStepperUp();">^</button>
-                    <button class="dnbutton" onclick="UpdateStepperDown();">v</button>     
-                </dd>      
-            </div>     
-            <div  style="width:100%;height:20%;padding-left:18px;padding-botton:5px">
-                <span class="textClass label" style="font-weight:bold;font-size:18px;">Color</span>
-                <div>
-                    <input id="color1" name="color1" type="text" value="#000" onchange="ColorChanged(this.value);" />  
-                </div>
-           </div>
-           <div  style="width:100%;height:16%;padding-left:18px;padding-botton:5px">
-                <span class="textClass label" style="font-weight:bold;font-size:18px;">Font Weight</span>
-                <div>
-                     <select  onchange="UpdateFontweight(this.value);">                        
-                        <option>Normal</option>
-                        <option>Bold</option>
-                     </select>
-                </div>
-           </div>
-           <div  style="width:100%;height:16%;padding-left:18px;padding-botton:5px">
-                <span class="textClass label" style="font-weight:bold;font-size:18px;">Font Style</span>
+            
+            
+            <div class = "col-lg-6">
+                <label class = "labelBig">Font Size</label>
+                <dd class='stepper_widget' ><input style = "width:120px;" type='text' class="form-control" placeholder="20" id='fontSizeText' value='20' class='min_20_max_100' onblur="FontSizeChange(this.value);">   
+                	<div class = "marginTopTen"></div>
+                    <button class="upbutton" onclick="UpdateStepperUp();">+</button>
+                    <button class="dnbutton" onclick="UpdateStepperDown();">-</button>     
+                </dd>   
+                <div class = "sep"></div>
+                <div class = "marginTopTen"></div>
+                
+            	<label class = "labelBig">Color</label>
+                <input id="color1" name="color1" type="text" value="#000" onchange="ColorChanged(this.value);" />  
+                <div class = "sep"></div>
+                <div class = "marginTopTen"></div>
+                 
+                <label class = "labelBig">Font Style</label>
                 <div>
                      <select  onchange="UpdateFontStyle(this.value);">                        
                         <option>Normal</option>
                         <option>Italic</option>
                      </select>
                 </div>
-           </div>
-
-           <div style="width:100%;height:20%;padding-left:18px;"> 
-               <span class="textClass label" style="font-weight:bold;font-size:18px;">Font Family</span>
-               <div>
+                <div class = "sep"></div>
+                <div class = "marginTopTen"></div> 
+                
+          		<label class = "labelBig">Font Weight</label>
+                <div>
+                     <select  onchange="UpdateFontweight(this.value);">                        
+                        <option>Normal</option>
+                        <option>Bold</option>
+                     </select>
+                </div>
+                <div class = "sep"></div>
+                <div class = "marginTopTen"></div> 
+				<label class = "labelBig">Font Family</label>
+           		<div>
                     <select  onchange="UpdateFamily(this.value);">                        
                         <option>Arial</option>   
                         <option>Verdana</option>                               
@@ -103,14 +132,51 @@
                         <option>Trebucet</option>   
                     </select>
                 </div>
-            </div>
-           <div style="width:100%;height:20%;padding-left:18px;bottom:0;;">
-               <input type="button" class="customButton textClass" value="Add Caption ( + )" onclick="AddCaption();" />   
-               <input type="button" class="customButton textClass inlineBlock" style="background-color:#00ee00;" value="Crop" onclick="Crop();" />   
-               <input type="button" id="saveButton" disabled class="customButton textClass inlineBlock disabled" style="width:140px;background-color:#00ee00;display:inline-block;" value="Save" onclick="Save();" />   
-
-           </div>       
-        </div>
+                <div class = "sep"></div>
+                <div class = "marginTopTen"></div> 
+                
+          		<input type="button" class = "btn btn-primary btn-lg" value="Add Caption ( + )" onclick="AddCaption();" />   
+                <input type="button" class = "btn btn-warning btn-lg" value="Crop" onclick="Crop();" />   
+                <input type="button" class = "btn btn-success btn-lg" value="Save" onclick="Save();" />   
+        </div>       
+     </div>    
 </div>
+
+<div class = "footer">
+	<div class = "container">
+		<div class = "row">
+            <div class = "col-lg-4">
+                <h3>Quick Links</h3>
+                 <ul>
+                    <li><a href = "/list/reviews.html">Browse</a></li>
+                    <li><a href = "/list/memes.html">Latest Memes</a></li>
+                    <li><a href = "/reviews/store/uploadreview">Write a Review</a></li>
+                    <li><a href = "/meme/store/create">Create a Meme</a></li>
+                    
+                </ul>
+            </div>
+            <div class = "col-lg-4">
+                <h3>Core Scenes</h3>
+                <ul>
+                    <li><a href = "">Terms of use</a></li>
+                    <li><a href = "">Privacy policy</a></li>
+                    <li><a href = "">About us</a></li>
+                </ul>
+            </div>
+            <div class = "col-lg-4">
+                <h3>Connect</h3>
+                <a target = "_blank" href = "http://www.facebook.com/smasheddotin"><img src = "../../reviewhtml/assets/facebook.png" alt = "Facebook" /></a>
+                <a href = ""><img src = "../../reviewhtml/assets/twitter.png" alt = "Twitter" /></a>
+                <a href = ""><img src = "../../reviewhtml/assets/pinterest.png" alt = "Pinterest" /></a>
+                <div class = "marginTopTen"></div>
+                <span class = "connectNote">If you have any queries,suggestions or just want to say hello, drop us a message at <a href = "mailto:hello@smashed.in">hello@smashed.in</a></span>
+            </div>
+        </div>
+    </div>
+    <div align = "center">
+        Copyright &copy; 2013 Smashed.in. All rights reserved.
+    </div>
+</div>
+
 </body>
 </html>

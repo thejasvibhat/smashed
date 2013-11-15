@@ -25,10 +25,18 @@ handlers:
   static_dir: MemeCreator/MEMEHTML
 
 - url: /reviewhtml
-  static_dir: Reviews/reviewhtml
+  static_dir: Barreviews/reviewhtml
 
-- url: /reviews1/
-  static_dir: Reviews
+- url: /list
+  static_dir: listviews 
+
+- url: /assets
+  static_dir: assets
+#- url: /meme
+#  static_dir: MemeCreator/views
+
+#- url: /reviews1/
+#  static_dir: Barreviews
 
 - url: /home/
   static_dir: smashedlanding

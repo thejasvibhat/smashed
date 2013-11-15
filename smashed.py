@@ -22,7 +22,7 @@ from MemeCreator.meme import ListMeme
 from MemeCreator.meme import GetMeme
 from MemeCreator.meme import GetShareMemeView
 
-#import Barreviews.listreviews
+import Barreviews.listreviews
 #logging.info ("%s" % Reviews)
 
 from Barreviews.listreviews import ListScenesHandler

@@ -163,7 +163,7 @@ function GetThumbnails()
                         }
                         else
                         {
-                            var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
+                            //var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
                             $(this).attr('style',margin);
                         }
                     });
@@ -322,7 +322,7 @@ function OnImageLoad()
                 curImage.addClass("widthCLassImg");
         curImage.removeClass("heightCLassImg");
 
-        var margin = 'margin: '+($("#BaseCanvas").height() - curImage.height())/2+'px 0px 0px 0px;';                            
+        //var margin = 'margin: '+($("#BaseCanvas").height() - curImage.height())/2+'px 0px 0px 0px;';                            
         curImage.attr('style',margin);
     }
 }

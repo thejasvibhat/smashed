@@ -3,7 +3,7 @@ function ListPromoScenes()
 {
     $.ajax({
                type: "GET",
-               url: "/reviews/scenes/listscenes?limit=2&offset=0",
+               url: "/reviews/scenes/listscenes?limit=10&offset=0",
                //url: "/reviews/scenes/listscenes?limit=2&offset=0",
                success: function(response){
                     theXmlDoc = $.parseXML(response);

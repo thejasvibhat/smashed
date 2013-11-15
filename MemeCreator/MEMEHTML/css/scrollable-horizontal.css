@@ -12,7 +12,8 @@
     height:120px;
 
     /* custom decorations */
-    border:1px solid #ccc;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-border-radius:1px 1px 2px #ddd;
     background-color:#ffffff;
 }
  
