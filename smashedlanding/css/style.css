@@ -1500,3 +1500,30 @@ ul#review-list-main li {
 {
     height:570px;
 }
+
+/* Custom Styles */
+
+.whiteCanvas
+{
+	background:#fff;
+	box-shadow:1px 1px 2px #ddd;
+	-webkit-box-shadow:1px 1px 2px #ddd;
+	margin:15px 0 15px 0;
+	color:#707070;
+}
+
+.whiteCanvas h3,.whiteCanvas h4
+{
+	font-family:"rockwell",helvetica;
+	color:#707070;
+}
+
+.noteSmall
+{
+	margin:5px 0 5px 0;
+}
+
+.marginTopFive
+{
+    margin:5px 0 0 0;
+}

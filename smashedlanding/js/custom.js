@@ -36,3 +36,28 @@ $(document).ready(function() {
     });
 	
 });
+
+
+$(window).load(function()
+{
+	$('.frontImages img').click(function()
+	{
+		$('#i'+$(this).attr('id')).click();
+	});
+	
+	$('input[type="file"]').on('change',function(input)
+	{
+		var id = $(this).attr('id').replace('i','');
+		readURL(input,id);  	
+	});
+});
+
+function readURL(input,id) {
+	var file = input.target.files[0];
+    var reader = new FileReader();
+    
+    reader.readAsDataURL(file);
+    reader.onloadend = function(e) {
+    	$('#'+id).attr('src', e.target.result);          
+    } 
+}
