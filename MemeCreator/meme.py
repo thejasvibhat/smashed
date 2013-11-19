@@ -1,12 +1,13 @@
 import webapp2
 import urllib
 import os
+from facepy import GraphAPI
 from google.appengine.ext import ndb
 import uuid
 from google.appengine.api import images
-
+import logging
 from PIL import Image, ImageDraw, ImageFont
-
+from google.appengine.api import urlfetch
 import StringIO
 
 from google.appengine.ext import db
@@ -42,9 +43,17 @@ def SaveFinalMeme(userid,file_name):
     usermeme.resid = str(uuid.uuid4()) 
     usermeme.blobid = file_name
     usermeme.userid = userid
+    usermeme.shareid = ''
     usermeme.put();
     return usermeme.resid;
 
+def UpdateFacebookId(resid,postid):
+    meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
+    memes = meme_query.fetch(1)
+    for meme in memes:
+        meme.shareid = postid
+        meme.put();
+	
 class ListMeme(webapp2.RequestHandler):
     def get(self):
         meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
@@ -57,6 +66,9 @@ class ListMeme(webapp2.RequestHandler):
             self.response.write('<icon>')
             self.response.write('/meme/actions/getmeme/%s' %meme.resid)
             self.response.write('</icon>')
+            self.response.write('<url>')
+            self.response.write('/meme/store/memeview/%s' %meme.resid)
+            self.response.write('</url>')
             self.response.write('</meme>')
         self.response.write('</memes>')
             
@@ -75,15 +87,25 @@ class GetShareMemeView(AuthHandler):
         meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
         memes = meme_query.fetch(1)
         for meme in memes:
-            template_values = {'memeurl':'/meme/actions/getmeme/%s' %meme.resid}
+            template_values = {'memeurl':'/meme/actions/getmeme/%s' %meme.resid,'conturl':'/meme/store/memeview/%s' %meme.resid,'shareid':'%s' %meme.shareid,'currentid':'%s' %meme.resid}
             path = os.path.join(os.path.dirname(__file__),'views/memeview.tmpl')
             tclass = Template.compile (file = path)
             t = tclass(searchList=template_values)
             self.response.out.write(t)
 
+class UploadFacebook(AuthHandler):
+    def get(self, resource):
+        splitres = resource.split(':') 
+        resid = splitres[0]		
+        shareid = splitres[1]		
+        meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
+        memes = meme_query.fetch(1)
+        for meme in memes:
+			meme.shareid = shareid
+			meme.put()
+        self.response.write('%s' %shareid)
 
 class ListFiles(webapp2.RequestHandler):
-
     def get(self):
         meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
         memes = meme_query.fetch(10)
@@ -113,8 +135,9 @@ class SaveHandler(AuthHandler):
             selectiony = objects.get('y')
             selectionwidth = objects.get('width')
             selectionheight = objects.get('height')
+            logging.info('%s' %objects)			
             for texts in objects:                
-                if texts.tag == "{http://www.w3.org/1999/xhtml}img":                    
+                if texts.tag == "{http://www.w3.org/1999/xhtml}imagebase":                    
                     imgId = texts.get('id')
                     imgwidth = texts.get('width')
                     imgheight = texts.get('height')
@@ -181,6 +204,20 @@ class SaveHandler(AuthHandler):
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
         memeid = SaveFinalMeme(userId,blob_key)
+        oauth_access_token = 'CAADlzuSdjcIBAFxne9wAoAbNvXAvlaGZAOacJ0lPzmhGsMmp9cM0hKuzRY0nqn95qMubeDZAVguyD2ZBkK1hFLwunNXyAq6WgTAogxtaoftnR9AEnZCCarIdEgg0tYamLptwZAZB7YzOIABMuZB8vXzDS4verdwzSGUm5xWkkFdk4r4hVnxDyYV'
+        graph = GraphAPI(oauth_access_token)
+
+		# Get my latest posts
+		# Post a photo of a parrot
+        urlfetch.set_default_fetch_deadline(45)
+        logging.info('http://smashed.thejasvi.in/meme/actions/getmeme/%s' %memeid)
+        postid = graph.post(
+                      path = '/10153430700220062/photos',
+                      message = 'photo description',
+                      url = 'http://smashed.thejasvi.in/meme/actions/getmeme/%s' %memeid
+				  )
+        logging.info('theju/%s' %postid['id'])
+        UpdateFacebookId(memeid,postid['id'])
         self.response.write('%s' %memeid)
         #self.redirect('/meme/store/memeview/%s' %memeid)
         

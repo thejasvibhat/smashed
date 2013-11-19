@@ -1,11 +1,11 @@
 <html>
 <head> 
 	<meta charset="utf-8">
-	<title>Meme Creator</title>
+	<title>Meme View</title>
       <link rel="stylesheet" href="/MEMEHTML/css/jquery-ui.css" />
     <script src="/MEMEHTML/jquery.tools.min.js"></script>
   <!--script src="http://code.jquery.com/jquery-1.9.1.js"></script!-->
-   <script src="http://malsup.github.com/jquery.form.js"></script> 
+   
   <script src="/MEMEHTML/jquery-ui.js"></script>
     <link rel="stylesheet" href="/MEMEHTML/css/style.css"> 
       <link rel="stylesheet" type="text/css" href="/MEMEHTML/css/imgareaselect-default.css" />
@@ -14,6 +14,15 @@
     <link rel="stylesheet" href="/MEMEHTML/css/colorPicker.css">   
     <link rel="stylesheet" href="/MEMEHTML/css/scrollable-horizontal.css">   
     <script  src="/MEMEHTML/meme.js"></script>  
+	<script type="text/javascript" src="/MEMEHTML/social-likes.js"></script>
+	<meta property="og:title" content="Smashed | Meme"/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="$conturl"/>
+<meta property="og:image" content="$memeurl"/>
+<meta property="og:site_name" content="Smashed"/>
+<meta property="og:description" content="Create your own meme and share it across."/>
+
+<link rel="stylesheet" href="/MEMEHTML/css/social-likes.css">
     
     <script language="javascript" type="text/javascript" src="/MEMEHTML/jquery.colorPicker.js"></script> 
 </head>               
@@ -36,7 +45,16 @@
                 <img id="backImage" class="displayBlock widthCLassImg" src="$memeurl" onload="OnImageLoad()" > 
             </div>
               
-       </div>                   
+       </div>     
+	   <input type="button" onclick= "UploadToFacebook('$memeurl')"/>
+<ul class="social-likes social-likes_vertical">
+
+	<li class="facebook"  title="Share link on Facebook">Facebook</li>
+	<li class="twitter" title="Share link on Twitter">Twitter</li>
+	<li class="plusone" title="Share link on Google+">Google+</li>
+</ul>
 </div>
+<input type="hidden" id="fcebookphoto" value="$shareid" />
+<input type="hidden" id="currentid" value="$currentid" />
 </body>
 </html>

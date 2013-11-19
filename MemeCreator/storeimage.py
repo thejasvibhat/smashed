@@ -50,6 +50,7 @@ class UserMemeDb(ndb.Model):
     blobid = ndb.BlobKeyProperty();
     date = ndb.DateTimeProperty(auto_now_add=True)
     userid   = ndb.StringProperty()
+    shareid   = ndb.StringProperty()
        
 class MainPageStore(AuthHandler):
 

@@ -181,7 +181,6 @@ class SimpleAuthHandler(object):
       'client_id': key, 
       'redirect_uri': callback_url 
     }
-
     if scope:
       params.update(scope=scope)
 
@@ -227,7 +226,7 @@ class SimpleAuthHandler(object):
       method=urlfetch.POST,
       headers={'Content-Type': 'application/x-www-form-urlencoded'}
     )
-
+    urlfetch.set_default_fetch_deadline(45)
     _parser = getattr(self, self.TOKEN_RESPONSE_PARSERS[provider])
     _fetcher = getattr(self, '_get_%s_user_info' % provider)
 

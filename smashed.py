@@ -21,6 +21,7 @@ from MemeCreator.meme import SaveHandler
 from MemeCreator.meme import ListMeme
 from MemeCreator.meme import GetMeme
 from MemeCreator.meme import GetShareMemeView
+from MemeCreator.meme import UploadFacebook
 
 import Barreviews.listreviews
 #logging.info ("%s" % Reviews)
@@ -60,6 +61,8 @@ routes = [
   webapp2.Route ('/meme/store/create', CreateMemeHandler),    
   webapp2.Route ('/meme/store/uploadskeleton', UploadMemeHandler),
   webapp2.Route ('/meme/store/memeview/<resource>', GetShareMemeView),
+  webapp2.Route ('/meme/store/facebookupload/<resource>', UploadFacebook),
+  
 
   #MemeCreator/meme.py
   webapp2.Route ('/meme/actions/list', ListFiles),

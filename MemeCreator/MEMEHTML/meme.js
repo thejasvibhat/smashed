@@ -134,7 +134,7 @@ function Apply()
     var fontsize = $("#fontsize").val() + 'px';
     cuTextBox.css("font-size",fontsize);
 }
-
+var oStrAccessToken = '';
 $(function() {
     GetUploadURL();
   // initialize scrollable
@@ -158,8 +158,42 @@ $(function() {
           $("#saveButton").removeAttr("disabled");
       }
   });
+	socialUrl = "https://www.facebook.com/photo.php?fbid="+$("#fcebookphoto").val();
+	$("#facebookshare").click();
 
   GetThumbnails();
+$.ajaxSetup({ cache: true });
+  $.getScript('//connect.facebook.net/en_UK/all.js', function(){
+    FB.init({
+      appId: '252676761554370',
+      channelUrl: '//smashed.thejasvi.in/auth',
+    });     
+    $('#loginbutton,#feedbutton').removeAttr('disabled');
+    FB.getLoginStatus(function(response) {
+	console.log(response);
+    if (response.status === 'connected') {
+        // the user is logged in and connected to your
+        // app, and response.authResponse supplies
+        // the user’s ID, a valid access token, a signed
+        // request, and the time the access token 
+        // and signed request each expire
+        var uid = response.authResponse.userID;
+        var accessToken = response.authResponse.accessToken;
+        var accessTokenOld = response.authResponse.accessToken;
+
+        //Extend access token                    
+        var OauthParams = {};
+        OauthParams['client_id'] = '252676761554370';
+        OauthParams['client_secret'] = 'f47dc57744f2abe248beb705fde437f6';
+        OauthParams['grant_type'] = 'fb_exchange_token';
+        OauthParams['fb_exchange_token'] = 'accessToken';
+        OauthParams['response_type'] = 'token';
+		oStrAccessToken = accessToken;
+    }
+	else
+	alert('shit');
+});
+  });
 });
 function SelectCrop(div,selection)
 {
@@ -259,7 +293,7 @@ function Save()
     oObjetcs.setAttribute("width",curSelectionWidth);
     oObjetcs.setAttribute("height",curSelectionHeight);
     
-    var oImages = document.createElement('image')
+    var oImages = document.createElement('imagebase')
     oImages.setAttribute("id",curImage.val());
     oImages.setAttribute("width",curImage.width());
     oImages.setAttribute("height",curImage.height());
@@ -377,3 +411,64 @@ function removeSelection()
 {
     $('#BaseCanvas').imgAreaSelect({remove:true});
 }
+function UploadSuccessData(id)
+{
+    $.ajax({
+        url: "/meme/store/facebookupload/"+id,
+        type: 'GET',
+        crossDomain: true,
+        
+    }).done(function ( data ) {
+        ShareToFacebook(data,id);        
+    });
+}
+var socialUrl = "";
+function ShareToFacebook(data,id)
+{
+	var splitres = id.split(":");
+	var postid = splitres[1];
+	socialUrl = "https://www.facebook.com/photo.php?fbid="+postid;
+	//alert(socialUrl);
+	console.log($("#facebookshare"));
+	$("#facebookshare").click();
+	
+}
+var popupwindow;
+function UploadToFacebook(imgURL)
+{
+	popupwindow = custompopup('', {
+				width: 480,
+				height: 300
+			});
+	FB.api('/me/photos', 'post', {
+	access_token: oStrAccessToken,
+		message:'photo description',
+		url:'http://smashed.thejasvi.in'+imgURL        
+	}, function(response){
+
+		if (!response || response.error) {
+			//alert('Error occured');
+			UploadSuccessData($("#currentid").val() + ":" + "theju");
+		} else {
+			UploadSuccessData($("#currentid").val() + ":" + response.id);
+			//alert('Post ID: ' + response.id);
+		}
+
+	});
+}
+function custompopup(url, params) {
+		var left = Math.round(screen.width/2 - params.width/2),
+			top = 0;
+		if (screen.height > params.height) {
+			top = Math.round(screen.height/3 - params.height/2);
+		}
+
+		var win = window.open(url, 'sl_' + this.service, 'left=' + left + ',top=' + top + ',' +
+			'width=' + params.width + ',height=' + params.height + ',personalbar=0,toolbar=0,scrollbars=1,resizable=1');
+		if (win) {
+			win.focus();
+		} else {
+			location.href = url;
+		}
+		return win;
+	}

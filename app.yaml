@@ -1,4 +1,4 @@
-application: testsmashed
+application: smashedat
 version: 2
 runtime: python27
 api_version: 1
@@ -32,11 +32,7 @@ handlers:
 
 - url: /assets
   static_dir: assets
-#- url: /meme
-#  static_dir: MemeCreator/views
 
-#- url: /reviews1/
-#  static_dir: Barreviews
 
 - url: /home/
   static_dir: smashedlanding
