@@ -44,9 +44,24 @@ class SceneHandler(webapp2.RequestHandler):
                 c['icon4'] = '/download/review/file/4?bid=%s' %review.bid
                 c['icon5'] = '/download/review/file/5?bid=%s' %review.bid
                 c['icon6'] = '/download/review/file/6?bid=%s' %review.bid
-                #c['rating'] = '%s' %review.rating
-                c['rating'] = '4'
-                c['budget'] = 'True'
+                c['rating'] = '%s' %review.rating
+				
+                c['budget'] = '%s' %review.o_budget
+                c['ac'] = '%s' %review.o_ac
+                c['carpark'] = '%s' %review.o_carpark
+                c['bigscreen'] = '%s' %review.o_bigscreen
+                c['ladyok'] = '%s' %review.o_ladyok
+                c['fightscene'] = '%s' %review.o_fightscene
+                c['musicvideo'] = '%s' %review.o_musicvideo
+                c['clean'] = '%s' %review.o_clean
+                c['smoke'] = '%s' %review.o_smoke
+                c['happyhours'] = '%s' %review.o_happyhours
+                c['check_card'] = '%s' %review.o_cardaccept
+                c['events'] = '%s' %review.o_events
+                c['bottlerate'] = '%s' %review.o_bottlerate
+                c['snack1'] = '%s' %review.snack_1
+                c['snack2'] = '%s' %review.snack_2				
+				
                 c['usp1'] = "Bottle Rate"
                 c['usp2'] = "Lady Friendly"
                 

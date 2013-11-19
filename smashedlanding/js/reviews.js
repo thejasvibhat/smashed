@@ -1,4 +1,4 @@
-var myname = "naren";
+
 function ListPromoScenes()
 {
     $.ajax({
@@ -19,7 +19,7 @@ function ListPromoScenes()
                         
                         $('#gallery-list-reviews').find('#item_'+i).click(function()
                         {
-                            window.location = "http://localhost:8080" + url;
+                            window.location =  url;
                         });                                                      
                     });
                    
@@ -48,7 +48,7 @@ function ListPromoMemes()
                         
                         $('#gallery-list-memes').find('#meme_'+i).click(function()
                         {
-                            window.location = "http://localhost:8080" + url;
+                            window.location =  url;
                         });                                                      
                     });
                    

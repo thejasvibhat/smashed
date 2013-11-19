@@ -229,7 +229,7 @@
                 <div class = "reviewLeftSectionOne">
                     <div class = "reviewUspContainer">
                         <span class = "check">
-	                        {% if budget is defined %}
+							{% if budget == "on" %} 
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -242,7 +242,7 @@
                     
                     <div class = "reviewUspContainer">
                         <span class = "check">
-	                        {% if ac is defined %}
+	                        {% if ac == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -256,7 +256,7 @@
                     
                     <div class = "reviewUspContainer">
                         <span class = "check">
-	                        {% if carpark is defined %}
+	                        {% if carpark == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -270,7 +270,7 @@
                     
                     <div class = "reviewUspContainer">
                         <span class = "check">
-	                        {% if bigscreen is defined %}
+	                        {% if bigscreen == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -284,7 +284,7 @@
                     
                     <div class = "reviewUspContainer">
                         <span class = "check">
-	                        {% if ladyok is defined %}
+	                        {% if ladyok == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -298,7 +298,7 @@
                     
                     <div class = "reviewUspContainer">
                         <span class = "check">
-	                        {% if fightscene is defined %}
+	                        {% if fightscene == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -318,7 +318,7 @@
                             Music / Video
                         </span>
                         <span class = "check">
-	                        {% if musicvideo is defined %}
+	                        {% if musicvideo == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -332,7 +332,7 @@
                             Clean
                         </span>
                         <span class = "check">
-	                        {% if smoke is defined %}
+	                        {% if clean == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -346,7 +346,7 @@
                             Smoking on Table
                         </span>
                         <span class = "check">
-	                        {% if happyhours is defined %}
+	                        {% if smoke == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -360,7 +360,7 @@
                             Happy Hours
                         </span>
                         <span class = "check">
-	                        {% if check_card is defined %}
+	                        {% if happyhours == "on" %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -374,7 +374,7 @@
                             Card Accepted
                         </span>
                         <span class = "check">
-                        {% if events is defined %}
+                        {% if check_card == "on" %}
                             <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
                         {% else %}
                         	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -387,7 +387,7 @@
                             Events
                         </span>
                         <span class = "check">
-	                        {% if check_card is defined %}
+	                        {% if events is defined %}
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        {% else %}
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
@@ -406,7 +406,7 @@
                 <h4>Favorite Snacks</h4>
                 <div class = "margintopten"></div>
                 <ul>
-                    <li>{{snack1}}/ Veg</li>
+                    <li>{{snack1}}</li>
                     <li>{{snack2}}</li>
                     <li>{{snack3}}</li>
                     <li>{{snack4}}</li>
