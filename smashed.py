@@ -29,6 +29,7 @@ import Barreviews.listreviews
 from Barreviews.listreviews import ListScenesHandler
 from Barreviews.listreviews import SearchHandler
 from Barreviews.review import SceneHandler
+from Barreviews.review import ReviewHandler
 
 from Barreviews.storereview import MainPageStore as MainPageStore1
 from Barreviews.storereview import UploadHandler as UploadHandler1
@@ -73,6 +74,7 @@ routes = [
   # #Reviews/review.py
   webapp2.Route ('/reviews/scenes/listscenes', ListScenesHandler),
   webapp2.Route ('/reviews/scenes/search', SearchHandler),
+  webapp2.Route ('/reviews/scenes/reviews', ReviewHandler),      
   webapp2.Route ('/reviews/scenes/<resource>', SceneHandler),    
 
   # #Reviews/storereview.py

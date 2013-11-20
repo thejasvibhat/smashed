@@ -12,8 +12,8 @@ def dbkey(dbname):
 class GetFile(blobstore_handlers.BlobstoreDownloadHandler):
   def get(self):
         myId=self.request.get('id')        
-        meme_query = MemeDb.query(ancestor=dbkey(MEME_DB_NAME)).order(-MemeDb.date)
-        memes = meme_query.fetch(10)
+        meme_query = MemeDb.query(MemeDb.myid == myId)
+        memes = meme_query.fetch(1)
 
 
         for meme in memes:
@@ -25,10 +25,8 @@ class GetIcon(webapp2.RequestHandler):
 
     def get(self):
         myId=self.request.get('id')        
-        meme_query = MemeDb.query(ancestor=dbkey(MEME_DB_NAME)).order(-MemeDb.date)
-        memes = meme_query.fetch(10)
-
-
+        meme_query = MemeDb.query(MemeDb.myid == myId)
+        memes = meme_query.fetch(1)
         for meme in memes:
             if meme.myid == myId:
                 self.response.write('%s' %
@@ -38,8 +36,8 @@ class GetIcon(webapp2.RequestHandler):
 class GetFileReview(blobstore_handlers.BlobstoreDownloadHandler):
   def get(self,resource):
         bid=self.request.get('bid')        
-        review_query = ReviewDb.query(ancestor=dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
-        reviews = review_query.fetch(10)
+        review_query = ReviewDb.query(ReviewDb.bid == bid)
+        reviews = review_query.fetch(1)
 
 
         for review in reviews:
@@ -62,8 +60,8 @@ class GetIconReview(webapp2.RequestHandler):
 
     def get(self,resource):
         bid=self.request.get('bid')        
-        review_query = ReviewDb.query(ancestor=dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
-        reviews = review_query.fetch(10)
+        review_query = ReviewDb.query(ReviewDb.bid == bid)
+        reviews = review_query.fetch(1)
 
 
         for review in reviews:
