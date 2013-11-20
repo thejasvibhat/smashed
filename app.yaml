@@ -27,8 +27,6 @@ handlers:
 - url: /reviewhtml
   static_dir: Barreviews/reviewhtml
 
-- url: /list
-  static_dir: listviews 
 
 - url: /assets
   static_dir: assets

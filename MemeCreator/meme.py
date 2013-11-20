@@ -63,6 +63,9 @@ class ListMeme(webapp2.RequestHandler):
         self.response.write('<memes>')
         for meme in memes:
             self.response.write('<meme>')
+            self.response.write('<ts>')
+            self.response.write('%s' %meme.date)
+            self.response.write('</ts>')			
             self.response.write('<icon>')
             self.response.write('/meme/actions/getmeme/%s' %meme.resid)
             self.response.write('</icon>')
@@ -93,6 +96,21 @@ class GetShareMemeView(AuthHandler):
             t = tclass(searchList=template_values)
             self.response.out.write(t)
 
+class GetListMemeView(AuthHandler):
+    def get(self):
+        path = os.path.join (os.path.dirname (__file__), 'views/memes.html')
+        meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+        memes = meme_query.fetch(5)
+        id = 0;
+        template_values = {}
+        for meme in memes:
+            id = id + 1
+            template_values['url%s'%id] = '/meme/store/memeview/%s'%meme.resid
+            template_values['image%s'%id] = '/meme/actions/getmeme/%s'%meme.resid
+        tclass = Template.compile (file = path)
+        t = tclass(searchList=template_values)
+        self.response.out.write(t)	    
+		
 class UploadFacebook(AuthHandler):
     def get(self, resource):
         splitres = resource.split(':') 
