@@ -7,6 +7,7 @@ from Cheetah.Template import Template
 class CreateMemeHandler(AuthHandler):
     def get(self):  
         if not self.logged_in:
+            self.session['redirect_url'] = '/meme/store/create'
             self.redirect('/auth/')
         else:
             template_values = {}

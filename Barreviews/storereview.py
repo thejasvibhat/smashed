@@ -16,7 +16,7 @@ from google.appengine.ext.webapp import blobstore_handlers
 sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), '../lib'))
 
 from Cheetah.Template import Template
-
+from User.handlers import AuthHandler
 REVIEW_DB_NAME = 'bars_db'
 def review_dbkey(review_dbname=REVIEW_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
@@ -61,17 +61,20 @@ class ReviewDb(ndb.Model):
     latlon = ndb.GeoPtProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
   
-class MainPageStore(webapp2.RequestHandler):
-
+class MainPageStore(AuthHandler):
     def get(self):
-        upload_url = blobstore.create_upload_url ('/reviews/store/upload')
-        path = os.path.join (os.path.dirname (__file__), 'views/upload.html')
-        #sign_query_params = urllib.urlencode ({'meme_db': MEME_DB_NAME})
-
-        template_values = {'upload_url': upload_url}
-        tmpl = Template( file = path, searchList = (template_values,) )
-
-        self.response.write (tmpl)
+        if not self.logged_in:
+            self.session['redirect_url'] = '/reviews/store/uploadreview'
+            self.redirect('/auth/')
+        else:
+            upload_url = blobstore.create_upload_url ('/reviews/store/upload')
+            path = os.path.join (os.path.dirname (__file__), 'views/upload.html')
+            #sign_query_params = urllib.urlencode ({'meme_db': MEME_DB_NAME})
+    
+            template_values = {'upload_url': upload_url}
+            tmpl = Template( file = path, searchList = (template_values,) )
+    
+            self.response.write (tmpl)
         
 class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
   def post(self):

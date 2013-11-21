@@ -14,7 +14,7 @@ from google.appengine.ext import db
 
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
-
+from webapp2_extras import auth, sessions
 
 from google.appengine.api import files
 
@@ -62,6 +62,9 @@ class ListMeme(webapp2.RequestHandler):
         memes = meme_query.fetch(oLimit,offset=oOffset)
         self.response.write('<memes>')
         for meme in memes:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id (meme.userid)
+            logging.info(userData)
             self.response.write('<meme>')
             self.response.write('<ts>')
             self.response.write('%s' %meme.date)
@@ -72,6 +75,15 @@ class ListMeme(webapp2.RequestHandler):
             self.response.write('<url>')
             self.response.write('/meme/store/memeview/%s' %meme.resid)
             self.response.write('</url>')
+            
+            self.response.write('<creatorname>')
+            self.response.write('%s' %userData.name)
+            self.response.write('</creatorname>')
+
+            self.response.write('<creatoravatar>')
+            self.response.write('%s' %userData.avatar_url)
+            self.response.write('</creatoravatar>')
+
             self.response.write('</meme>')
         self.response.write('</memes>')
             
@@ -104,9 +116,14 @@ class GetListMemeView(AuthHandler):
         id = 0;
         template_values = {}
         for meme in memes:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id (meme.userid)
             id = id + 1
             template_values['url%s'%id] = '/meme/store/memeview/%s'%meme.resid
             template_values['image%s'%id] = '/meme/actions/getmeme/%s'%meme.resid
+            template_values['name%s'%id] = '%s' %userData.name
+            template_values['avatar%s'%id] = '%s' %userData.avatar_url
+
         tclass = Template.compile (file = path)
         t = tclass(searchList=template_values)
         self.response.out.write(t)	    
@@ -138,7 +155,8 @@ class ListFiles(webapp2.RequestHandler):
               
 class SaveHandler(AuthHandler):
     def post(self):
-        userId = ''#self.current_user;
+        user_dict = self.auth.get_user_by_session()
+        userId = user_dict['user_id']		
         root = ET.fromstring(self.request.get('data'))
         imgId = ''
         family = ''

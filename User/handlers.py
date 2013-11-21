@@ -77,6 +77,7 @@ class ProfileHandler(BaseRequestHandler):
     """Handles GET /profile"""
     self.response.write ("User = %s Session = %s" % (self.current_user ,
                                                      self.auth.get_user_by_session()))
+    self.redirect(self.session.get('redirect_url'))
     return
 
 
