@@ -1,23 +1,57 @@
-<html>
-  <head>
-    <title></title>
-  </head>
-  <body>
-    <div id="header">
-      <p id="logo">
-	SMASHED
-      </p>
-      <p id="user">
-#if $user_loggedin
-        <p>Hi $username</p>
-	<a href="$logout_url">Logout</a>
-#else
-        <a href="/auth/google" class="btn">Login with Google</a><br/>
-        <a href="/auth/facebook" class="btn">Login with Facebook</a>
-#end if
-      </p>
-    </div>
-    <hr />
-  </body>
-</html>
+<html lang="en">
+    <head> 
+        <meta charset="utf-8">
+        <title>Smashed.in :: Login</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="/MEMEHTML/css/jquery-ui.css" />
+	    <script src="/MEMEHTML/jquery.tools.min.js"></script>
+	    <script src="http://malsup.github.com/jquery.form.js"></script> 
+	    <script src="/MEMEHTML/jquery-ui.js"></script>
+	    <!--<link rel="stylesheet" href="/MEMEHTML/css/style.css"> -->
+	    <link rel="stylesheet" type="text/css" href="/MEMEHTML/css/imgareaselect-default.css" />
+	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
+	    <script type="text/javascript" src="/MEMEHTML/jquery.imgareaselect.pack.js"></script>
+	    
+	    <link rel="stylesheet" href="/home/css/bootstrap.css"> 
+	    <link rel="stylesheet" href="/home/css/overwrite.css"> 
+		<link href="/home/css/font-awesome.css" rel="stylesheet">
+		<link href="/home/css/font-awesome-set.css" rel="stylesheet">
+	    <link rel="stylesheet" href="/home/css/style.css"> 
+	    <link rel="stylesheet" href="/home/skin/default.css"> 
+	
+	    <script src="/home/js/custom.js"></script>
 
+    </head>
+    
+    
+<body>
+
+<div class="container">
+  <div class="col-lg-6 col-lg-offset-3">
+  		<div class = "marginTopFifteen"></div>
+  		<div class = "alignCenter">
+  			<img alt = "Smashed.in" src = "/home/img/slogosmall.png" />
+  		</div>
+  		<div class = "whiteCanvas alignCenter">
+  			<div class = "paddingTopTen"></div>
+  			<h3>WELCOME TO SMASHED.IN</h3>
+  			<div class = "marginTopTen"></div>
+  			<div class = "noteSmall">
+  				We know you guys find it hard to remember passwords. We'll make it simple. Use one the following networks to get in. ( Don't wory...WE WON'T SPAM! )
+  			</div>
+  			
+  			<div class = "marginTopTen"></div>
+  			<a href = "/auth/facebook">
+  				<img title = "Login With Facebook" alt = "Login With Facebook" src = "/assets/fblogin.png" />
+  			</a>
+  			
+  			<a href = "/auth/google">
+  				<img title = "Login With Google" alt = "Login With Google" src = "/assets/googlelogin.png" />
+  			</a>
+  			<div class = "paddingBottomTen"></div>
+  		</div>
+  </div>
+</div>
+
+</body>
+</html>

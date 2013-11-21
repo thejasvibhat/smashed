@@ -1527,3 +1527,18 @@ ul#review-list-main li {
 {
     margin:5px 0 0 0;
 }
+
+.paddingBottomTen
+{
+    padding-bottom:10px;
+}
+
+.marginTopFifteen
+{
+    margin:15px 0 0 0;
+}
+
+.paddingTopTen
+{
+    padding-top:10px;
+}
