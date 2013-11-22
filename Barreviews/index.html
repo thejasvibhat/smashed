@@ -1,24 +1,28 @@
 <html lang="en">
     <head> 
         <meta charset="utf-8">
-        <title>Smashed.in :: Prasanna Bar</title>
+        <title>Smashed.in :: {{name}}</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="/MEMEHTML/jquery-ui.js"></script>
         <script src="/MEMEHTML/colorbox.js"></script>
         <script src="/MEMEHTML/jquery.tools.min.js"></script>
         <link rel="stylesheet" href="/MEMEHTML/css/jquery-ui.css" />
-        <link rel="stylesheet" href="/MEMEHTML/css/style.css">
-        <link rel="stylesheet" href="/reviewhtml/css/style.css"> 
+        <!--<link rel="stylesheet" href="/MEMEHTML/css/style.css">
+        <link rel="stylesheet" href="/reviewhtml/css/style.css">-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'> 
+        <link rel="stylesheet" href="/home/css/bootstrap.css"> 
+        <link rel="stylesheet" href="/home/css/overwrite.css"> 
+	<link href="/home/css/font-awesome.css" rel="stylesheet">
+	<link href="/home/css/font-awesome-set.css" rel="stylesheet">
+        <link rel="stylesheet" href="/home/css/style.css"> 
+        <link rel="stylesheet" href="/home/skin/default.css"> 
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="/home/js/custom.js"></script>
     </head>
     
     <script type= "text/javascript">
         
-    $(document).ready(function()
-    {
-        $('a').colorbox({rel:'gal'});
-    });
-  function initialize() {
+    function initialize() {
         var myLatLng = new google.maps.LatLng({{lat}},{{lon}});
         var map_canvas = document.getElementById('map_canvas');
         var map_options = {
@@ -39,56 +43,53 @@
 
 <body>
     
-    <!-- Topabar... Gotta make these common -->
-    <div class = "blacktopbar">  
-        <div class = "screen1k marginauto"> 
-            <span class = "logotext">SMASHED.IN</span> 
-        </div>
-    </div>
-    
-    <!-- Breadcrumbs and Search box -->
-    <div class = "margintopfive"></div>
-    <div class = "whitestrip">
-        <div class = "screen1k marginauto">
-            <div class = "breadcrumb floatleft">
-                <span>Browse >> </span>
-                <span class = "u">Prasanna</span>
-            </div>
-            
-            <div class = "searchbox floatright">
-                <input type = "text" placeholder = "Search for bars / memes..." />
-            </div>
-            
-            <div class = "clearboth"></div>
-            
-        </div>
-    </div>
-    
-    <div class = "margintopfive"></div>
-    
+   <!-- Header -->
+        <header>
+                <div class="navbar">
+                        <div class="container">
+                                <a class="navbar-brand" href="index.html"><img src="/home/img/slogotmp.png" alt="Smashed.in" /></a>
+                                <div class="nav-collapse collapse navbar-responsive-collapse">
+                                        <ul class="nav navbar-nav">
+                                                <li><a href="/home/index.html">Home</a></li>
+                                                <li><a href="/reviews/scenes/reviews">Reviews</a></li>
+                                                <li><a href="/reviews/store/uploadreview">Write a Review</a></li>
+                                                <li><a href="/meme/store/memeview/memes">Memes</a></li>
+                                                <li><a href="/meme/store/create">Create Meme</a></li>
+                                                <li><a href="#contact">Contact</a></li>
+                                        </ul>
+                                </div><!-- End nav-collapse -->
+                        </div><!-- End container -->
+                </div><!-- End navbar -->
+        </header>
+        <!-- End header -->
+
+
+
+   
+      
     <!-- Banner -->
     <div class = "reviewHeadingBackground">
-         <div class = "screen1k marginauto">
+         <div class = "container">
              
-            <div class = "floatleft reviewHeadingBig">
+            <div class = "col-lg-8 reviewHeadingBig">
                 {{name}}
             </div>
             
-             <div class = "floatright reviewScreenShotContainer">
+             <div class = "col-lg-4 reviewScreenShotContainer">
                  <!-- Screenshots -->
                  <div class = "ScreenShotWrap displayinlineblock">
                      <a href = "{{icon1}}" rel = "gal">
-                         <img src = "{{icon1}}" />
+                         <img class = "img-responsive" src = "{{icon1}}" />
                      </a>
                  </div>
                  <div class = "ScreenShotWrap displayinlineblock">
                      <a href = "{{icon2}}" rel = "gal">
-                         <img src = "{{icon2}}" />
+                         <img class = "img-responsive" src = "{{icon2}}" />
                      </a>
                  </div>
                  <div class = "ScreenShotWrap displayinlineblock">
                      <a href = "{{icon3}}" rel = "gal">
-                         <img src = "{{icon3}}" />
+                         <img class = "img-responsive" src = "{{icon3}}" />
                      </a>
                  </div>
                  
@@ -96,19 +97,19 @@
                  
                  <div class = "ScreenShotWrap displayinlineblock">
                      <a href = "{{icon4}}" rel = "gal">
-                         <img src = "{{icon4}}" />
+                         <img class = "img-responsive" src = "{{icon4}}" />
                      </a>
                  </div>
                  
                  <div class = "ScreenShotWrap displayinlineblock">
                      <a href = "{{icon5}}" rel = "gal">
-                         <img src = "{{icon5}}" />
+                         <img class = "img-responsive" src = "{{icon5}}" />
                      </a>
                  </div>
                  
                  <div class = "ScreenShotWrap displayinlineblock">
                      <a href = "{{icon6}}" rel = "gal">
-                         <img src = "{{icon6}}" />
+                         <img class = "img-responsive" src = "{{icon6}}" />
                      </a>
                  </div>
                  
@@ -120,114 +121,124 @@
     </div>
     
     <!-- Details and Maps -->
-    <div class = "margintopten"></div>
+    <div class = "marginTopTen"></div>
     
-    <div class = "screen1k marginauto">
-        <div class = "floatleft">
-            <div class = "reviewSubHeading">
-                {{name}}
-            </div>
-            
-            <div class = "margintopfive"></div>
-            
-            <div class = "reviewWhiteBoxSmall">
-                <h4>Address:</h4>
-                <div class = "margintopten" style="width:100px;"></div>
-                <span>
-                    {{address}}
-                </span>
-                <div class = "margintopten">
-                    <h4>Phone:</h4>
-                    <div class = "margintopten"></div>
-                    <span>
-                        {{phone}}
-                    </span>
-                </div>
-            </div>
-            
-            <div class = "margintopten"></div>
-            
-            <div class = "reviewWhiteBoxSmall">
-                <h4>Prasanna's Scenes</h4>
-                <div class = "margintopten"></div>
-                <!-- Rating Container ( Styles N/A ) -->
-                <div class = "ratingContainer">
-                	{% if rating == "1" %}
-	                    <img src = "/reviewhtml/assets/rate_1.png" />
-                    {% endif %}
-                	{% if rating == "1.5" %}
-	                    <img src = "/reviewhtml/assets/rate_1_5.png" />
-                    {% endif %}
-
-                	{% if rating == "2" %}
-	                    <img src = "/reviewhtml/assets/rate_2.png" />
-                    {% endif %}
-
-                	{% if rating == "2.5" %}
-	                    <img src = "/reviewhtml/assets/rate_2_5.png" />
-                    {% endif %}
-
-                	{% if rating == "3" %}
-	                    <img src = "/reviewhtml/assets/rate_3.png" />
-                    {% endif %}
-                	{% if rating == "3.5" %}
-	                    <img src = "/reviewhtml/assets/rate_3_5.png" />
-                    {% endif %}
-
-                	{% if rating == "4" %}
-	                    <img src = "/reviewhtml/assets/rate_4.png" />
-                    {% endif %}
-
-                	{% if rating == "4.5" %}
-	                    <img src = "/reviewhtml/assets/rate_4_5.png" />
-                    {% endif %}
-
-                	{% if rating == "5" %}
-	                    <img src = "/reviewhtml/assets/rate_5.png" />
-                    {% endif %}
-                </div>
+    <div class = "container">
+    
+   		<div class = "col-lg-4">
+   			    			
+   			<div class = "row">
+   				<div class = "col-lg-12">
+   					<div class = "reviewWhiteBoxSmall">
+                		<h4>Address:</h4>
+                		<div class = "marginTopTen" style="width:100px;"></div>
+                		<span>
+                    		{{address}}
+                		</span>
+                		<div class = "marginTopTen">
+                    		<h4>Phone:</h4>
+                    		<div class = "marginTopTen"></div>
+                    		<span>
+                        		{{phone}}
+                    		</span>
+                		</div>
+                	</div>
+            	</div>
+   			</div> <!-- Address -->
+   			<div class = "marginTopTen"></div>
+   			
+   			<div class = "row">
+   				<div class = "col-lg-12">
+   					<div class = "reviewWhiteBoxSmall">
+						<h4>{{name}}'s Scenes</h4>
+                		<div class = "marginTopTen"></div>
+                		<!-- Rating Container ( Styles N/A ) -->
+                		<div class = "ratingContainer">
+		                	{% if rating == "1" %}
+			                    <img src = "/reviewhtml/assets/rate_1.png" />
+		                    {% endif %}
+		                	{% if rating == "1.5" %}
+			                    <img src = "/reviewhtml/assets/rate_1_5.png" />
+		                    {% endif %}
+		
+		                	{% if rating == "2" %}
+			                    <img src = "/reviewhtml/assets/rate_2.png" />
+		                    {% endif %}
+		
+		                	{% if rating == "2.5" %}
+			                    <img src = "/reviewhtml/assets/rate_2_5.png" />
+		                    {% endif %}
+		
+		                	{% if rating == "3" %}
+			                    <img src = "/reviewhtml/assets/rate_3.png" />
+		                    {% endif %}
+		                	{% if rating == "3.5" %}
+			                    <img src = "/reviewhtml/assets/rate_3_5.png" />
+		                    {% endif %}
+		
+		                	{% if rating == "4" %}
+			                    <img src = "/reviewhtml/assets/rate_4.png" />
+		                    {% endif %}
+		
+		                	{% if rating == "4.5" %}
+			                    <img src = "/reviewhtml/assets/rate_4_5.png" />
+		                    {% endif %}
+		
+		                	{% if rating == "5" %}
+			                    <img src = "/reviewhtml/assets/rate_5.png" />
+		                    {% endif %}
+                		</div>
                 
-                <!-- USP -->
-                <div class = "reviewUspContainer">
-                    <span class = "check">
-                        <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
-                    </span>
-                    <span class = "UspItem">
-                        {{usp1}}
-                    </span>
-                </div>
-                <div class = "reviewUspContainer">
-                    <span class = "check">
-                        <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
-                    </span>
-                    <span class = "UspItem">
-                        {{usp2}}
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        <div class = "floatright">
-            <div class = "margintopfive"></div>
+		                <!-- USP -->
+		                <div class = "reviewUspContainer">
+		                    <span class = "check">
+		                        <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
+		                    </span>
+		                    <span class = "UspItem">
+		                        {{usp1}}
+		                    </span>
+		                </div>
+		                <div class = "reviewUspContainer">
+		                    <span class = "check">
+		                        <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
+		                    </span>
+		                    <span class = "UspItem">
+		                        {{usp2}}
+		                    </span>
+		                </div>
+           			</div>
+   				</div>
+   			</div> <!-- Scenes -->
+   			
+   		</div> <!-- Left -->
+   		
+   		<div class = "col-lg-8">
+   			<div class = "marginTopFive"></div>
             <div id = "map_canvas" class = "GoogleMapContainer">
             </div>
-        </div>
-        
-        <div class = "clearboth"></div>
-        
-        <!-- Lets get into core? -->
-        
-        <div class = "margintwenty"></div>
-        <h3 class = "coreHeading">
-            Not enough details? Lets get into core then!
-        </h3>
-        
-        <div class = "margintopten"></div>
-        
-        <div class = "whitestrip heightauto">
-            <div class = "reviewDetailsLeft">
-                <div class = "reviewLeftSectionOne">
-                    <div class = "reviewUspContainer">
+   		</div> <!-- Right -->
+   		
+    </div> <!-- Container -->   
+    
+    <div class = "marginTopTwenty"></div>
+    
+    <div class = "container">
+    	<div class = "col-lg-12">
+    		<div class = "alignCenter">
+    			<h3 class = "coreHeading">Not enough details? Lets get into core then!</h3>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class = "marginTopTen"></div>
+    
+    <div class = "container">
+    	<div class = "col-lg-12">
+    	
+    		<div class = "col-lg-6 whiteBox">
+    		
+    			<div class = "col-lg-6">
+    				<div class = "reviewUspContainer">
                         <span class = "check">
 							{% if budget == "on" %} 
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
@@ -309,11 +320,10 @@
                             Fight Scene
                         </span>
                     </div>
-                </div> <!-- Review Section 1 -->
-                
-                <div class = "reviewLeftSectionTwo">
-                    
-                    <div class = "reviewUspContainer">
+    			</div>
+    			
+    			<div class = "col-lg-6">
+    				<div class = "reviewUspContainer">
                         <span class = "UspItem">
                             Music / Video
                         </span>
@@ -395,68 +405,63 @@
 
                         </span>
                     </div>
-                </div> <!-- Review section 2 -->
-                
-                <div class = "clearboth"></div>
-            </div> <!-- Review detail left -->
-            
-            <div class = "reviewDetailsRight">
-                {{description}} 
-                <div class = "margintwenty"></div>
+    			</div>
+    			
+    		</div>
+    		
+    		<div class = "col-lg-6">
+    			{{description}} 
+                <div class = "marginTopTwenty"></div>
                 <h4>Favorite Snacks</h4>
-                <div class = "margintopten"></div>
+                <div class = "marginTopTen"></div>
                 <ul>
                     <li>{{snack1}}</li>
                     <li>{{snack2}}</li>
-                    <li>{{snack3}}</li>
-                    <li>{{snack4}}</li>
                 </ul>
-            </div> <!-- Review detail right -->
-            
-            <div class = "clearboth"></div>
-        </div> <!-- Container -->
-        
-    </div> <!-- Main -->
+    		</div>
+    		
+    	</div>
+    </div>
+    
+    <div class = "marginTopTwenty"></div>
 
-    <div class = "footer">
-        <div class = "screen1k marginauto">
-            <div class = "footerLeft displayinlineblock floatleft">
+<div class = "footer">
+	<div class = "container">
+		<div class = "row">
+            <div class = "col-lg-4">
                 <h3>Quick Links</h3>
-                <div class = "marginten"></div>
-                <ul>
-                    <li><a href = "">Browse</a></li>
-                    <li><a href = "">Latest Memes</a></li>
-                    <li><a href = "">Write a Review</a></li>
-                    <li><a href = "">Create a Meme</a></li>
+                 <ul>
+                    <li><a href = "/reviews/scenes/reviews/">Browse</a></li>
+                    <li><a href = "/meme/store/memeview/memes">Latest Memes</a></li>
+                    <li><a href = "/reviews/store/uploadreview">Write a Review</a></li>
+                    <li><a href = "/meme/store/create">Create a Meme</a></li>
                     
                 </ul>
             </div>
-            <div class = "footerMiddle displayinlineblock floatleft">
+            <div class = "col-lg-4">
                 <h3>Core Scenes</h3>
-                <div class = "margnten"></div>
                 <ul>
                     <li><a href = "">Terms of use</a></li>
                     <li><a href = "">Privacy policy</a></li>
                     <li><a href = "">About us</a></li>
                 </ul>
             </div>
-            <div class = "footerRight displayinlineblock floatleft socialLinks">
+            <div class = "col-lg-4">
                 <h3>Connect</h3>
-                <div class = "margintopten"></div>
-                <a href = ""><img src = "../../reviewhtml/assets/facebook.png" alt = "Facebook" /></a>
+                <a target = "_blank" href = "http://www.facebook.com/smasheddotin"><img src = "../../reviewhtml/assets/facebook.png" alt = "Facebook" /></a>
                 <a href = ""><img src = "../../reviewhtml/assets/twitter.png" alt = "Twitter" /></a>
                 <a href = ""><img src = "../../reviewhtml/assets/pinterest.png" alt = "Pinterest" /></a>
                 <div class = "margintopten"></div>
                 <span class = "connectNote">If you have any queries,suggestions or just want to say hello, drop us a message at <a href = "mailto:hello@smashed.in">hello@smashed.in</a></span>
             </div>
         </div>
-        <div class = "footerStrip">
-            Copyright &copy; 2013 Smashed.in. All rights reserved.
-        </div>
     </div>
+    <div align = "center">
+        Copyright &copy; 2013 Smashed.in. All rights reserved.
+    </div>
+</div>
 
-   
- 
+    
 </body>
     
 </html>
