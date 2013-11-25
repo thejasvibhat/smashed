@@ -1,35 +1,3 @@
-<!--
-  <body>
-    <form action="$upload_url" method="POST" enctype="multipart/form-data">
-      icon1
-      <input name="icon1" type="file" />
-      icon2
-      <input name="icon2" type="file" />
-      icon3
-      <input name="icon3" type="file" />
-      icon4
-      <input name="icon4" type="file" />
-      icon5
-      <input name="icon5" type="file" />
-      icon6
-      <input name="icon6" type="file" />
-      name
-      <input name="name" type="text" />
-      address
-      <textarea name="address" ></textarea>
-      phone
-      <input name="phone" type="text" />
-      rating
-      <input name="rating" type="string" />
-      description
-      <textarea name="description" ></textarea>
-      <div><input type="submit" value="Store review"></div>
-    </form>
-    <input type="file" id="myFile" style="display:none;">
-  </body>
-</html>
--->
-
 <html lang="en">
     <head> 
         <meta charset="utf-8">
@@ -44,13 +12,15 @@
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300' rel='stylesheet' type='text/css'>
 	    <script type="text/javascript" src="/MEMEHTML/jquery.imgareaselect.pack.js"></script>
 	    
+	    
 	    <link rel="stylesheet" href="/home/css/bootstrap.css"> 
 	    <link rel="stylesheet" href="/home/css/overwrite.css"> 
 		<link href="/home/css/font-awesome.css" rel="stylesheet">
 		<link href="/home/css/font-awesome-set.css" rel="stylesheet">
 	    <link rel="stylesheet" href="/home/css/style.css"> 
 	    <link rel="stylesheet" href="/home/skin/default.css"> 
-	
+	    <link rel="stylesheet" href="/assets/css/stepper.css">
+	    <link rel="stylesheet" href="/assets/css/validation.css"> 
 	    
 	    <link rel="stylesheet" href="/MEMEHTML/css/scrollable-buttons.css">   
 	    <link rel="stylesheet" href="/MEMEHTML/css/colorPicker.css">   
@@ -59,7 +29,9 @@
 	    
 	    <script language="javascript" type="text/javascript" src="/MEMEHTML/jquery.colorPicker.js"></script> 
 	    <script src="/home/js/custom.js"></script>
-
+ 		<script type="text/javascript" src="/assets/js/stepper.js"></script>
+ 		<script type="text/javascript" src="/assets/js/validation.js"></script>
+ 		<script type="text/javascript" src="/assets/js/validation-lang.js"></script>
     </head>
     
     
@@ -88,7 +60,7 @@
 	<div class = "col-lg-12 whiteCanvas">
 		<h3>Write a review. Help others to put a scene</h3>
 		<div class = "sep"></div>
-		<form action="$upload_url" method="POST" enctype="multipart/form-data">
+		<form id = "uploadReviewForm" action="$upload_url" method="POST" enctype="multipart/form-data" >
 			<div class = "row">
 				<div class = "col-lg-12">
 					<h4>Images</h4>
@@ -138,17 +110,17 @@
 					</div>
 				</div>
 				<div class = "col-lg-3">
-					<input type = "text" name = "name" class = "form-control" placeholder = "Bar Name" />
+					<input type = "text" name = "name" class = "form-control validate[required]" placeholder = "Bar Name" />
 				</div>
 				<div class = "col-lg-3">
-					<input id = "addressLocator" type = "text" name = "address" class = "form-control" placeholder = "Address" />
+					<input id = "addressLocator" type = "text" name = "address" class = "form-control validate[required]" placeholder = "Address" />
 				</div>
 				<div class = "col-lg-3">
 					<input type = "text" name = "phone" class = "form-control" placeholder = "Phone" />
 				</div>
 				<div class = "col-lg-3">
-					<input type = "text" name = "rating" class = "form-control" />
-					<span>Rate it out of 5. You know the drill right?</span>
+					<input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" disabled = "true" />
+					<div>Rate it out of 5. You know the drill right?</div>
 				</div>
 				
 			</div>
@@ -207,7 +179,7 @@
 				</div>
 				
 				<div class = "col-lg-6">
-					<div><textarea name = "description" placeholder = "General details about the place..." wrap = "hard" style = "width:100%;" ></textarea>
+					<div><textarea class = "validate[required]" name = "description" placeholder = "General details about the place..." wrap = "hard" style = "width:100%;" ></textarea>
 					</div>
 					<div class = "marginTopFive">
 						<input type = "text" name = "favsnack1" placeholder = "Favorite Snack 1" />
@@ -216,13 +188,26 @@
 						<input type = "text" name = "favsnack2" placeholder = "Favorite Snack 2" />
 					</div>
 				</div>
-				
-				<div class = "col-lg-12 marginTopTen">
-					<input type = "submit" class = "btn btn-primary" value = "That's it!" />
-				</div>
-				
+								
 			</div>
+			
+			<div class = "marginTopTen"></div>
+			<div class = "row">
+				<div class = "col-lg-1">
+					<input type = "button" onClick = "onReviewUpload();" class = "btn btn-primary" value = "That's it!" />
+				</div>
+			
+				<div id = "uploadSpinner" class = "col-lg-11 loaderTop" style = "display:none;">
+					<img src = "/assets/pacman.gif" />
+					&nbsp;&nbsp;
+					<span id = "spinnerMg">Submitting your awesome review...Hang in there!
+				</div>
+			</div>
+			
+			<div class = "marginTopTen"></div>
+			
 		</form>
+		
 	</div>
 </div>
 

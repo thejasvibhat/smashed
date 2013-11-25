@@ -50,6 +50,20 @@ $(window).load(function()
 		var id = $(this).attr('id').replace('i','');
 		readURL(input,id);  	
 	});
+	
+	/* Steppers */
+	
+	$('#rating').stepper({
+    	wheel_step:1,       // Wheel increment is 1
+    	limit: [1,5],         // No negative values
+    	onStep: function( val, up )
+    	{
+        	// do something here...
+    	}
+	});
+	
+	$('#uploadReviewForm').validationEngine({promptPosition : "topLeft", scroll: false});
+	
 });
 
 function readURL(input,id) {
@@ -60,4 +74,18 @@ function readURL(input,id) {
     reader.onloadend = function(e) {
     	$('#'+id).attr('src', e.target.result);          
     } 
+}
+
+function onReviewUpload ()
+{
+	if( $("#uploadReviewForm").validationEngine('validate'))
+	{
+		$('#uploadReviewForm').find('input').attr('disabled',true);
+		$('#uploadReviewForm').find('textarea').attr('disabled',true);
+		$('#uploadSpinner').fadeIn();
+		//$('#uploadReviewForm').submit();
+		return true;
+	} else {
+		return false;
+	}
 }

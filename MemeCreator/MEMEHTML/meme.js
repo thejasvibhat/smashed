@@ -321,6 +321,10 @@ function Save()
     oObjetcs.appendChild(oTextBoxes);
    
     xmlDocument.documentElement.appendChild(oObjetcs);
+    
+    /* Spinners */
+    $('#memeSpinner').fadeIn();
+    
     $.ajax({
       type: "POST",
       crossDomain: true,
