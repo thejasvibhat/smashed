@@ -76,7 +76,7 @@ routes = [
   # #Reviews/review.py
   webapp2.Route ('/reviews/scenes/listscenes', ListScenesHandler),
   webapp2.Route ('/reviews/scenes/search', SearchHandler),
-  webapp2.Route ('/reviews/scenes/reviews', ReviewHandler),      
+  webapp2.Route ('/reviews/scenes/reviews', ReviewHandler),
   webapp2.Route ('/reviews/scenes/<resource>', SceneHandler),    
 
   # #Reviews/storereview.py

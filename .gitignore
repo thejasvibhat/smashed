@@ -2,3 +2,4 @@
 TAGS
 .emacs.desktop
 secrets/secrets.py
+.emacs.desktop.lock

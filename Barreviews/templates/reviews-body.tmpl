@@ -1,0 +1,33 @@
+<!-- Main Content -->
+<div class = "marginTopTwenty"></div>
+
+<div class = "container">
+  <div class = "row">
+#for $r in $reviews
+#set $rating = $r.rating.replace('.', '_')
+    <div class="col-lg-3 cursorPointer whiteBoxReview">
+      <a href = "/reviews/scenes/$r.bid">
+	<div class = "reviewImageWrapper">
+	  <img class = "img-responsive" src = "/download/review/file/1?bid=$r.bid" />
+	</div>
+	<div class = "gridDetailContainer">
+	  <div class = "col-lg-9">
+	    <h3>$r.name</h3>
+	    <div class = "gridRatingContainer">
+	      <img class = "img-responsive" src = "/reviewhtml/assets/rate_${rating}.png" />
+	    </div>
+	    <div class = "gridMeta margintopfive">
+	      $r.address
+	    </div>
+	  </div>
+	  <div class = "col-lg-3">
+	    <a href = "javascript:void(0);">
+	      <img src = "../../reviewhtml/assets/googlemap.jpg" width = "42" />
+	    </a>
+	  </div>
+	</div>
+      </a>
+    </div>
+#end for
+  </div>
+</div>

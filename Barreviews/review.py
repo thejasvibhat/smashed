@@ -8,6 +8,8 @@ sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), '../li
 import jinja2
 from Cheetah.Template import Template
 
+from skel.skel import Skel
+
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'])
@@ -17,47 +19,24 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('bars_db', review_dbname) 
 
-
 class ReviewHandler(webapp2.RequestHandler):
     def get(self):
-        path = os.path.join (os.path.dirname (__file__), 'views/reviews.html')
+        l_skel = Skel()
+
+        #Head
+        head_path = os.path.join (os.path.dirname (__file__), 'templates/reviews-head.tmpl')
+        l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+
+        #Body
         review_query = ReviewDb.query(ancestor=review_dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
         reviews = review_query.fetch(12)
 
-        id = 0;
-        template_values = {}
-        for review in reviews:
-            id = id + 1
-            ratingUrl = ''
-            if review.rating == "1":
-			    ratingUrl = '/reviewhtml/assets/rate_1.png'
-            if review.rating == "1.5":
-			    ratingUrl = '/reviewhtml/assets/rate_1_5.png'
-            if review.rating == "2":
-			    ratingUrl = '/reviewhtml/assets/rate_2.png'
-            if review.rating == "2.5":
-			    ratingUrl = '/reviewhtml/assets/rate_2_5.png'
-            if review.rating == "3":
-			    ratingUrl = '/reviewhtml/assets/rate_3.png'
-            if review.rating == "3.5":
-		        ratingUrl = '/reviewhtml/assets/rate_3_5.png'
-            if review.rating == "4":
-			    ratingUrl = '/reviewhtml/assets/rate_4.png'
-            if review.rating == "4.5":
-			    ratingUrl = '/reviewhtml/assets/rate_4_5.png'
-            if review.rating == "5":
-			    ratingUrl = '/reviewhtml/assets/rate_5.png'
-            add = "<br />".join(review.address.split("\n"))                
-            template_values['name%s'%id] = '%s'%review.name
-            template_values['rating%s'%id] = '%s'%ratingUrl
-            template_values['address%s'%id] = '%s'%add
-            template_values['image%s'%id] = '/download/review/file/1?bid=%s' %review.bid			
-            template_values['url%s'%id] = '/reviews/scenes/%s' %review.bid						
-        logging.info('%s' %template_values)
-        tclass = Template.compile (file = path)
-        t = tclass(searchList=template_values)
-        self.response.out.write(t)
-		
+        template_values = {"reviews" : reviews}
+        path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')
+        l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+
+        self.response.out.write(l_skel.gethtml())
+
 class SceneHandler(webapp2.RequestHandler):
     def get(self, resource):
         bid = resource 

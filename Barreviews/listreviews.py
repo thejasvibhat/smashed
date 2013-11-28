@@ -10,8 +10,8 @@ REVIEW_DB_NAME = 'bars_db'
 class ListScenesHandler (webapp2.RequestHandler):
     def get(self):
         review_query = ReviewDb.query(ancestor=ndb.Key('bars_db',REVIEW_DB_NAME)).order(-ReviewDb.date)
-        oLimit = int(self.request.get("limit"))
-        oOffset = int(self.request.get("offset"))
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
         reviews = review_query.fetch(oLimit,offset=oOffset)
         self.response.write('<reviews>')
         for review in reviews:
