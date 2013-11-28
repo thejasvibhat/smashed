@@ -51,7 +51,8 @@ class UserMemeDb(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
     userid   = ndb.IntegerProperty()
     shareid   = ndb.StringProperty()
-       
+
+    '''
 class MainPageStore(AuthHandler):
 
     def get(self):
@@ -68,8 +69,9 @@ class MainPageStore(AuthHandler):
         #sign_query_params = urllib.urlencode({'meme_db': MEME_DB_NAME})
         self.response.write(MAIN_PAGE_FOOTER_TEMPLATE %
                             (upload_url))
+'''
 
-class UploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
+class SkelUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
   def post(self):
     upload_files = self.get_uploads('content')  # 'file' is file upload field in the form
     blob_info = upload_files[0]
@@ -85,8 +87,8 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
     meme.icon = db.Blob(thumbnail)
     meme.put()
 
-    self.redirect('/meme/store/storeview') 
-    
+    self.response.write ("")
+
 # application = webapp2.WSGIApplication([
 #     ('/meme/store/storeview', MainPageStore),
 #     ('/meme/store/upload', UploadHandler),    

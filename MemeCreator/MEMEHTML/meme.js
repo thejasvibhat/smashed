@@ -26,7 +26,7 @@ function UploadUrlSkeleton(data)
 function GetUploadURL()
 {
     $.ajax({
-        url: "/meme/store/uploadskeleton",
+        url: "/api/oh/skel-preupload",
         type: 'GET',
         crossDomain: true,
         
@@ -87,14 +87,14 @@ function AddCaption()
 {
     reset();
     i++;
-    var top = 250;
+    var top = 10;
     if(i== 1)
-        top = 300;
+        top = 10;
     else if(i == 2)
-        top = 650;
+        top = 400;
         
         
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:320px;top:"+top+"px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;'>Add caption here</textarea></div>");  
+    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:200px;top:"+top+"px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;'>Add caption here</textarea></div>");  
     
     cuTextBox = $('#myText'+i+'');     
 m_arrTextBoxes.push(cuTextBox);
@@ -117,9 +117,8 @@ m_arrTextBoxes.push(cuTextBox);
         
         if(isDragging)
         {
-            
-            curDemoBox.css("top",event.pageY - 30);
-            curDemoBox.css("left",event.pageX - 40);
+            curDemoBox.css("top",event.pageY - 280 - $(cuTextBox).height()/2);
+            curDemoBox.css("left",event.pageX - 100 - $(cuTextBox).width()/2);
         }
    });
     demoBox.mouseup(function up(ev){curDemoBox = demoBox;isDragging = false;});
@@ -145,9 +144,8 @@ $(function() {
           curImage =  $("#backImage");
           curImage.addClass('imagehide');
           var iconsrc = ui.draggable.find("img").context.src;
-          var src = iconsrc.replace("icon","file");
-          var value =    iconsrc.split("?")[1];
-          value = value.substring(3); 
+          var src = iconsrc.replace("icon", "download");
+          var value = iconsrc.split("/").pop();
 
          $("#backImage").attr('src', src);
           
@@ -174,7 +172,7 @@ $.ajaxSetup({ cache: true });
     if (response.status === 'connected') {
         // the user is logged in and connected to your
         // app, and response.authResponse supplies
-        // the user’s ID, a valid access token, a signed
+        // the user's ID, a valid access token, a signed
         // request, and the time the access token 
         // and signed request each expire
         var uid = response.authResponse.userID;
@@ -205,7 +203,7 @@ function SelectCrop(div,selection)
 function GetThumbnails()
 {
     $.ajax({
-        url: "/meme/actions/list",
+        url: "/api/oh/skel-list",
         type: 'GET',
         crossDomain: true,
 
@@ -328,14 +326,14 @@ function Save()
     $.ajax({
       type: "POST",
       crossDomain: true,
-      url: '/meme/actions/save',
+      url: '/api/oh/save',
         data : {
             method : "Save",
             data : XMLToString(xmlDocument)
         },
 
     }).done(function ( datanew ) {
-        window.location = '/meme/store/memeview/'+datanew;
+        window.location = '/oh/'+datanew;
         //alert(datanew);
     });
 }

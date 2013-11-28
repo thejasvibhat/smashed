@@ -147,12 +147,12 @@ padding-bottom:10px;}
 
 .heightCLass
 {
-    height:100px;
+    height:100%;
     width:auto;
 }
 .widthCLass
 {
-    width:100px;
+    width:100%;
     height:auto;    
 }
 

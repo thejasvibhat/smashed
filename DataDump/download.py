@@ -1,4 +1,5 @@
 import webapp2
+import logging
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb
@@ -8,6 +9,18 @@ MEME_DB_NAME = 'meme_db'
 REVIEW_DB_NAME = 'bars_db'
 def dbkey(dbname):
     return ndb.Key(dbname,dbname)
+
+
+class GetRes (blobstore_handlers.BlobstoreDownloadHandler):
+  def get (self, resource):
+      blob_info = blobstore.BlobInfo.get(resource)
+      self.send_blob(blob_info)
+
+class GetIcon (blobstore_handlers.BlobstoreDownloadHandler):
+  def get (self, resource):
+      logging.error ("GetIcon %s" % resource)
+      blob_info = blobstore.BlobInfo.get(resource)
+      self.send_blob(blob_info)
 
 class GetFile(blobstore_handlers.BlobstoreDownloadHandler):
   def get(self):
@@ -21,7 +34,7 @@ class GetFile(blobstore_handlers.BlobstoreDownloadHandler):
                     blob_info = blobstore.BlobInfo.get(meme.resid)
                     self.send_blob(blob_info)
 
-class GetIcon(webapp2.RequestHandler):
+class GetIcon_old (webapp2.RequestHandler):
 
     def get(self):
         myId=self.request.get('id')        

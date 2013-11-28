@@ -13,32 +13,32 @@ from secrets import secrets
 
 from MemeCreator.creatememe import *
 
-from MemeCreator.storeimage import MainPageStore
-from MemeCreator.storeimage import UploadHandler
+#from MemeCreator.storeimage import MainPageStore
+from MemeCreator.storeimage import *
 
-from MemeCreator.meme import ListFiles
-from MemeCreator.meme import SaveHandler
-from MemeCreator.meme import ListMeme
-from MemeCreator.meme import GetMeme
-from MemeCreator.meme import GetShareMemeView
-from MemeCreator.meme import GetListMemeView
-from MemeCreator.meme import UploadFacebook
+# from MemeCreator.meme import ListFiles
+# from MemeCreator.meme import SaveHandler
+# from MemeCreator.meme import ListMeme
+# from MemeCreator.meme import GetMeme
+# from MemeCreator.meme import GetShareMemeView
+# from MemeCreator.meme import GetListMemeView
+# from MemeCreator.meme import UploadFacebook
+
+from MemeCreator.meme import *
 
 import Barreviews.listreviews
-#logging.info ("%s" % Reviews)
 
 from Barreviews.listreviews import ListScenesHandler
 from Barreviews.listreviews import SearchHandler
 from Barreviews.review import SceneHandler
 from Barreviews.review import ReviewHandler
+from Barreviews.listreviews import ListComments
 
-from Barreviews.storereview import MainPageStore as MainPageStore1
-from Barreviews.storereview import UploadHandler as UploadHandler1
+from Barreviews.storereview import *
 
+from Barreviews.comments import *
+from DataDump.download import GetRes
 from DataDump.download import GetIcon
-from DataDump.download import GetFile
-from DataDump.download import GetIconReview
-from DataDump.download import GetFileReview
 
 
 class ComingSoon (AuthHandler):
@@ -57,38 +57,39 @@ class ComingSoon (AuthHandler):
 routes = [
   webapp2.Route ('/', handler=ComingSoon),
 
-  #MemeCreator/storeimage.py
-  webapp2.Route ('/meme/store/storeview', MainPageStore),
-  webapp2.Route ('/meme/store/upload', UploadHandler),    
-  webapp2.Route ('/meme/store/create', CreateMemeHandler),    
-  webapp2.Route ('/meme/store/uploadskeleton', UploadMemeHandler),
-  webapp2.Route ('/meme/store/memeview/memes', GetListMemeView),    
-  webapp2.Route ('/meme/store/memeview/<resource>', GetShareMemeView),
-  webapp2.Route ('/meme/store/facebookupload/<resource>', UploadFacebook),
+  webapp2.Route ('/oh', GetOhList),    #OH List (VIEW)
+  webapp2.Route ('/oh/record', OhRecordHandler),    #oh creator (VIEW)
+  webapp2.Route ('/oh/<resource>', GetOh),    #OH Single (VIEW)
+
+  webapp2.Route ('/api/oh/skel-preupload', SkelPreUploadHandler), #OH lib/skel upload URL creator (API)
+  webapp2.Route ('/api/oh/skel-upload', SkelUploadHandler),    #oh lib/skel upload (API)
+  webapp2.Route ('/api/oh/skel-list', SkelList), #OH lib/skel list (API)
+
+  webapp2.Route ('/api/oh/save', SaveHandler), #OH Save (API)
+  webapp2.Route ('/api/oh/list', ListMeme), #OH List (API), Used for ticker
+
+
+  webapp2.Route ('/b', ReviewHandler), #BR list (VIEW)
+  webapp2.Route ('/b/record', BRecordHandler), #BR create/upload (VIEW)
+  webapp2.Route ('/b/<resource>', SceneHandler), #BR Single (VIEW)
+  webapp2.Route ('/b/<resource>/<name>', SceneHandler), #BR Single (VIEW)
+ 
+  webapp2.Route ('/api/b/list', ListScenesHandler),
+  webapp2.Route ('/api/b/comments', ListComments),
+  webapp2.Route ('/api/b/updatecomment', AddComment),
+  webapp2.Route ('/api/b/upload', BSaveHandler),
   
-
-  #MemeCreator/meme.py
-  webapp2.Route ('/meme/actions/list', ListFiles),
-  webapp2.Route ('/meme/actions/save', SaveHandler),
-  webapp2.Route ('/meme/actions/listmeme', ListMeme),
-  webapp2.Route ('/meme/actions/getmeme/<resource>', GetMeme),
-
-  # #Reviews/review.py
-  webapp2.Route ('/reviews/scenes/listscenes', ListScenesHandler),
-  webapp2.Route ('/reviews/scenes/search', SearchHandler),
-  webapp2.Route ('/reviews/scenes/reviews', ReviewHandler),
-  webapp2.Route ('/reviews/scenes/<resource>', SceneHandler),    
-
   # #Reviews/storereview.py
-  webapp2.Route ('/reviews/store/uploadreview', MainPageStore1),
-  webapp2.Route ('/reviews/store/upload', UploadHandler1),
-  
-  # #DataDump.download.py
-  webapp2.Route ('/download/meme/icon', GetIcon),
-  webapp2.Route ('/download/meme/file', GetFile),
-  webapp2.Route ('/download/review/icon/<resource>', GetIconReview),
-  webapp2.Route ('/download/review/file/<resource>', GetFileReview)
+  #webapp2.Route ('/reviews/store/uploadreview', MainPageStore1), #BR create/upload (VIEW)
+  #webapp2.Route ('/reviews/store/upload', UploadHandler1), #BR create/upload (API)
 
+
+  # #DataDump.download.py
+  # webapp2.Route ('/download/review/icon/<resource>', GetIconReview), #BR resource
+  # webapp2.Route ('/download/review/file/<resource>', GetFileReview) #BR resource
+
+  webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
+  webapp2.Route ('/res/icon/<resource>', GetIcon), #OH res download (API/Path)
 ]
 
 # webapp2 config

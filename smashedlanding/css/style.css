@@ -1803,4 +1803,35 @@ li
 }
 
 
+.label
+{
+    text-transform:uppercase;
+    color:#707070;
+    display:block;
+    margin-bottom:5px;
+}
+
+.heightCLass
+{
+    height:100%;
+    width:auto;
+}
+.widthCLass
+{
+    width:100%;
+    height:auto;    
+}
+
+.heightCLassImg
+{
+    height:100%;
+    width:auto;
+}
+.widthCLassImg
+{
+    width:100%;
+    height:auto;    
+}
+
+
 

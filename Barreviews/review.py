@@ -4,6 +4,11 @@ import os
 import logging
 from google.appengine.ext import ndb
 from storereview import ReviewDb
+from comments import CommentReviewDb
+from webapp2_extras import auth, sessions
+import math
+import json
+from User.handlers import AuthHandler
 sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), '../lib'))
 import jinja2
 from Cheetah.Template import Template
@@ -18,6 +23,7 @@ REVIEW_DB_NAME = 'bars_db'
 def review_dbkey(review_dbname=REVIEW_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('bars_db', review_dbname) 
+
 
 class ReviewHandler(webapp2.RequestHandler):
     def get(self):
@@ -37,8 +43,8 @@ class ReviewHandler(webapp2.RequestHandler):
 
         self.response.out.write(l_skel.gethtml())
 
-class SceneHandler(webapp2.RequestHandler):
-    def get(self, resource):
+class SceneHandler(AuthHandler):
+    def get(self, resource, name=None):
         bid = resource 
         t = JINJA_ENVIRONMENT.get_template('index.html')
         c = {}
@@ -47,6 +53,31 @@ class SceneHandler(webapp2.RequestHandler):
 
         for review in reviews:
             if review.bid == bid:
+                revid = str(review.reviewid)
+                userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid)
+                userreviews = userreview_querry.fetch()
+                userDetails = self.current_user
+                c['currentuser'] = userDetails
+                rating = 0
+                totalReviews = 0
+                allReviewsDict = []
+                for userreview in userreviews:
+                    rating += float(userreview.rating.strip())
+
+                    l_auth = auth.get_auth()
+                    userData = l_auth.store.user_model.get_by_id(userreview.userid)
+                    reviewsDict = {}
+                    reviewsDict['rating'] = userreview.rating
+                    reviewsDict['review'] = userreview.review
+                    reviewsDict['username'] = userData.name
+                    reviewsDict['avatar'] = userData.avatar_url
+                    allReviewsDict.append(reviewsDict)
+                    totalReviews = totalReviews + 1                    
+                logging.info(reviewsDict)
+                rating = rating/totalReviews
+                rating = 0.5 * math.ceil(2.0 * rating)
+                
+                c['reviewlist'] = allReviewsDict
                 #12.913762,77.600119                
                 c['name'] = '%s' % review.name
                 #c['lat'] = '%s' % review.latlon.lat
@@ -56,15 +87,13 @@ class SceneHandler(webapp2.RequestHandler):
                 add = "<br />".join(review.address.split("\n"))                
                 c['address'] = '%s' % add
                 c['phone'] ='%s' % review.phone
-                desc = "<br />".join(review.description.split("\n"))
-                c['description'] = '%s' %desc               
-                c['icon1'] = '/download/review/file/1?bid=%s' %review.bid
-                c['icon2'] = '/download/review/file/2?bid=%s' %review.bid
-                c['icon3'] = '/download/review/file/3?bid=%s' %review.bid
-                c['icon4'] = '/download/review/file/4?bid=%s' %review.bid
-                c['icon5'] = '/download/review/file/5?bid=%s' %review.bid
-                c['icon6'] = '/download/review/file/6?bid=%s' %review.bid
-                c['rating'] = '%s' %review.rating
+                desc = "<br />".join(userreviews[0].review.split("\n"))
+                c['description'] = '%s' %desc
+                c['reviewid'] = '%s' %review.reviewid
+
+                c['images'] = review.images
+                
+                c['rating'] = '%s' %rating
 				
                 c['budget'] = '%s' %review.o_budget
                 c['ac'] = '%s' %review.o_ac
@@ -79,13 +108,13 @@ class SceneHandler(webapp2.RequestHandler):
                 c['check_card'] = '%s' %review.o_cardaccept
                 c['events'] = '%s' %review.o_events
                 c['bottlerate'] = '%s' %review.o_bottlerate
-                c['snack1'] = '%s' %review.snack_1
-                c['snack2'] = '%s' %review.snack_2				
+                c['snack1'] = '%s' %userreviews[0].snack1
+                c['snack2'] = '%s' %userreviews[0].snack2				
 				
                 c['usp1'] = "Bottle Rate"
                 c['usp2'] = "Lady Friendly"
                 
-        self.response.write(t.render(c))
+        self.response.write (t.render(c))
     
 # application = webapp2.WSGIApplication([
 #     ('/reviews/scenes/listscenes', ListScenesHandler),

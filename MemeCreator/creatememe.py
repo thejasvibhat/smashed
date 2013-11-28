@@ -4,10 +4,10 @@ from google.appengine.ext import blobstore
 from User.handlers import AuthHandler
 from Cheetah.Template import Template
 
-class CreateMemeHandler(AuthHandler):
+class OhRecordHandler (AuthHandler):
     def get(self):  
         if not self.logged_in:
-            self.session['redirect_url'] = '/meme/store/create'
+            self.session['redirect_url'] = '/oh/record'
             self.redirect('/auth/')
         else:
             template_values = {}
@@ -17,8 +17,8 @@ class CreateMemeHandler(AuthHandler):
             logging.info (self.logged_in)
             self.response.out.write(t)
 
-class UploadMemeHandler(AuthHandler):
+class SkelPreUploadHandler(AuthHandler):
     def get(self):
-        upload_url = blobstore.create_upload_url('/meme/store/upload')
+        upload_url = blobstore.create_upload_url('/api/oh/skel-upload')
         self.response.write(upload_url)
         

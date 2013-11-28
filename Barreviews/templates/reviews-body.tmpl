@@ -6,9 +6,9 @@
 #for $r in $reviews
 #set $rating = $r.rating.replace('.', '_')
     <div class="col-lg-3 cursorPointer whiteBoxReview">
-      <a href = "/reviews/scenes/$r.bid">
+      <a href = "/b/$r.bid">
 	<div class = "reviewImageWrapper">
-	  <img class = "img-responsive" src = "/download/review/file/1?bid=$r.bid" />
+	  <img class = "img-responsive" src = "/res/download/${r.images[0]}" />
 	</div>
 	<div class = "gridDetailContainer">
 	  <div class = "col-lg-9">

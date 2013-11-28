@@ -1,10 +1,11 @@
 import webapp2
-
+import json
 from google.appengine.api import search
 from google.appengine.ext import ndb
-
+from webapp2_extras import auth, sessions
 from review import ReviewDb
-
+from review import CommentReviewDb
+from User.handlers import AuthHandler
 REVIEW_DB_NAME = 'bars_db'
 
 class ListScenesHandler (webapp2.RequestHandler):
@@ -19,37 +20,41 @@ class ListScenesHandler (webapp2.RequestHandler):
             self.response.write('<name>')
             self.response.write('%s' %review.name)
             self.response.write('</name>')
-			
-			
-            self.response.write('<icon1>')
-            self.response.write('/download/review/file/1?bid=%s' %review.bid)
-            self.response.write('</icon1>')
-			
-            self.response.write('<icon2>')
-            self.response.write('/download/review/file/2?bid=%s' %review.bid)
-            self.response.write('</icon2>')
 
-            self.response.write('<icon3>')
-            self.response.write('/download/review/file/3?bid=%s' %review.bid)
-            self.response.write('</icon3>')
+            self.response.write('<icon>')
+            self.response.write('/res/download/%s' % review.images[0])
+            self.response.write('</icon>')
 
-            self.response.write('<icon4>')
-            self.response.write('/download/review/file/4?bid=%s' %review.bid)
-            self.response.write('</icon4>')
-
-            self.response.write('<icon5>')
-            self.response.write('/download/review/file/5?bid=%s' %review.bid)
-            self.response.write('</icon5>')
-
-            self.response.write('<icon6>')
-            self.response.write('/download/review/file/6?bid=%s' %review.bid)
-            self.response.write('</icon6>')
-			
             self.response.write('<url>')
-            self.response.write('/reviews/scenes/%s' % review.bid)
+            self.response.write('/b/%s' % review.bid)
             self.response.write('</url>')
             self.response.write('</review>')
         self.response.write('</reviews>')
+
+class ListComments(AuthHandler):
+    def get (self):
+        resource = self.request.get ("reviewid");
+        userDetails = self.current_user
+        revid = resource
+        userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid).order(-CommentReviewDb.date)
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
+        userreviews = userreview_querry.fetch(oLimit,offset=oOffset)
+        finalDict = {}
+        finalDict['currentuser'] = '%s' %userDetails.name
+        finalDict['currentavatar'] = '%s' %userDetails.avatar_url
+        allReviewsDict = []
+        for userreview in userreviews:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id(userreview.userid)
+            reviewsDict = {}
+            reviewsDict['rating'] = userreview.rating
+            reviewsDict['review'] = userreview.review
+            reviewsDict['username'] = userData.name
+            reviewsDict['avatar'] = userData.avatar_url
+            allReviewsDict.append(reviewsDict)
+        finalDict['reviews'] = allReviewsDict
+        self.response.write(json.dumps(finalDict))
 
 class SearchHandler(webapp2.RequestHandler):
     def get(self):

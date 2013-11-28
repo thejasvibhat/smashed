@@ -96,19 +96,24 @@ class GetMeme(blobstore_handlers.BlobstoreDownloadHandler):
             blob_info = blobstore.BlobInfo.get(meme.blobid)
             self.send_blob(blob_info)
 
-class GetShareMemeView(AuthHandler):
+class GetOh (AuthHandler):
     def get(self, resource):
         resid = resource 
         meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
         memes = meme_query.fetch(1)
         for meme in memes:
-            template_values = {'memeurl':'/meme/actions/getmeme/%s' %meme.resid,'conturl':'/meme/store/memeview/%s' %meme.resid,'shareid':'%s' %meme.shareid,'currentid':'%s' %meme.resid}
+            template_values = {
+                'memeurl':'/res/download/%s' % meme.blobid,
+                'conturl':'/oh/%s' % meme.resid,
+                'shareid':'%s' % meme.shareid,
+                'currentid':'%s' %meme.resid
+                }
             path = os.path.join(os.path.dirname(__file__),'views/memeview.tmpl')
             tclass = Template.compile (file = path)
             t = tclass(searchList=template_values)
             self.response.out.write(t)
 
-class GetListMemeView(AuthHandler):
+class GetOhList (AuthHandler):
     def get(self):
         path = os.path.join (os.path.dirname (__file__), 'views/memes.html')
         meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
@@ -119,10 +124,10 @@ class GetListMemeView(AuthHandler):
             l_auth = auth.get_auth()
             userData = l_auth.store.user_model.get_by_id (meme.userid)
             id = id + 1
-            template_values['url%s'%id] = '/meme/store/memeview/%s'%meme.resid
-            template_values['image%s'%id] = '/meme/actions/getmeme/%s'%meme.resid
-            template_values['name%s'%id] = '%s' %userData.name
-            template_values['avatar%s'%id] = '%s' %userData.avatar_url
+            template_values['url%s'%id] = '/oh/%s' % meme.resid
+            template_values['image%s'%id] = '/res/download/%s' % meme.blobid
+            template_values['name%s'%id] = '%s' % userData.name
+            template_values['avatar%s'%id] = '%s' % userData.avatar_url
 
         tclass = Template.compile (file = path)
         t = tclass(searchList=template_values)
@@ -140,16 +145,16 @@ class UploadFacebook(AuthHandler):
 			meme.put()
         self.response.write('%s' %shareid)
 
-class ListFiles(webapp2.RequestHandler):
+class SkelList (webapp2.RequestHandler):
     def get(self):
         meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
         memes = meme_query.fetch(10)
 
+        #TODO: Make this valid XML or JSON
         self.response.write('<head>')
         for meme in memes:
             self.response.write('<url>')
-            self.response.write('/download/meme/icon?id=%s' %
-                                meme.myid)
+            self.response.write('/res/icon/%s' % meme.resid)
             self.response.write('</url>')
         self.response.write('</head>')
               
@@ -193,9 +198,7 @@ class SaveHandler(AuthHandler):
                         back_layer.save(output, format="png")
                         back_layer = output.getvalue()
                         output.close()               
-                                # merge
-                
-                
+                        #merge
                         merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
                                                    (thumbnail, (450-int(imgwidth))/2, (450 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
                                                    450, 450)
@@ -243,18 +246,19 @@ class SaveHandler(AuthHandler):
         oauth_access_token = 'CAADlzuSdjcIBAFxne9wAoAbNvXAvlaGZAOacJ0lPzmhGsMmp9cM0hKuzRY0nqn95qMubeDZAVguyD2ZBkK1hFLwunNXyAq6WgTAogxtaoftnR9AEnZCCarIdEgg0tYamLptwZAZB7YzOIABMuZB8vXzDS4verdwzSGUm5xWkkFdk4r4hVnxDyYV'
         graph = GraphAPI(oauth_access_token)
 
-		# Get my latest posts
-		# Post a photo of a parrot
+        # Get my latest posts
+        # Post a photo of a parrot
+
         urlfetch.set_default_fetch_deadline(45)
-        logging.info('http://smashed.thejasvi.in/meme/actions/getmeme/%s' %memeid)
         postid = graph.post(
-                      path = '/10153430700220062/photos',
-                      message = 'photo description',
-                      url = 'http://smashed.thejasvi.in/meme/actions/getmeme/%s' %memeid
-				  )
-        logging.info('theju/%s' %postid['id'])
-        UpdateFacebookId(memeid,postid['id'])
-        self.response.write('%s' %memeid)
+                       path = '/10153430700220062/photos',
+                       message = 'photo description',
+                       url = 'http://smashed.thejasvi.in/res/download/%s' % blob_key
+                       )
+        #logging.info('theju/%s' % postid['id'])
+        UpdateFacebookId (memeid,postid['id'])
+
+        self.response.write ('%s' % memeid)
         #self.redirect('/meme/store/memeview/%s' %memeid)
         
 
