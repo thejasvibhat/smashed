@@ -40,6 +40,7 @@ from Barreviews.comments import *
 from DataDump.download import GetRes
 from DataDump.download import GetIcon
 
+from landing.landing import LandingPage
 
 class ComingSoon (AuthHandler):
 
@@ -55,7 +56,7 @@ class ComingSoon (AuthHandler):
 
 # Map URLs to handlers
 routes = [
-  webapp2.Route ('/', handler=ComingSoon),
+  webapp2.Route ('/', handler=LandingPage),
 
   webapp2.Route ('/oh', GetOhList),    #OH List (VIEW)
   webapp2.Route ('/oh/record', OhRecordHandler),    #oh creator (VIEW)
