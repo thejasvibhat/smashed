@@ -54,7 +54,7 @@ $(window).load(function()
 	/* Steppers */
 	
 	$('#rating').stepper({
-    	wheel_step:1,       // Wheel increment is 1
+    	wheel_step:0.5,       // Wheel increment is 1
     	limit: [1,5],         // No negative values
     	onStep: function( val, up )
     	{
@@ -63,6 +63,21 @@ $(window).load(function()
 	});
 	
 	$('#uploadReviewForm').validationEngine({promptPosition : "topLeft", scroll: false});
+	
+	$('#uploadReviewForm').submit(function(event)
+	{
+		
+		if( !$("#uploadReviewForm").validationEngine('validate'))
+		{
+			return false;
+		}
+		//event.preventDefault();
+		$('#uploadSpinner').fadeIn();
+	});
+	
+	/* Location Picker */
+	$('#addressLocator').locationPicker();
+
 	
 });
 
@@ -76,16 +91,3 @@ function readURL(input,id) {
     } 
 }
 
-function onReviewUpload ()
-{
-	if( $("#uploadReviewForm").validationEngine('validate'))
-	{
-		$('#uploadReviewForm').find('input').attr('disabled',true);
-		$('#uploadReviewForm').find('textarea').attr('disabled',true);
-		$('#uploadSpinner').fadeIn();
-		//$('#uploadReviewForm').submit();
-		return true;
-	} else {
-		return false;
-	}
-}

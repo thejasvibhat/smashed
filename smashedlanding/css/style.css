@@ -1728,7 +1728,6 @@ li
     -webkit-box-shadow:1px 1px 2px #ddd;
     background:#ffffff;
     margin:20px 0 20px 0;
-	text-align:center;
 }
 
 .memeIndvItem img
@@ -1761,14 +1760,14 @@ li
 
 .tickerIndvItem
 {
-    background:#e5e5e5;
+    background:#f6f6f6;
     padding:10px;
 }
 
 .tickerPhoto
 {
     width:70px;
-    heigot:70px;
+    height:70px;
     padding:5px;
     box-shadow:1px 1px 2px #ddd;
     -webkit-box-shadow:1px 1px 2px #ddd;
@@ -1831,6 +1830,24 @@ li
 {
     width:100%;
     height:auto;    
+}
+
+
+.memeShareContainer
+{
+	margin-top:150px;
+}
+
+.noMargin
+{
+	margin-left:0;
+	margin-right:0;
+}
+
+.separator
+{
+	background:#666;
+	border-bottom:1px solid #aaa;
 }
 
 
