@@ -41,7 +41,7 @@ from DataDump.download import GetRes
 from DataDump.download import GetIcon
 
 from landing.landing import LandingPage
-
+from checktoken import *
 class ComingSoon (AuthHandler):
 
     def get(self):
@@ -91,6 +91,7 @@ routes = [
 
   webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
   webapp2.Route ('/res/icon/<resource>', GetIcon), #OH res download (API/Path)
+  webapp2.Route ('/gettoken', BaseRequestHandler), 
 ]
 
 # webapp2 config
