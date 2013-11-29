@@ -66,20 +66,29 @@ class ReviewDb(ndb.Model):
     userid   = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
     
-  
+from skel.skel import Skel
+
 class BRecordHandler (AuthHandler):
     def get(self):
         if not self.logged_in:
             self.session['redirect_url'] = '/b/record'
             self.redirect('/auth/')
         else:
+            l_skel = Skel()
+            l_skel.title = "Smashed.in :: Write a Review"
+
+            #Head
+            head_path = os.path.join (os.path.dirname (__file__), 'templates/upload-head.tmpl')
+            l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+
+            #Body
             upload_url = blobstore.create_upload_url ('/api/b/upload')
-            path = os.path.join (os.path.dirname (__file__), 'views/upload.html')
-    
+
+            path = os.path.join (os.path.dirname (__file__), 'templates/upload-body.tmpl')
             template_values = {'upload_url': upload_url}
-            tmpl = Template( file = path, searchList = (template_values,) )
-    
-            self.response.write (tmpl)
+            l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+
+            self.response.out.write(l_skel.gethtml())    
         
 class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
     def post(self):

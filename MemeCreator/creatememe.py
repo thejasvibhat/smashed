@@ -3,6 +3,7 @@ import logging
 from google.appengine.ext import blobstore
 from User.handlers import AuthHandler
 from Cheetah.Template import Template
+from skel.skel import Skel
 
 class OhRecordHandler (AuthHandler):
     def get(self):  
@@ -10,12 +11,19 @@ class OhRecordHandler (AuthHandler):
             self.session['redirect_url'] = '/oh/record'
             self.redirect('/auth/')
         else:
+            l_skel = Skel()
+            l_skel.title = "Smashed.in :: Record Your Overheard"
+
+            #Head
+            head_path = os.path.join (os.path.dirname (__file__), 'templates/createoh-head.tmpl')
+            l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+
+            #Body
             template_values = {}
-            path = os.path.join(os.path.dirname(__file__),'views/creatememe.tmpl')
-            tclass = Template.compile (file = path)
-            t = tclass(searchList=template_values)
-            logging.info (self.logged_in)
-            self.response.out.write(t)
+            path = os.path.join (os.path.dirname (__file__), 'templates/createoh-body.tmpl')
+            l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+
+            self.response.out.write(l_skel.gethtml())
 
 class SkelPreUploadHandler(AuthHandler):
     def get(self):

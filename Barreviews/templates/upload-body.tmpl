@@ -1,0 +1,138 @@
+
+<div class = "container">
+  <div class = "col-lg-12 whiteCanvas">
+    <h3>Write a review. Help others to put a scene</h3>
+    <div class = "sep"></div>
+    <form id = "uploadReviewForm" action="$upload_url" method="POST" enctype="multipart/form-data" >
+      <div class = "row">
+	<div class = "col-lg-12">
+	  <h4>Images</h4>
+	  <div class = "noteSmall">
+	    Upload upto <b>SIX</b> of the bar. Upload images of the place / food and ofcourse the menu ( If the bar has one! )
+	  </div>
+	</div>
+
+#set $loop = 1
+#for $loopid in ['One', 'Two', 'Three', 'Four', 'Five', 'Six']
+	<input id = "i$loopid" name = "icon$loop" type = "file" style = "display:none;">
+#set $loop += 1
+#end for
+
+#for $loopid in ['One', 'Two', 'Three', 'Four', 'Five', 'Six']
+	<div class = "col-lg-2 frontImages">
+	  <img id = "$loopid" class = "img-responsive cursorPointer" src = "/assets/upload_new.jpg" />
+	</div>
+#end for
+
+      </div>
+      
+      <div class = "sep"></div>
+      
+      <div class = "row">
+	<div class = "col-lg-12">
+	  <h4>Basic Information</h4>
+	  <div class = "noteSmall">
+	    Basic details. Won't take too long :)
+	  </div>
+	</div>
+	<div class = "col-lg-3">
+	  <input type = "text" name = "name" class = "form-control validate[required]" placeholder = "Bar Name" />
+	</div>
+	<div class = "col-lg-3">
+	  <input id = "addressLocator" type = "text" name = "address" class = "form-control validate[required]" placeholder = "Address" />
+	</div>
+	<div class = "col-lg-3">
+	  <input type = "text" name = "phone" class = "form-control" placeholder = "Phone" />
+	</div>
+	<div class = "col-lg-3">
+	  <input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" disabled = "true" />
+	  <div>Rate it out of 5. You know the drill right?</div>
+	</div>
+	
+      </div>
+      
+      <div class = "sep"></div>
+      
+      <div class = "row">
+	<div class = "col-lg-12">
+	  <h4>Core Details</h4>
+	  <div class = "noteSmall">
+	    This is where people are going to decide they are going or not! . Use checkboxes to tell people what's there and what's not.
+	  </div>
+	</div>
+	
+	<div class = "col-lg-6">
+	  <div class = "col-lg-6">
+	    <div>
+	      <input type = "checkbox" name = "budget" /> Budget
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "ac" /> A/C
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "carpark" /> Car Park
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "bigscreen" /> Big Screen
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "ladyfriendly" /> Lady Friendly
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "fightscene" /> Fight Scene
+	    </div>
+	  </div>
+	  <div class = "col-lg-6">
+	    <div>
+	      <input type = "checkbox" name = "music" /> Music / Video
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "clean" /> Clean
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "smokingontable" /> Smoking On Table
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "happyhours" /> Happy Hours
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "cardaccepted" /> Card Accepted
+	    </div>
+	    <div>
+	      <input type = "checkbox" name = "events" /> Events
+	    </div>
+	  </div>
+	</div>
+	
+	<div class = "col-lg-6">
+	  <div><textarea class = "validate[required]" name = "description" placeholder = "General details about the place..." wrap = "hard" style = "width:100%;" ></textarea>
+	  </div>
+	  <div class = "marginTopFive">
+	    <input type = "text" name = "favsnack1" placeholder = "Favorite Snack 1" />
+	  </div>					
+	  <div class = "marginTopFive">
+	    <input type = "text" name = "favsnack2" placeholder = "Favorite Snack 2" />
+	  </div>
+	</div>
+	
+      </div>
+      
+      <div class = "marginTopTen"></div>
+      <div class = "row">
+	<div class = "col-lg-1">
+	  <input type = "submit" class = "btn btn-primary" value = "That's it!" />
+	</div>
+	
+	<div id = "uploadSpinner" class = "col-lg-11 loaderTop" style = "display:none;">
+	  <img src = "/assets/pacman.gif" />
+	  &nbsp;&nbsp;
+	  <span id = "spinnerMg">Submitting your awesome review...Hang in there!
+	</div>
+      </div>
+      
+      <div class = "marginTopTen"></div>
+      
+    </form>
+    
+  </div>
+</div>
