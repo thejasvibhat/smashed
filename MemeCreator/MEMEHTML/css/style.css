@@ -92,13 +92,13 @@ padding-bottom:10px;}
 {
     height:100%;
     width:auto;
-    display:table;
+    vertical-align:top;
 }
 .widthCLass
 {
     width:100%;
-    height:auto;   
-    display:table; 
+    height:auto;  
+    vertical-align:top; 
 }
 
 .heightCLassImg
