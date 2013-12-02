@@ -1,23 +1,3 @@
-@import url("reset.css");
-.disabled {opacity:.2;}
-.enabled {opacity:1;}
-body,html
-{
-    margin:0;
-    padding:0;
-    background:#e5e5e5;
-}
-@font-face
-{
-  font-family: rockwell;
-  src: url('../assets/Rockwell.ttf'),
-  url('./assets/Rockwell.eot'); /* IE9 */
-}
-.stepper_widget {vertical-align:top;}
-.stepper_widget input{width:25px;}
-.stepper_widget button{margin:0;padding:0;border:0;background-color:transparent;width:20px;cursor:pointer;}
-.stepper_widget .upbutton{position:relative;top:-6px;}
-.stepper_widget .dnbutton{position:relative;top:5px;left:-24px;}
 .transClass {
   background-color: rgba(255, 0, 0, 0);
   position: absolute;
@@ -107,53 +87,18 @@ padding-bottom:10px;}
     border-color:#ff0;
 }
 
-/* Sep 19 2013 */
-
-.blacktopbar
-{
-    width:100%;
-    background:#2b2b2b;
-    height:60px;
-    line-height:60px;
-}
-
-.screen1k
-{
-    width:1020px;
-    overflow:hidden;
-}
-
-.marginauto
-{
-    margin: 0 auto;
-}
-
-.logotext
-{
-    font-family:"rockwell",helvetica;
-    font-size:35px;
-    color:#ffffff;
-    text-shadow: 0px 5px 2px #000000;
-    filter: dropshadow(color=#000000, offx=0, offy=5);
-}
-
-.label
-{
-    text-transform:uppercase;
-    color:#707070;
-    display:block;
-    margin-bottom:5px;
-}
 
 .heightCLass
 {
     height:100%;
     width:auto;
+    display:table;
 }
 .widthCLass
 {
     width:100%;
-    height:auto;    
+    height:auto;   
+    display:table; 
 }
 
 .heightCLassImg
@@ -207,13 +152,6 @@ padding-bottom:10px;}
     font-family:"rockwell",helvetica;
     text-transform:uppercase;
     font-size:25px;
-}
-
-.separator
-{
-    margin:5px 0 5px 0;
-    background:#dddddd;
-    border-bottom:1px solid #e5e5e5;
 }
 
 .tickerIndvItem
