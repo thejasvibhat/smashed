@@ -1,71 +1,3 @@
-function UploadSkeleton()
-{
-    var options = {
-            success:       SkeletonUploaded
-            };
-            $('#uploadNewForm').ajaxForm(options);
-            $('#uploadNewForm').submit();
-
-}
-function SkeletonUploaded(data)
-{
-    $('#uploadNewForm').remove();
-    var api = $(".items").empty();
-    GetThumbnails();
-    GetUploadURL();
-}
-function UploadUrlSkeleton(data)
-{
-
-   var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> </form>';
-    $('body').append(html);     
-
-       
-
-}
-function GetUploadURL()
-{
-    $.ajax({
-        url: "/api/oh/skel-preupload",
-        type: 'GET',
-        crossDomain: true,
-        
-    }).done(function ( data ) {
-       // alert(data);
-        $("#uploadNewForm").attr('action',data);
-        UploadUrlSkeleton(data);
-        
-    });
-}
-function ChangeBackground()
-{
-    
-    $("#myFile").click();      
-    $('#myFile').change(function(input)
-    {
-        
-     //   var file = input.target.files[0];
-      //  var reader = new FileReader();
-    
-    //     reader.readAsDataURL(file);
-      //  reader.onloadend = function(e) {
-           // $("#backImage").attr('src', e.target.result);  
-            UploadSkeleton();
-       // } 
-    
-            
-        
-    }); 
-
-}
-function reset()
-{
-    curColor = 0;
-    curFontSize = 30;
-    curfontFamily = "Arial";
-    curfontWeight = "Normal";
-    curfontStyle = "Normal";
-}
 var isDragging = false;
 var i = 0;
 var cuTextBox;
@@ -83,6 +15,54 @@ var curSelectionX = 0;
 var curSelectionY = 0;
 var curSelectionWidth = 1;
 var curSelectionHeight = 1;
+function UploadSkeleton()
+{
+    var options = {success:       SkeletonUploaded};
+    $('#uploadNewForm').ajaxForm(options);
+    $('#uploadNewForm').submit();
+}
+function SkeletonUploaded(data)
+{
+    $('#uploadNewForm').remove();
+    var api = $(".items").empty();
+    GetThumbnails();
+    GetUploadURL();
+}
+function UploadUrlSkeleton(data)
+{
+
+   var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> </form>';
+    $('body').append(html);     
+}
+function GetUploadURL()
+{
+    $.ajax({
+        url: "/api/oh/skel-preupload",
+        type: 'GET',
+        crossDomain: true,
+        
+    }).done(function ( data ) {
+        $("#uploadNewForm").attr('action',data);
+        UploadUrlSkeleton(data);        
+    });
+}
+function ChangeBackground()
+{   
+    $("#myFile").click();      
+    $('#myFile').change(function(input)
+    {        
+        UploadSkeleton();
+    }); 
+}
+function reset()
+{
+    curColor = 0;
+    curFontSize = 30;
+    curfontFamily = "Arial";
+    curfontWeight = "Normal";
+    curfontStyle = "Normal";
+}
+
 function AddCaption()
 {
     reset();
@@ -97,7 +77,7 @@ function AddCaption()
     $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:200px;top:"+top+"px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;'>Add caption here</textarea></div>");  
     
     cuTextBox = $('#myText'+i+'');     
-m_arrTextBoxes.push(cuTextBox);
+    m_arrTextBoxes.push(cuTextBox);
     ColorChanged(curColor);
     curFontSize = 20;
     FontSizeChange(curFontSize);
@@ -129,69 +109,33 @@ m_arrTextBoxes.push(cuTextBox);
 
 function Apply()
 {
-
     var fontsize = $("#fontsize").val() + 'px';
     cuTextBox.css("font-size",fontsize);
 }
-var oStrAccessToken = '';
+
 $(function() {
     GetUploadURL();
-  // initialize scrollable
-  $('#color1').colorPicker();
-  $(".scrollable").scrollable();
-  $("#BaseCanvas").droppable({
+      // initialize scrollable
+      $('#color1').colorPicker();
+      $(".scrollable").scrollable();
+      $("#BaseCanvas").droppable({
       drop: function( event, ui ) {
-          curImage =  $("#backImage");
-          curImage.addClass('imagehide');
-          var iconsrc = ui.draggable.find("img").context.src;
-          var src = iconsrc.replace("icon", "download");
-          var value = iconsrc.split("/").pop();
+            curImage =  $("#backImage");
+            curImage.addClass('imagehide');
+            var iconsrc = ui.draggable.find("img").context.src;
+            var src = iconsrc.replace("icon", "download");
+            var value = iconsrc.split("/").pop();
 
-         $("#backImage").attr('src', src);
+            $("#backImage").attr('src', src);
           
-          $("#backImage").attr('value', value);
+            $("#backImage").attr('value', value);
           
-          $('#saveButton').removeClass("disabled");   
-          $('#saveButton').addClass("enabled");   
-          $("#saveButton").removeAttr("disabled");
-      }
-  });
-	socialUrl = "https://www.facebook.com/photo.php?fbid="+$("#fcebookphoto").val();
-	$("#facebookshare").click();
-
+            $('#saveButton').removeClass("disabled");   
+            $('#saveButton').addClass("enabled");   
+            $("#saveButton").removeAttr("disabled");
+        }
+    });
   GetThumbnails();
-$.ajaxSetup({ cache: true });
-  $.getScript('//connect.facebook.net/en_UK/all.js', function(){
-    FB.init({
-      appId: '252676761554370',
-      channelUrl: '//smashed.thejasvi.in/auth',
-    });     
-    $('#loginbutton,#feedbutton').removeAttr('disabled');
-    FB.getLoginStatus(function(response) {
-	console.log(response);
-    if (response.status === 'connected') {
-        // the user is logged in and connected to your
-        // app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed
-        // request, and the time the access token 
-        // and signed request each expire
-        var uid = response.authResponse.userID;
-        var accessToken = response.authResponse.accessToken;
-        var accessTokenOld = response.authResponse.accessToken;
-
-        //Extend access token                    
-        var OauthParams = {};
-        OauthParams['client_id'] = '252676761554370';
-        OauthParams['client_secret'] = 'f47dc57744f2abe248beb705fde437f6';
-        OauthParams['grant_type'] = 'fb_exchange_token';
-        OauthParams['fb_exchange_token'] = 'accessToken';
-        OauthParams['response_type'] = 'token';
-		oStrAccessToken = accessToken;
-    }
-	else
-	alert('shit');
-});
-  });
 });
 function SelectCrop(div,selection)
 {
@@ -206,8 +150,6 @@ function GetThumbnails()
         url: "/api/oh/skel-list",
         type: 'GET',
         crossDomain: true,
-
-        
     }).done(function ( data ) {
                theXmlDoc = $.parseXML(data);
 			   var theRow = $(theXmlDoc).find('url').get();
@@ -255,8 +197,9 @@ function GetThumbnails()
 
 function FontSizeChange(val)
 {
+    console.log(cuTextBox);
     curFontSize = val;
-    cuTextBox.css("font-size",val);
+    cuTextBox.css("font-size",val+"px");
 }
 function UpdateFamily(val)
 {
@@ -395,8 +338,8 @@ function OnImageLoad()
     if((curImage.height()) > (curImage.width()))
     {     
         curImage.removeClass("widthCLassImg");
-        curImage.addClass("heightCLassImg");
-              var margin = 'margin: 0px 0px 0px '+($("#BaseCanvas").width() - curImage.width())/2+'px;';                            
+        curImage.addClass("heightCLassImg");        
+        var margin = 'margin: 0px 0px 0px '+($("#BaseCanvas").width() - curImage.width())/2+'px;';                            
         curImage.attr('style',margin);
         
     }
