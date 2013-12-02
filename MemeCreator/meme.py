@@ -108,14 +108,14 @@ class GetOh (AuthHandler):
                 'shareid':'%s' % meme.shareid,
                 'currentid':'%s' %meme.resid
                 }
-            path = os.path.join(os.path.dirname(__file__),'views/memeview.tmpl')
+            path = os.path.join(os.path.dirname(__file__),'templates/memeview.tmpl')
             tclass = Template.compile (file = path)
             t = tclass(searchList=template_values)
             self.response.out.write(t)
 
 class GetOhList (AuthHandler):
     def get(self):
-        path = os.path.join (os.path.dirname (__file__), 'views/memes.html')
+        path = os.path.join (os.path.dirname (__file__), 'templates/memes.html')
         meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
         memes = meme_query.fetch(5)
         id = 0;
