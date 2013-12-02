@@ -1,7 +1,7 @@
 var m_strCurTimeStamp = "";
 setInterval(function() {
     $.ajax({
-        url: "/meme/actions/listmeme?offset=0&limit=1",
+        url: "/api/oh/list?offset=0&limit=1",
         type: 'GET',
         crossDomain: true,
         
