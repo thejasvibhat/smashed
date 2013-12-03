@@ -17,6 +17,12 @@ indexes:
     direction: desc
 
 - kind: MemeDb
+  properties:
+  - name: tags
+  - name: date
+    direction: desc
+
+- kind: MemeDb
   ancestor: yes
   properties:
   - name: date

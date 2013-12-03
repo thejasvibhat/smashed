@@ -31,7 +31,7 @@ function SkeletonUploaded(data)
 function UploadUrlSkeleton(data)
 {
 
-   var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> </form>';
+   var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/><>      <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /> </form>';
     $('body').append(html);     
 }
 function GetUploadURL()

@@ -147,9 +147,9 @@ class UploadFacebook(AuthHandler):
 
 class SkelList (webapp2.RequestHandler):
     def get(self):
-        meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
-        memes = meme_query.fetch(10)
-
+        tag = self.request.get('tag',default_value="smashed")        
+        meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
+        memes = meme_query.fetch(10)        
         #TODO: Make this valid XML or JSON
         self.response.write('<head>')
         for meme in memes:
