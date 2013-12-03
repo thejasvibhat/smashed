@@ -193,15 +193,15 @@ class SaveHandler(AuthHandler):
                         background.resize(width=int(imgwidth), height=int(imgheight))
                         background.im_feeling_lucky()
                         thumbnail = background.execute_transforms(output_encoding=images.JPEG)
-                        back_layer = Image.new('RGBA', (450,450), (100, 0, 0, 100))
+                        back_layer = Image.new('RGBA', (550,550), (100, 0, 0, 100))
                         output = StringIO.StringIO()
                         back_layer.save(output, format="png")
                         back_layer = output.getvalue()
                         output.close()               
                         #merge
                         merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
-                                                   (thumbnail, (450-int(imgwidth))/2, (450 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
-                                                   450, 450)
+                                                   (thumbnail, (550-int(imgwidth))/2, (550 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
+                                                   550, 550)
 
 
                 for child in texts.iter('{http://www.w3.org/1999/xhtml}text'):
@@ -228,7 +228,7 @@ class SaveHandler(AuthHandler):
                         textlayers.append(text_layer)
                         merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
                                                    (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
-                                                   450, 450)
+                                                   550, 550)
 
                         
         #merged = images.crop(merged,float(selectionx),float(selectiony),
