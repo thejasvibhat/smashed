@@ -25,7 +25,7 @@ from MemeCreator.storeimage import *
 # from MemeCreator.meme import UploadFacebook
 
 from MemeCreator.meme import *
-
+from MemeCreator.comments import *
 import Barreviews.listreviews
 
 from Barreviews.listreviews import ListScenesHandler
@@ -65,6 +65,8 @@ routes = [
   webapp2.Route ('/api/oh/skel-preupload', SkelPreUploadHandler), #OH lib/skel upload URL creator (API)
   webapp2.Route ('/api/oh/skel-upload', SkelUploadHandler),    #oh lib/skel upload (API)
   webapp2.Route ('/api/oh/skel-list', SkelList), #OH lib/skel list (API)
+  webapp2.Route ('/api/oh/comments', ListCommentsOh),
+  webapp2.Route ('/api/oh/updatecomment', AddCommentOh),
 
   webapp2.Route ('/api/oh/save', SaveHandler), #OH Save (API)
   webapp2.Route ('/api/oh/list', ListMeme), #OH List (API), Used for ticker

@@ -1,6 +1,7 @@
 import webapp2
 import urllib
 import os
+import json
 from facepy import GraphAPI
 from google.appengine.ext import ndb
 import uuid
@@ -25,7 +26,7 @@ from MemeCreator.storeimage import UserMemeDb
 from User.handlers import AuthHandler
 from Cheetah.Template import Template
 from skel.skel import Skel
-
+from MemeCreator.comments import *
 MEME_DB_NAME = 'meme_db'
 
 USER_MEME_DB_NAME = 'user_meme_db'
@@ -44,6 +45,7 @@ def SaveFinalMeme(userid,file_name):
     usermeme.blobid = file_name
     usermeme.userid = userid
     usermeme.shareid = ''
+    usermeme.commentid = CreateComment({}, 'init', userid)
     usermeme.put();
     return usermeme.resid;
 
@@ -106,7 +108,8 @@ class GetOh (AuthHandler):
                 'memeurl':'/res/download/%s' % meme.blobid,
                 'conturl':'/oh/%s' % meme.resid,
                 'shareid':'%s' % meme.shareid,
-                'currentid':'%s' %meme.resid
+                'currentid':'%s' %meme.resid,
+                'commentid':'%s' %meme.commentid
                 }
             path = os.path.join(os.path.dirname(__file__),'templates/memeview.tmpl')
             tclass = Template.compile (file = path)
@@ -139,8 +142,33 @@ class GetOhList (AuthHandler):
 
 	l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
 
-        self.response.out.write(l_skel.gethtml())	    
-		
+        self.response.out.write(l_skel.gethtml())	   
+        
+class ListCommentsOh(AuthHandler):
+    def get (self):
+        resource = self.request.get ("commentid");
+        userDetails = self.current_user
+        commentid = resource
+        usercomments_querry = CommentDb.query(CommentDb.parentid == commentid).order(-CommentDb.date)
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
+        usercomments = usercomments_querry.fetch(oLimit,offset=oOffset)
+        finalDict = {}
+        finalDict['currentuser'] = '%s' %userDetails.name
+        finalDict['currentavatar'] = '%s' %userDetails.avatar_url
+        allCommentsDict = []
+        for usercomment in usercomments:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id(usercomment.userid)
+            commentsDict = {}
+            commentsDict['comment'] = usercomment.comment
+            commentsDict['commentid'] = usercomment.commentid
+            commentsDict['username'] = userData.name
+            commentsDict['avatar'] = userData.avatar_url
+            allCommentsDict.append(commentsDict)
+        finalDict['comments'] = allCommentsDict
+        self.response.write(json.dumps(finalDict))	
+        
 class UploadFacebook(AuthHandler):
     def get(self, resource):
         splitres = resource.split(':') 

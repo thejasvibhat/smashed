@@ -52,6 +52,7 @@ class UserMemeDb(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
     userid   = ndb.IntegerProperty()
     shareid   = ndb.StringProperty()
+    commentid = ndb.StringProperty()
 
     '''
 class MainPageStore(AuthHandler):
