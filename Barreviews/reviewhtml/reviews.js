@@ -40,11 +40,11 @@ function SaveReviewComments()
     });
 }
 
-function ListPromoScenes()
+function ListLatestReviews()
 {
     $.ajax({
                type: "GET",
-               url: "/reviews/scenes/listscenes?limit=10&offset=0",
+               url: "/api/b/list?limit=10&offset=0",
                //url: "/reviews/scenes/listscenes?limit=2&offset=0",
                success: function(response){
                     theXmlDoc = $.parseXML(response);
@@ -52,9 +52,9 @@ function ListPromoScenes()
                     $(theRow).each(function(i) 
                     {
                         i++;
-                        var review_name = $(this).find('name').text();
-                        var imgUrl = $(this).find('icon1').text();
-                        var url    =  $(this).find('url').text();
+                        var review_name = $(this).children('name').text();
+                        var imgUrl = $(this).children('icon').text();
+                        var url    =  $(this).children('url').text();
                         $('#gallery-list-reviews').find('#item_'+i).find('img').attr('src',imgUrl);
                         $('#gallery-list-reviews').find('#item_'+i).find('h6').html(review_name);
                         
@@ -63,17 +63,14 @@ function ListPromoScenes()
                             window.location =  url;
                         });                                                      
                     });
-                   
-                   $('#listReviewsLoaded').val("true");
-
                }
     });
 }
-function ListPromoMemes()
+function ListLatestOh()
 {
     $.ajax({
                type: "GET",
-               url: "/meme/actions/listmeme?limit=10&offset=0",
+               url: "/api/oh/list?limit=10&offset=0",
                //url: "/reviews/scenes/listscenes?limit=2&offset=0",
                success: function(response){
                     theXmlDoc = $.parseXML(response);
@@ -92,9 +89,6 @@ function ListPromoMemes()
                             window.location =  url;
                         });                                                      
                     });
-                   
-                   $('#listMemesLoaded').val("true");
-
                }
     });
 }

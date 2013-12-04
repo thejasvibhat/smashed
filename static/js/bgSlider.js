@@ -19,7 +19,8 @@ var photos = [ {
 
 
 $(document).ready(function() {
-		
+	var height = $(window).height();
+	$('.home-contain').css('height',height+'px');		
 	// Backwards navigation
 	$("#back").click(function() {
 		stopAnimation();

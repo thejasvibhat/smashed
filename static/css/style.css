@@ -70,7 +70,7 @@ BG slider
 	background-color:none;
 	background-attachment:fixed;	
 	width:100%;
-	height:660px;
+	height:100%;
 	position:absolute;
 	margin:0;
 	top:0;
@@ -1426,15 +1426,12 @@ gridGoogleMapContainer
 
 .labelBig
 {
-    display:block;
-    margin-bottom:10px;
     font-family:'rockwell',helvetica;
     font-size:22px;
     color:#707070;
     padding:5px;
-    background:#ffffff;
-    box-shadow:1px 1px 2px #ddd;
-    -webkit-box-shadow:1px 1px 2px #ddd;
+    text-shadow:1px 1px 2px #ddd;
+    -webkit-text-shadow:1px 1px 2px #ddd;
 }
 
 .sep
@@ -1500,5 +1497,116 @@ gridGoogleMapContainer
 	border-bottom:1px solid #aaa;
 }
 
+.whiteCanvas
+{
+    background:#fff;
+    box-shadow:1px 1px 2px #ddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+}
 
+.whiteCanvas h3,.whiteCanvas h4
+{
+    font-family:"rockwell",helvetica;
+    color:#666;
+}
 
+.paddingNone
+{
+    padding:none;
+}
+
+.paddingBottom
+{
+    padding-bottom:10px;
+}
+
+.clearNav
+{
+    margin-top:90px;
+}
+
+.noteSmall
+{
+        margin:5px 0 5px 0;
+}
+
+.marginTopFive
+{
+    margin-top:5px;
+}
+
+li
+{
+    list-style:none;
+}
+
+.shareFB
+{
+	background: url("/assets/f-a.png") no-repeat scroll 0 0 #3B5998;  
+	border-radius:3px;
+	-webkit-border-radius:3px; 
+}
+
+.shareFB a,.shareFB a:hover
+{
+        border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    display: block;
+    font-weight: bold;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 15px 0 34px;
+    text-align: center;
+}
+
+.shareTwitter
+{
+    background: url("/assets/f-a.png") no-repeat scroll 0 -34px #00ACED;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+}
+
+.shareTwitter a ,.shareTwitter a:hover, .shareGoogle a, .shareGoogle a:hover
+{
+    border-radius: 3px 3px 3px 3px;
+    color: #FFFFFF;
+    display: block;
+    font-weight: bold;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 15px 0 34px;
+    text-align: center;
+    text-decoration:none;
+}
+
+.shareFB:hover
+{
+    background: url("/assets/f-a.png") no-repeat scroll 0 0 #4c70ba;
+    text-decoration:none;
+}
+
+.shareFB a:hover
+{
+    text-decoration:none;
+}
+.shareTwitteir:hover
+{
+    background: url("/assets/f-a.png") no-repeat scroll 0 -34px #21c2ff;
+}
+
+.shareGoogle:hover
+{
+    background: url("/assets/g.png") no-repeat scroll 0 0 #ba412a;
+}
+
+.shareGoogle
+{
+    background:url("/assets/g.png") no-repeat scroll 0 0 #d6492f;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+}
+
+.paddingBottomTen
+{
+    padding-bottom:10px;
+}

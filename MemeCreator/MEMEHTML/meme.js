@@ -24,14 +24,13 @@ function UploadSkeleton()
 function SkeletonUploaded(data)
 {
     $('#uploadNewForm').remove();
-    var api = $(".items").empty();
+    var api = $(".itemsCore").empty();
     GetThumbnails();
     GetUploadURL();
 }
 function UploadUrlSkeleton(data)
 {
-
-   var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/><>      <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /> </form>';
+     var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/><>      <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /> </form>';
     $('body').append(html);     
 }
 function GetUploadURL()
@@ -117,7 +116,7 @@ $(function() {
     GetUploadURL();
       // initialize scrollable
       $('#color1').colorPicker();
-      $(".scrollable").scrollable();
+      //$(".scrollable").scrollable();
       $("#BaseCanvas").droppable({
       drop: function( event, ui ) {
             curImage =  $("#backImage");
@@ -155,9 +154,8 @@ function GetThumbnails()
 			   var theRow = $(theXmlDoc).find('url').get();
 			   $(theRow).each(function(i) 
 				{
-				    var test = '<div class="scrollableDiv" ><img class="widthCLass" id="image_'+i+'"  src="'+$(this).text()+'"/></div>';                    
-					var api = $(".scrollable").data("scrollable");
-					api.addItem(test);
+				    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass" id="image_'+i+'"  src="'+$(this).text()+'"/></div>';                   
+				    $('.itemsCore').append(test); 
                     $( "#image_"+i+"" ).draggable({
                       revert: "invalid", // when not dropped, the item will revert back to its initial position
                       containment: "document",

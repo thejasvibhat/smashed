@@ -24,7 +24,7 @@ from MemeCreator.storeimage import MemeDb
 from MemeCreator.storeimage import UserMemeDb
 from User.handlers import AuthHandler
 from Cheetah.Template import Template
-
+from skel.skel import Skel
 
 MEME_DB_NAME = 'meme_db'
 
@@ -115,7 +115,15 @@ class GetOh (AuthHandler):
 
 class GetOhList (AuthHandler):
     def get(self):
-        path = os.path.join (os.path.dirname (__file__), 'templates/memes.html')
+	l_skel = Skel()
+	l_skel.title = "Smashed.in :: OverHeards"
+
+	#Head
+	head_path = os.path.join (os.path.dirname(__file__), 'templates/oh-head.tmpl')
+	l_skel.addtohead(str((Template.compile(file=head_path)(searchList={}))))
+
+	#body
+        path = os.path.join (os.path.dirname (__file__), 'templates/oh-body.tmpl')
         meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
         memes = meme_query.fetch(5)
         id = 0;
@@ -129,9 +137,9 @@ class GetOhList (AuthHandler):
             template_values['name%s'%id] = '%s' % userData.name
             template_values['avatar%s'%id] = '%s' % userData.avatar_url
 
-        tclass = Template.compile (file = path)
-        t = tclass(searchList=template_values)
-        self.response.out.write(t)	    
+	l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
+
+        self.response.out.write(l_skel.gethtml())	    
 		
 class UploadFacebook(AuthHandler):
     def get(self, resource):
@@ -147,9 +155,11 @@ class UploadFacebook(AuthHandler):
 
 class SkelList (webapp2.RequestHandler):
     def get(self):
+
         tag = self.request.get('tag',default_value="smashed")        
         meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
-        memes = meme_query.fetch(10)        
+        memes = meme_query.fetch(10)        	
+
         #TODO: Make this valid XML or JSON
         self.response.write('<head>')
         for meme in memes:

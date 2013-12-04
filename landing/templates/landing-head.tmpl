@@ -1,12 +1,28 @@
 
-<script src="/static/js/reviews.js"></script>
+<script src="/reviewhtml/reviews.js"></script>
 <link href="/static/css/cslider.css" rel="stylesheet">
 <link href="/static/css/prettyPhoto.css" rel="stylesheet">
 <link href="/static/skin/default.css" rel="stylesheet">
 <noscript>
   <link rel="stylesheet" type="text/css" href="/static/css/nojs.css" />
 </noscript>
-
+<style type = "text/css">
+.clearNav
+{
+    margin:0;
+}
+.footer
+{
+    margin:0;
+}
+</style>
+<script type = "text/javascript">
+jQuery(document).ready(function()
+{
+    ListLatestReviews();
+    ListLatestOh();
+});
+</script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 <script src="/static/js/html5shiv.js"></script>
