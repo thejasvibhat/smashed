@@ -17,9 +17,17 @@ var curSelectionWidth = 1;
 var curSelectionHeight = 1;
 function UploadSkeleton()
 {
+    
     var options = {success:       SkeletonUploaded};
     $('#uploadNewForm').ajaxForm(options);
     $('#uploadNewForm').submit();
+}
+function SaveSkel()
+{
+    $("#modalView").addClass('overlayout');
+    $("#modalView").removeClass('popup');
+    $("#tags").val($("#tags_2").val());
+    UploadSkeleton();
 }
 function SkeletonUploaded(data)
 {
@@ -49,8 +57,18 @@ function ChangeBackground()
 {   
     $("#myFile").click();      
     $('#myFile').change(function(input)
-    {        
-        UploadSkeleton();
+    {   
+         var file = input.target.files[0];
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+        reader.onloadend = function(e) {
+            $("#thumb1").attr('src', e.target.result);  
+            $("#modalView").removeClass('overlayout');
+            $("#modalView").addClass('popup');
+        }
+
+      //  UploadSkeleton();
     }); 
 }
 function reset()
@@ -135,6 +153,18 @@ $(function() {
         }
     });
   GetThumbnails();
+    $('#tags_2').tagsInput({
+				width: 'auto',
+				onChange: function(elem, elem_tags)
+				{
+					var languages = ['php','ruby','javascript'];
+					$('.tag', elem_tags).each(function()
+					{
+						if($(this).text().search(new RegExp('\\b(' + languages.join('|') + ')\\b')) >= 0)
+							$(this).css('background-color', 'yellow');
+					});
+				}
+			});
 });
 function SelectCrop(div,selection)
 {
@@ -143,10 +173,22 @@ function SelectCrop(div,selection)
     curSelectionWidth = selection.x2/450;
     curSelectionHeight = selection.y2/450;
 }
-function GetThumbnails()
+function TagPressed(e){
+    if (!e) e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '13'){
+      GetThumbnails($("#search").val());
+      return false;
+    }
+  }
+function GetThumbnails(tags)
 {
+    $('.itemsCore').empty();
+    var lUrl = "/api/oh/skel-list";
+    if(tags)
+        lUrl = "/api/oh/skel-list?tag="+tags;
     $.ajax({
-        url: "/api/oh/skel-list",
+        url: lUrl,
         type: 'GET',
         crossDomain: true,
     }).done(function ( data ) {
@@ -154,9 +196,9 @@ function GetThumbnails()
 			   var theRow = $(theXmlDoc).find('url').get();
 			   $(theRow).each(function(i) 
 				{
-				    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass" id="image_'+i+'"  src="'+$(this).text()+'"/></div>';                   
+				    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass tilt" id="image_'+i+'"  src="'+$(this).text()+'"/></div>';                   
 				    $('.itemsCore').append(test); 
-                    $( "#image_"+i+"" ).draggable({
+                   /* $( "#image_"+i+"" ).draggable({
                       revert: "invalid", // when not dropped, the item will revert back to its initial position
                       containment: "document",
                       helper: "clone",
@@ -170,6 +212,20 @@ function GetThumbnails()
                       cursor: "move",
                     zIndex:10000,
                     appendTo:$("#BaseCanvas")
+                    });*/
+                    $( "#image_"+i+"" ).click(function(){
+                        curImage =  $("#backImage");
+                        curImage.addClass('imagehide');
+                        var iconsrc = this.src;
+                        var src = iconsrc.replace("icon", "download");
+                        var value = iconsrc.split("/").pop();                            
+                        $("#backImage").attr('src', src);       
+                        $("#BaseCanvas").addClass('load');       
+                        $("#backImage").attr('value', value);                                  
+                        $('#saveButton').removeClass("disabled");   
+                        $('#saveButton').addClass("enabled");   
+                        $("#saveButton").removeAttr("disabled");
+
                     });
                     $( "#image_"+i+"" ).load(function (){
                         
@@ -331,6 +387,7 @@ function UpdateStepperDown()
 function OnImageLoad()
 {
     //alert($("#BaseCanvas").height());
+    $("#BaseCanvas").removeClass('load');
     curImage = $("#backImage");
     curImage.removeClass('imagehide');
     if((curImage.height()) > (curImage.width()))

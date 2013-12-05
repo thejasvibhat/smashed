@@ -1,9 +1,17 @@
 
 <script src="/static/js/waypoints.min.js"></script>
+<div id="modalView" class="overlayout dropdown-menu" style="top:15%;min-height:350px; margin-left: auto;margin-right: auto ;" >
+    <div class="ressmallthumb floatleft"><img src="" id="thumb1" style="width:100px;height:auto"></div>     
+    <div class = "marginTopTwenty"></div> 
+    <input id='tags_2' type='text' class='tags' value="Smashed,Jaggesh,Troll Boss" ></p>
+    <div class = "marginTopTwenty"></div> 
+    <input type="button" class="btn btn-success" value="Save" onclick="SaveSkel();" style="float:bottom;position:absolute">
+    <div class = "marginTopTwenty"></div> 
+</div>
 
 <div class="memeCreateHead">
   <div class="container"> 
-    <span>Drag an image from image roller or </span>
+    <span>Click the overheard skeleton or  </span>
     <span class = "cursorPointer" onclick="ChangeBackground();"> upload new ( + )</span>
   </div> 
 </div>
@@ -11,10 +19,9 @@
 <div class = "marginTopTwenty"></div> 
 
 <div class="container">
-
   	<div class = "col-lg-3 whiteCanvas paddingNone paddingBottom">
 	    <div class = "marginTopTen"></div>
- 	    <input type = "text" placeholder = "Search..." class = "form-control" /> 
+ 	    <input type = "text" id="search" placeholder = "Search..." class = "form-control" onkeypress="TagPressed(event)" /> 
   	    <div id="scrollable"> 
     
     		<!-- root element for the items -->
@@ -22,8 +29,10 @@
     		</div>  
   	    </div>  
 	</div>	
+    
         <div class = "col-lg-6">
-            <div id="BaseCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#ababab;width:550px;height:550px;"> 
+                        
+            <div id="BaseCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#ababab;width:550px;height:550px;">             
                 <img id="backImage" src="/MEMEHTML/assets/drophere.jpg" onload="OnImageLoad()" > 
             </div>
         </div>

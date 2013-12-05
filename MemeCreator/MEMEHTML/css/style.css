@@ -181,3 +181,26 @@ padding-bottom:10px;}
     font-weight:bold;
     color:#000000;
 }
+.load{background:url('/MEMEHTML/assets/loading.gif') no-repeat center;}
+
+.tilt {
+    cursor:pointer;
+  -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+       -o-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+}
+
+.tilt:hover {
+  -webkit-transform: rotate(-10deg);
+     -moz-transform: rotate(-10deg);
+       -o-transform: rotate(-10deg);
+      -ms-transform: rotate(-10deg);
+          transform: rotate(-10deg);
+}
+
+.overlayout{display:none;background:#fff;width:600px;height:auto;border:8px
+solid #333;padding:10px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;color:#131313;word-wrap:break-word}
+.popup{display:block;background:#fff;width:600px;height:auto;border:8px
+solid #333;padding:10px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;color:#131313;word-wrap:break-word}
