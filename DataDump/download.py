@@ -18,7 +18,6 @@ class GetRes (blobstore_handlers.BlobstoreDownloadHandler):
 
 class GetIcon (blobstore_handlers.BlobstoreDownloadHandler):
   def get (self, resource):
-      logging.error ("GetIcon %s" % resource)
       blob_info = blobstore.BlobInfo.get(resource)
       self.send_blob(blob_info)
 

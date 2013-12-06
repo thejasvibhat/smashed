@@ -1,5 +1,5 @@
 var isDragging = false;
-var i = 0;
+var iTextCnt = 0;
 var cuTextBox;
 var curDemoBox;
 var curColor = 0;
@@ -38,7 +38,7 @@ function SkeletonUploaded(data)
 }
 function UploadUrlSkeleton(data)
 {
-     var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/><>      <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /> </form>';
+     var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /> </form>';
     $('body').append(html);     
 }
 function GetUploadURL()
@@ -83,17 +83,17 @@ function reset()
 function AddCaption()
 {
     reset();
-    i++;
+    iTextCnt++;
     var top = 10;
-    if(i== 1)
+    if(iTextCnt== 1)
         top = 10;
-    else if(i == 2)
+    else if(iTextCnt == 2)
         top = 400;
         
         
-    $("#BaseCanvas").append("<div class='demo"+i+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:200px;top:"+top+"px;background-color:transparent;'><textarea  id='myText"+i+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;'>Add caption here</textarea></div>");  
+    $("#BaseCanvas").append("<div class='demo"+iTextCnt+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:50px;top:"+top+"px;background-color:transparent;cursor:move;'><textarea  id='myText"+iTextCnt+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;'>Add caption here</textarea></div>");  
     
-    cuTextBox = $('#myText'+i+'');     
+    cuTextBox = $('#myText'+iTextCnt+'');     
     m_arrTextBoxes.push(cuTextBox);
     ColorChanged(curColor);
     curFontSize = 20;
@@ -101,8 +101,8 @@ function AddCaption()
     UpdateFamily(curfontFamily);
     UpdateFontweight(curfontWeight);
     UpdateFontStyle(curfontStyle);
-    var textBox = $('#myText'+i+'');
-    var demoBox = $('.demo'+i+'');
+    var textBox = $('#myText'+iTextCnt+'');
+    var demoBox = $('.demo'+iTextCnt+'');
     m_arrDemoBoxes.push(demoBox);
     curDemoBox = demoBox;
     textBox.focus();
@@ -114,8 +114,12 @@ function AddCaption()
         
         if(isDragging)
         {
-            curDemoBox.css("top",event.pageY - 280 - $(cuTextBox).height()/2);
-            curDemoBox.css("left",event.pageX - 100 - $(cuTextBox).width()/2);
+            var localCoordinates = $("#BaseCanvas").globalToLocal(
+						event.pageX,
+						event.pageY
+					);
+            curDemoBox.css("top",localCoordinates.y - $(cuTextBox).height()/2);
+            curDemoBox.css("left",localCoordinates.x - $(cuTextBox).width()/2);
         }
    });
     demoBox.mouseup(function up(ev){curDemoBox = demoBox;isDragging = false;});
@@ -123,7 +127,16 @@ function AddCaption()
   
    } 
 
+function RemoveCaption()
+{
+    var index = m_arrDemoBoxes.indexOf(curDemoBox);
+    if (index > -1) {
+        m_arrDemoBoxes.splice(index, 1);
+        m_arrTextBoxes.splice(index, 1);
+    }
 
+    curDemoBox.remove();
+}
 function Apply()
 {
     var fontsize = $("#fontsize").val() + 'px';
@@ -412,3 +425,61 @@ function removeSelection()
     $('#BaseCanvas').imgAreaSelect({remove:true});
 }
 
+// I translate the coordiantes from a global context to
+// a local context.
+$.globalToLocal = function( context, globalX, globalY ){
+    // Get the position of the context element.
+    var position = context.offset();
+
+    // Return the X/Y in the local context.
+    return({
+        x: Math.floor( globalX - position.left ),
+        y: Math.floor( globalY - position.top )
+    });
+};
+
+
+// I translate the coordinates from a local context to
+// a global context.
+jQuery.localToGlobal = function( context, localX, localY ){
+    // Get the position of the context element.
+    var position = context.offset();
+
+    // Return the X/Y in the local context.
+    return({
+        x: Math.floor( localX + position.left ),
+        y: Math.floor( localY + position.top )
+    });
+};
+
+
+// -------------------------------------------------- //
+// -------------------------------------------------- //
+
+
+// I am the FN version of the global to local function.
+$.fn.globalToLocal = function( globalX, globalY ){
+    return(
+        $.globalToLocal(
+            this.first(),
+            globalX,
+            globalY
+        )
+    );
+};
+
+
+// I am the FN version of the local to global function.
+$.fn.localToGlobal = function( localX, localY ){
+    return(
+        $.localToGlobal(
+            this.first(),
+            localX,
+            localY
+        )
+    );
+};
+
+
+// -------------------------------------------------- //
+// -------------------------------------------------- //

@@ -10,7 +10,7 @@ import logging
 from PIL import Image, ImageDraw, ImageFont
 from google.appengine.api import urlfetch
 import StringIO
-
+import textwrap
 from google.appengine.ext import db
 
 from google.appengine.ext import blobstore
@@ -184,8 +184,11 @@ class UploadFacebook(AuthHandler):
 class SkelList (webapp2.RequestHandler):
     def get(self):
 
-        tag = self.request.get('tag',default_value="smashed")        
-        meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
+        tag = self.request.get('tag',default_value="auto")        
+        if tag == "auto":
+            meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
+        else:
+            meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
         memes = meme_query.fetch(10)        	
 
         #TODO: Make this valid XML or JSON
@@ -256,7 +259,27 @@ class SaveHandler(AuthHandler):
                         textVal = props.get('textVal')                        
                         text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
                         draw = ImageDraw.Draw(text_img)
-                        draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
+                        font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+                        #width, height1 = font.getsize(textVal)
+                        apString = '' 
+                        lines = []
+                        for x in range(0, len(textVal)):
+                            tempString = apString
+                            apString = apString + '%s' %textVal[x]                            
+                            width1, height1 = font.getsize(apString)
+                            if width1 >= int(width):
+                                lines.append(tempString)
+                                apString = '%s' %textVal[x]
+                        if apString != '':
+                            lines.append(apString)
+                        #lines = textwrap.wrap(textVal, width = 10)
+                        y_text = 0
+                        for line in lines:
+                            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+                            width1, height1 = font.getsize(line)                            
+                            draw.text((0, y_text), line, font = font,fill=color)
+                            y_text += height1
+                        #draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
                 
                         # no write access on GAE
                         output = StringIO.StringIO()
