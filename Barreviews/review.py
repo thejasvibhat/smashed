@@ -10,14 +10,11 @@ import math
 import json
 from User.handlers import AuthHandler
 sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), '../lib'))
-import jinja2
+
 from Cheetah.Template import Template
 
 from skel.skel import Skel
 
-JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-    extensions=['jinja2.ext.autoescape'])
 
 REVIEW_DB_NAME = 'bars_db'
 def review_dbkey(review_dbname=REVIEW_DB_NAME):
@@ -45,8 +42,11 @@ class ReviewHandler(webapp2.RequestHandler):
 
 class SceneHandler(AuthHandler):
     def get(self, resource, name=None):
+        l_skel = Skel()
         bid = resource 
-        t = JINJA_ENVIRONMENT.get_template('index.html')
+        head_path = os.path.join (os.path.dirname (__file__), 'templates/b-head.tmpl')
+        l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+
         c = {}
         review_query = ReviewDb.query(ReviewDb.bid == bid)		
         reviews = review_query.fetch(1)
@@ -114,7 +114,12 @@ class SceneHandler(AuthHandler):
                 c['usp1'] = "Bottle Rate"
                 c['usp2'] = "Lady Friendly"
                 
-        self.response.write (t.render(c))
+        path = os.path.join (os.path.dirname (__file__), 'templates/b-body.tmpl')
+        l_skel.addtobody (str((Template.compile(file=path) (searchList=c))))
+
+        self.response.out.write(l_skel.gethtml())
+
+
     
 # application = webapp2.WSGIApplication([
 #     ('/reviews/scenes/listscenes', ListScenesHandler),

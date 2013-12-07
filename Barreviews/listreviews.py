@@ -36,7 +36,7 @@ class ListComments(AuthHandler):
         resource = self.request.get ("reviewid");
         userDetails = self.current_user
         revid = resource
-        userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid).order(-CommentReviewDb.date)
+        userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid).order(CommentReviewDb.date)
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
         userreviews = userreview_querry.fetch(oLimit,offset=oOffset)

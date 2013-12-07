@@ -12,6 +12,7 @@ from google.appengine.ext import ndb
 
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+import math
 
 sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), '../lib'))
 from comments import CreateReview
@@ -89,7 +90,18 @@ class BRecordHandler (AuthHandler):
             l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
 
             self.response.out.write(l_skel.gethtml())    
-        
+
+def UpdateReviewRating(curRating,reviewId):
+    review_query = ReviewDb.query(ReviewDb.reviewid == reviewId)		
+    reviews = review_query.fetch(1)
+    for review in reviews:
+        existRating = float(review.rating)
+        rating = float(curRating.strip())
+        rating = (rating + existRating)/2
+        rating = 0.5 * math.ceil(2.0 * rating)
+        review.rating = '%s' %rating
+        review.put()
+
 class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
     def post(self):
         user_dict = self.auth.get_user_by_session()
@@ -116,7 +128,9 @@ class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
         review.name = self.request.get('name')
         review.address = self.request.get('address')
         review.phone = self.request.get('phone')
-        review.rating = self.request.get('rating')
+        rating = float(self.request.get('rating'))
+        rating = 0.5 * math.ceil(2.0 * rating)
+        review.rating = '%s' %rating
         review.description = self.request.get('description')
     
         review.snack_1 = self.request.get('favsnack1')

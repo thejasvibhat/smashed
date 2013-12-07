@@ -14,23 +14,23 @@ function SaveReviewComments()
                     $(oClone).find('#creatoravatar').attr('src',$("#curcreatorname").attr('src'));
                    $(oClone).find('#creatordescription').html($("#curdescription").val());
                    if($("#rating").val() == 1)
-                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1.png');
+                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_0.png');
                    if($("#rating").val() == 1.5)
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_5.png');
                    if($("#rating").val() == 2)
-                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2.png');
+                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_0.png');
                    if($("#rating").val() == 2.5)
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_5.png');
                    if($("#rating").val() == 3)
-                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3.png');
+                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_0.png');
                    if($("#rating").val() == 3.5)
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_5.png');
                    if($("#rating").val() == 4)
-                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4.png');
+                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_0.png');
                    if($("#rating").val() == 4.5)
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_5.png');
                    if($("#rating").val() == 5)
-                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_5.png');
+                       $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_5_0.png');
                     $(container).prepend('<div class = "separator"></div>');
                     $(container).prepend(oClone);
                     $(oClone).show();
@@ -101,36 +101,40 @@ $(function () {
                     oObj = $.parseJSON(response);
                    $("#curContainer").find('#curcreatorname').html(oObj.currentuser);
                    $("#curContainer").find('#curcreatoravatar').attr('src',oObj.currentavatar);
-
+                    i = 0;
                     (oObj.reviews).forEach(function(eachRev) 
                     {
-                        var klon = $("#reviewItem" );
-                        var container = $('#revContainer');
-                        var oClone = klon.clone();
-                        $(oClone).find('#creatorname').html(eachRev.username);
-                        $(oClone).find('#creatoravatar').attr('src',eachRev.avatar);
-                       $(oClone).find('#creatordescription').html(eachRev.review);
-                       if(eachRev.rating == 1)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1.png');
-                       if(eachRev.rating == 1.5)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_5.png');
-                       if(eachRev.rating == 2)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2.png');
-                       if(eachRev.rating == 2.5)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_5.png');
-                       if(eachRev.rating == 3)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3.png');
-                       if(eachRev.rating == 3.5)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_5.png');
-                       if(eachRev.rating == 4)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4.png');
-                       if(eachRev.rating == 4.5)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_5.png');
-                       if(eachRev.rating == 5)
-                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_5.png');
-                        $(container).prepend('<div class = "separator"></div>');
-                        $(container).prepend(oClone);
-                        $(oClone).show();
+                        i++;
+                        if(i != 1)
+                        {
+	                        var klon = $("#reviewItem" );
+	                        var container = $('#revContainer');
+	                        var oClone = klon.clone();
+	                        $(oClone).find('#creatorname').html(eachRev.username);
+	                        $(oClone).find('#creatoravatar').attr('src',eachRev.avatar);
+	                       $(oClone).find('#creatordescription').html(eachRev.review);
+	                       if(eachRev.rating == 1)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_0.png');
+	                       if(eachRev.rating == 1.5)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_5.png');
+	                       if(eachRev.rating == 2)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_0.png');
+	                       if(eachRev.rating == 2.5)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_5.png');
+	                       if(eachRev.rating == 3)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_0.png');
+	                       if(eachRev.rating == 3.5)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_5.png');
+	                       if(eachRev.rating == 4)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_0.png');
+	                       if(eachRev.rating == 4.5)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_5.png');
+	                       if(eachRev.rating == 5)
+	                           $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_5_0.png');
+	                        $(container).prepend('<div class = "separator"></div>');
+	                        $(container).prepend(oClone);
+	                        $(oClone).show();
+	                      }
                     });
                    
 
