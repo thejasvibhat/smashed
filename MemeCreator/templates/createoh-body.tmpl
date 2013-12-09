@@ -1,26 +1,30 @@
 
 <script src="/static/js/waypoints.min.js"></script>
-<div id="modalView" class="overlayout dropdown-menu" style="top:15%;min-height:350px; margin-left: auto;margin-right: auto ;" >
-    <div class="ressmallthumb floatleft"><img src="" id="thumb1" style="width:100px;height:auto"></div>     
+<div id="modalView" class="overlayout dropdown-menu" style="top:15%;">
+	<div class = "alignCenter">
+		<span class = "rockwellTextBig">Add some cool tags to the image. </span>
+	</div>
+	<div class = "marginTopTwenty"></div>
+    <div class="row">
+		<div class = "col-lg-2">
+			<img src="" id="thumb1" class = "img-responsive" />
+		</div>     
+	</div>
     <div class = "marginTopTwenty"></div> 
-    <input id='tags_2' type='text' class='tags' value="Smashed,Jaggesh,Troll Boss" ></p>
+    <input id='tags_2' type='text' class='tags' value="Smashed" ></p>
     <div class = "marginTopTwenty"></div> 
-    <input type="button" class="btn btn-success" value="Save" onclick="SaveSkel();" style="float:bottom;position:absolute">
+    <input type="button" class="btn btn-success" value="Save" onclick="SaveSkel();"/>
+	<input type="button" class="btn btn-danger" value="Cancel" onclick="CancelSaveSkel();"/>
     <div class = "marginTopTwenty"></div> 
-</div>
-
-<div class="memeCreateHead">
-  <div class="container"> 
-    <span>Click the overheard skeleton or  </span>
-    <span class = "cursorPointer" onclick="ChangeBackground();"> upload new ( + )</span>
-  </div> 
 </div>
 
 <div class = "marginTopTwenty"></div> 
 
 <div class="container">
   	<div class = "col-lg-3 whiteCanvas paddingNone paddingBottom">
-	    <div class = "marginTopTen"></div>
+	    <div class = "marginTen">
+			<span class = "rockwellTextBig cursorPointer" onclick="ChangeBackground();"> Upload new ( + )</span>
+		</div>
  	    <input type = "text" id="search" placeholder = "Search..." class = "form-control" onkeypress="TagPressed(event)" /> 
   	    <div id="scrollable"> 
     

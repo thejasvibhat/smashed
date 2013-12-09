@@ -72,10 +72,10 @@ class ListMeme(webapp2.RequestHandler):
             self.response.write('%s' %meme.date)
             self.response.write('</ts>')			
             self.response.write('<icon>')
-            self.response.write('/meme/actions/getmeme/%s' %meme.resid)
+            self.response.write('/res/icon/%s' %meme.blobid)
             self.response.write('</icon>')
             self.response.write('<url>')
-            self.response.write('/meme/store/memeview/%s' %meme.resid)
+            self.response.write('/oh/%s' %meme.resid)
             self.response.write('</url>')
             
             self.response.write('<creatorname>')

@@ -202,5 +202,28 @@ padding-bottom:10px;}
 
 .overlayout{display:none;background:#fff;width:600px;height:auto;border:8px
 solid #333;padding:10px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;color:#131313;word-wrap:break-word}
-.popup{display:block;background:#fff;width:600px;height:auto;border:8px
-solid #333;padding:10px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;color:#131313;word-wrap:break-word}
+.popup
+{
+	display:block;
+	background:#fff;
+	width:600px;
+	height:auto;
+	border:0px
+	solid #333;
+	padding:10px;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	border-radius:2px;
+	color:#131313;
+	word-wrap:break-word;
+	font-family:"rockwell";
+}
+
+.moreOhIndv
+{
+	margin:20px 20px 20px 0;
+}
+.reviewWhiteBoxSmall
+{
+	margin-bottom:20px;
+}

@@ -18,7 +18,6 @@ function ListComments()
                             $(oClone).find('#creatorname').html(eachCom.username);
                             $(oClone).find('#creatoravatar').attr('src',eachCom.avatar);
                            $(oClone).find('#creatordescription').html(eachCom.comment);
-                            $(container).prepend('<div class = "separator"></div>');
                             $(container).prepend(oClone);
                             $(oClone).show();
                         }
@@ -47,5 +46,30 @@ function SaveComments()
                     $(oClone).show();
 
                }
+    });
+}
+
+function GetRecommendedOh()
+{
+	var data = {'limit': '1000','offset':'0'};
+	$.ajax({
+	   type: "GET",
+	   url: "/api/oh/list",
+	   data:data,
+	   success: function(response){
+			theXmlDoc = $.parseXML(response);
+			var theRow = $(theXmlDoc).find('meme').get();
+			$(theRow).each(function(i)
+			{
+				i++;
+				var url  = $(this).find("url").text();
+				var icon = $(this).find("icon").text();
+				var ele = $("#ohIndvItem").clone().attr('id','oh-'+i);
+				$(ele).find('img').attr('src',icon);
+				$(ele).find('a').attr('href',url);
+				$('#more_oh_container').append(ele);
+				$(ele).fadeIn();
+			});
+	   }
     });
 }

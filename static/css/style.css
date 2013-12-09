@@ -1512,7 +1512,7 @@ gridGoogleMapContainer
 
 .paddingNone
 {
-    padding:none;
+    padding:none !important;
 }
 
 .paddingBottom
@@ -1614,4 +1614,26 @@ li
 .marginTopFifteen
 {
     margin-top:15px;
+}
+
+.rockwellTextBig
+{
+	font-family:'rockwell',helvetica;
+	color:#666;
+	font-size:20px;
+}
+
+.marginTen
+{
+	margin:10px 0 10px 0;
+}
+
+.alignCenter
+{
+	text-align:center;
+}
+
+.marginRightTwenty
+{	
+	margin-right:10px;
 }

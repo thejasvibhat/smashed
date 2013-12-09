@@ -29,6 +29,13 @@ function SaveSkel()
     $("#tags").val($("#tags_2").val());
     UploadSkeleton();
 }
+
+function CancelSaveSkel ()
+{
+	$("#modalView").addClass('overlayout');
+    $("#modalView").removeClass('popup');
+}
+
 function SkeletonUploaded(data)
 {
     $('#uploadNewForm').remove();
