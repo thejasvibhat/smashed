@@ -237,6 +237,7 @@ Navbar
   color: #fff;
   border-radius: 0;
   outline:none;
+  font-family:"rockwell";
 }
 
 header .navbar-nav > .dropdown > a .caret{

@@ -76,7 +76,7 @@
     box-shadow:1px 1px 2px #aaa;
     padding:5px;
     height:84px;
-    margin-right:10px;
+    text-align:center;
 }
 
 .displayinlineblock
@@ -86,8 +86,8 @@
 
 .ScreenShotWrap img
 {
-    max-width:96px;
-    max-height:84px;
+    max-width:100%;
+    max-height:100%;
 }
 
 .margintopten
@@ -124,10 +124,16 @@
     font-family:helvetica;
 }
 
+.coreHeading
+{
+    color:#666666;
+    font-family:"rockwell",helvetica;  
+}
+
 .reviewWhiteBoxSmall h4
 {
-    color:#2b2b2b;
-    font-family:helvetica;
+    color:#666666;
+    font-family:"rockwell",helvetica;
     font-size:20px;
 }
 
@@ -165,7 +171,7 @@
 
 .GoogleMapContainer
 {
-    background:#ffffff;
+    background:#ffffff !important;
     padding:10px;
     -webkit-box-shadow:1px 1px 2px #aaa;
     box-shadow:1px 1px 2px #aaa;
