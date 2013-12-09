@@ -101,20 +101,29 @@ class GetMeme(blobstore_handlers.BlobstoreDownloadHandler):
 class GetOh (AuthHandler):
     def get(self, resource):
         resid = resource 
+	l_skel = Skel()
+	l_skel.title = "Smashed.in :: OverHeards"
+
         meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
         memes = meme_query.fetch(1)
-        for meme in memes:
-            template_values = {
-                'memeurl':'/res/download/%s' % meme.blobid,
-                'conturl':'/oh/%s' % meme.resid,
-                'shareid':'%s' % meme.shareid,
-                'currentid':'%s' %meme.resid,
-                'commentid':'%s' %meme.commentid
-                }
-            path = os.path.join(os.path.dirname(__file__),'templates/memeview.tmpl')
-            tclass = Template.compile (file = path)
-            t = tclass(searchList=template_values)
-            self.response.out.write(t)
+        meme = memes[0]
+        template_values = {
+            'memeurl':   '/res/download/%s' % meme.blobid,
+            'conturl':   '/oh/%s' % meme.resid,
+            'shareid':   '%s' % meme.shareid,
+            'currentid': '%s' %meme.resid,
+            'commentid': '%s' %meme.commentid
+            }
+
+	#Head
+	head_path = os.path.join (os.path.dirname(__file__), 'templates/ohview-head.tmpl')
+	l_skel.addtohead(str((Template.compile(file=head_path)(searchList=template_values))))
+
+	#body
+        path = os.path.join (os.path.dirname (__file__), 'templates/ohview-body.tmpl')
+	l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
+
+        self.response.out.write(l_skel.gethtml())
 
 class GetOhList (AuthHandler):
     def get(self):

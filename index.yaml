@@ -10,6 +10,17 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: CommentDb
+  properties:
+  - name: parentid
+  - name: date
+    direction: desc
+
+- kind: CommentReviewDb
+  properties:
+  - name: parentid
+  - name: date
+
 - kind: CommentReviewDb
   properties:
   - name: parentid
