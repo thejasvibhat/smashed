@@ -316,13 +316,18 @@ function Save()
     var oTextBoxes = document.createElement('texts')
     for(var i=0; i < m_arrTextBoxes.length ; i++)
     {
-        var oTextXml = xmlDocument.createElement('text');        
+        var oTextXml = xmlDocument.createElement('text');
         var oTextBox = m_arrTextBoxes[i];
         var oProperty = xmlDocument.createElement('properties');
         oProperty.setAttribute("size",oTextBox.css("font-size").split("p")[0]);
         oProperty.setAttribute("color",oTextBox.css("color"));
         oProperty.setAttribute("style",oTextBox.css("font-style"));
-        oProperty.setAttribute("weight",oTextBox.css("font-weight"));
+	fontWeight = oTextBox.css("font-weight");
+        if(fontWeight == 400)
+	    fontWeight = "normal";
+	else if(fontWeight == 700)
+	    fontWeight == "bold";
+        oProperty.setAttribute("weight",fontWeight);
         oProperty.setAttribute("name",oTextBox.css("font-family"));
         oProperty.setAttribute("left",m_arrDemoBoxes[i].css("left").split("p")[0] - $("#BaseCanvas").position().left);
         oProperty.setAttribute("top",m_arrDemoBoxes[i].css("top").split("p")[0] - $("#BaseCanvas").position().top);
@@ -331,10 +336,9 @@ function Save()
         oProperty.setAttribute("textVal",oTextBox.val());
         oTextXml.appendChild(oProperty);
         oTextBoxes.appendChild(oTextXml);
-        
     }
     oObjetcs.appendChild(oTextBoxes);
-   
+
     xmlDocument.documentElement.appendChild(oObjetcs);
     
     /* Spinners */

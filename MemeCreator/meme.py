@@ -213,6 +213,7 @@ class SaveHandler(AuthHandler):
         user_dict = self.auth.get_user_by_session()
         userId = user_dict['user_id']		
         root = ET.fromstring(self.request.get('data'))
+        remove_namespace(root,"http://www.w3.org/1999/xhtml")
         imgId = ''
         family = ''
         size = ''
@@ -226,9 +227,8 @@ class SaveHandler(AuthHandler):
             selectiony = objects.get('y')
             selectionwidth = objects.get('width')
             selectionheight = objects.get('height')
-            logging.info('%s' %objects)			
             for texts in objects:                
-                if texts.tag == "{http://www.w3.org/1999/xhtml}imagebase":                    
+                if texts.tag == "imagebase":                    
                     imgId = texts.get('id')
                     imgwidth = texts.get('width')
                     imgheight = texts.get('height')
@@ -254,7 +254,7 @@ class SaveHandler(AuthHandler):
                                                    550, 550)
 
 
-                for child in texts.iter('{http://www.w3.org/1999/xhtml}text'):
+                for child in texts.iter('text'):
                     for props in child:
                         family = props.get('name')
                         color = props.get('color')
@@ -357,6 +357,15 @@ def GetFontName(oFamily,oStyle,oWeight):
     return name
             
             
+
+def remove_namespace(doc, namespace):
+    """Remove namespace in the passed document in place."""
+    ns = u'{%s}' % namespace
+    nsl = len(ns)
+    for elem in doc.getiterator():
+        if elem.tag.startswith(ns):
+            elem.tag = elem.tag[nsl:]
+
         
         
        
