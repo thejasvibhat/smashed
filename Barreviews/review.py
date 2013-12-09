@@ -25,7 +25,7 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
 class ReviewHandler(webapp2.RequestHandler):
     def get(self):
         l_skel = Skel()
-
+	l_skel.title = "Smashed.in :: Latest Additions"
         #Head
         head_path = os.path.join (os.path.dirname (__file__), 'templates/reviews-head.tmpl')
         l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))

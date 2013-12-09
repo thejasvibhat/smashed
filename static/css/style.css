@@ -311,19 +311,39 @@ ul#gallery-list-memes li {
 	cursor:pointer;
 }
 
-.image-wrapper{
+.image-wrapper,.image-wrapper-normal{
 	display:block;
 	width:100%;
 	height:auto;
-	max-height:300px;
+	max-height:240px;
 }
 
-.img-title{
+.image-wrapper-normal
+{
+    max-height:300px;
+}
+
+.img-title,.img-title-big{
 	position:relative;
 	background:#fff;
 	height:46px;
 	width:100%;
 	overflow:hidden;
+	font-family:"raleway",helvetica;
+}
+
+.img-title-big
+{
+    height:120px;
+    box-shadow:1px 1px 2px #dddddd;
+    -webkit-box-shadow:1px 1px 2px #ddd;
+}
+
+.img-title-big h6
+{
+    margin:10px 0 10px 0;
+    color:#666666;
+    font-size:20px;
 }
 
 .img-title h6{

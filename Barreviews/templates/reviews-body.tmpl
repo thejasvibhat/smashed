@@ -2,32 +2,32 @@
 <div class = "marginTopTwenty"></div>
 
 <div class = "container">
-  <div class = "row">
+  <ul id="gallery-list-reviews" class="clearfix">
 #for $r in $reviews
 #set $rating = $r.rating.replace('.', '_')
-    <div class="col-lg-3 cursorPointer whiteBoxReview">
-      <a href = "/b/$r.bid">
-	<div class = "reviewImageWrapper">
-	  <img class = "img-responsive" src = "/res/download/${r.images[0]}" />
-	</div>
-	<div class = "gridDetailContainer">
-	  <div class = "col-lg-9">
-	    <h3>$r.name</h3>
-	    <div class = "gridRatingContainer">
-	      <img class = "img-responsive" src = "/reviewhtml/assets/rate_${rating}.png" />
-	    </div>
-	    <div class = "gridMeta margintopfive">
-	      $r.address
-	    </div>
-	  </div>
-	  <div class = "col-lg-3">
-	    <a href = "javascript:void(0);">
-	      <img src = "/reviewhtml/assets/googlemap.jpg" width = "42" />
-	    </a>
-	  </div>
-	</div>
+    <li class="item col-lg-4 all">
+    	<a href = "/b/$r.bid">
+			<div class="image-wrapper">
+	  			<img class = "img-responsive" src = "/res/download/${r.images[0]}" />
+			</div>
+			<div class="img-title-big">
+	  			<div class = "col-lg-9">
+	    			<h6>$r.name</h6>
+	    			<div class = "gridRatingContainer">
+	      				<img class = "img-responsive" src = "/reviewhtml/assets/rate_${rating}.png" />
+	    			</div>
+	    			<div class = "gridMeta margintopfive">
+	      				$r.address
+	    			</div>
+	  			</div>
+	  			<div class = "col-lg-3 marginTopTwenty">
+	    			<a href = "javascript:void(0);">
+	      				<img src = "/reviewhtml/assets/googlemap.jpg" width = "42" />
+	    			</a>
+	  			</div>
+			</div>
       </a>
-    </div>
+    </li>
 #end for
-  </div>
+  </ul>
 </div>
