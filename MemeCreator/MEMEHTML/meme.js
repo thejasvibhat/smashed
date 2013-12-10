@@ -316,18 +316,13 @@ function Save()
     var oTextBoxes = document.createElement('texts')
     for(var i=0; i < m_arrTextBoxes.length ; i++)
     {
-        var oTextXml = xmlDocument.createElement('text');
+        var oTextXml = xmlDocument.createElement('text');        
         var oTextBox = m_arrTextBoxes[i];
         var oProperty = xmlDocument.createElement('properties');
         oProperty.setAttribute("size",oTextBox.css("font-size").split("p")[0]);
         oProperty.setAttribute("color",oTextBox.css("color"));
         oProperty.setAttribute("style",oTextBox.css("font-style"));
-	fontWeight = oTextBox.css("font-weight");
-        if(fontWeight == 400)
-	    fontWeight = "normal";
-	else if(fontWeight == 700)
-	    fontWeight == "bold";
-        oProperty.setAttribute("weight",fontWeight);
+        oProperty.setAttribute("weight",oTextBox.css("font-weight"));
         oProperty.setAttribute("name",oTextBox.css("font-family"));
         oProperty.setAttribute("left",m_arrDemoBoxes[i].css("left").split("p")[0] - $("#BaseCanvas").position().left);
         oProperty.setAttribute("top",m_arrDemoBoxes[i].css("top").split("p")[0] - $("#BaseCanvas").position().top);
@@ -336,9 +331,10 @@ function Save()
         oProperty.setAttribute("textVal",oTextBox.val());
         oTextXml.appendChild(oProperty);
         oTextBoxes.appendChild(oTextXml);
+        
     }
     oObjetcs.appendChild(oTextBoxes);
-
+   
     xmlDocument.documentElement.appendChild(oObjetcs);
     
     /* Spinners */
@@ -494,3 +490,60 @@ $.fn.localToGlobal = function( localX, localY ){
 
 // -------------------------------------------------- //
 // -------------------------------------------------- //
+
+function GetTickerInit()
+{
+	$.ajax({
+        url: "/api/oh/list?offset=0&limit=10",
+        type: 'GET',
+        crossDomain: true,
+        
+    }).done(function ( data ) {
+       // alert(data);
+	   theXmlDoc = $.parseXML(data);
+	   var theRow = $(theXmlDoc).find('meme').get();
+	  $(theRow).each(function(i) 
+	  {
+	   	var klon = $("#tickItem" );
+	   	var container = $('#tickerContainer');
+	   	var oClone = klon.clone();
+	   	$(oClone).find('#ticks').attr('href',$(this).find('url').text());
+       	$(oClone).find('#creatorname').html($(this).find('creatorname').text());
+	   	$(oClone).find('#creatoravatar').attr('src',$(this).find('creatoravatar').text());
+	   	$(container).prepend('<div class = "separator"></div>');
+	   	$(container).prepend(oClone);
+	   	$(oClone).show();
+	  });
+    });
+    
+}
+
+function GetTickerLatest()
+{
+	$.ajax({
+        url: "/api/oh/list?offset=0&limit=1",
+        type: 'GET',
+        crossDomain: true,
+        
+    }).done(function ( data ) {
+       // alert(data);
+	   theXmlDoc = $.parseXML(data);
+	   var theRow = $(theXmlDoc).find('ts').text();
+	   if(m_strCurTimeStamp == "")
+			m_strCurTimeStamp = theRow;
+	   if(theRow != m_strCurTimeStamp)
+	   {
+			m_strCurTimeStamp = theRow;
+			var klon = $("#tickItem" );
+			var container = $('#tickerContainer');
+			var oClone = klon.clone();
+			$(oClone).find('#ticks').attr('href',$(theXmlDoc).find('url').text());
+			$(oClone).find('#creatorname').html($(theXmlDoc).find('creatorname').text());
+			$(oClone).find('#creatoravatar').attr('src',$(theXmlDoc).find('creatoravatar').text());
+			$(container).prepend('<div class = "separator"></div>');
+			$(container).prepend(oClone);
+			$(oClone).show();
+	   }
+    });
+}
+
