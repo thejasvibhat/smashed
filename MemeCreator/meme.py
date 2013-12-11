@@ -111,8 +111,8 @@ class GetOh (AuthHandler):
             'memeurl':   '/res/download/%s' % meme.blobid,
             'conturl':   '/oh/%s' % meme.resid,
             'shareid':   '%s' % meme.shareid,
-            'currentid': '%s' %meme.resid,
-            'commentid': '%s' %meme.commentid
+            'currentid': '%s' % meme.resid,
+            'commentid': '%s' % meme.commentid
             }
 
 	#Head
@@ -138,17 +138,7 @@ class GetOhList (AuthHandler):
         path = os.path.join (os.path.dirname (__file__), 'templates/oh-body.tmpl')
         meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
         memes = meme_query.fetch(5)
-        id = 0;
-        template_values = {}
-        for meme in memes:
-            l_auth = auth.get_auth()
-            userData = l_auth.store.user_model.get_by_id (meme.userid)
-            id = id + 1
-            template_values['url%s'%id] = '/oh/%s' % meme.resid
-            template_values['image%s'%id] = '/res/download/%s' % meme.blobid
-            template_values['name%s'%id] = '%s' % userData.name
-            template_values['avatar%s'%id] = '%s' % userData.avatar_url
-
+        template_values = {"memes" : memes}
 	l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
 
         self.response.out.write(l_skel.gethtml())	   

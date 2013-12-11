@@ -47,6 +47,9 @@
               <li><a href="/b/record">Write a Review</a></li>
               <li><a href="/oh">OverHeards</a></li>
               <li><a href="/oh/record">Record a OverHeard</a></li>
+#if $logged_in
+			  <li><a href = "/auth/logout">Logout</a></li>			 
+#end if
             </ul>
           </div><!-- End nav-collapse -->
         </div><!-- End container -->
