@@ -51,6 +51,31 @@ $(window).load(function()
 		readURL(input,id);  	
 	});
 	
+	$('#uploadReviewForm').submit(function(event)
+	{
+		
+		if( !$("#uploadReviewForm").validationEngine('validate'))
+		{
+			return false;
+		}
+		//event.preventDefault();
+		$('#uploadSpinner').fadeIn();
+	});
+	
+});
+
+function readURL(input,id) {
+	var file = input.target.files[0];
+    var reader = new FileReader();
+    
+    reader.readAsDataURL(file);
+    reader.onloadend = function(e) {
+    	$('#'+id).attr('src', e.target.result);          
+    } 
+}
+
+function uploadReviewInit()
+{
 	/* Steppers */
 	
 	$('#rating').stepper({
@@ -64,30 +89,8 @@ $(window).load(function()
 	
 	$('#uploadReviewForm').validationEngine({promptPosition : "topLeft", scroll: false});
 	
-	$('#uploadReviewForm').submit(function(event)
-	{
-		
-		if( !$("#uploadReviewForm").validationEngine('validate'))
-		{
-			return false;
-		}
-		//event.preventDefault();
-		$('#uploadSpinner').fadeIn();
-	});
-	
 	/* Location Picker */
 	$('#addressLocator').locationPicker();
-
 	
-});
-
-function readURL(input,id) {
-	var file = input.target.files[0];
-    var reader = new FileReader();
-    
-    reader.readAsDataURL(file);
-    reader.onloadend = function(e) {
-    	$('#'+id).attr('src', e.target.result);          
-    } 
 }
 

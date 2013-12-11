@@ -1555,6 +1555,11 @@ gridGoogleMapContainer
     margin-top:5px;
 }
 
+.marginBottomFive
+{
+	margin-bottom:5px;
+}
+
 li
 {
     list-style:none;
@@ -1686,3 +1691,4 @@ li
 	text-decoration:none;
 }
 */
+

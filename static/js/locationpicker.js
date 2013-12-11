@@ -48,15 +48,15 @@
                     }else{
                         map.panTo(latLng);
                     }
-                    $(that).val(lat + "," + lng);
+                    //$(that).val(lat + "," + lng);
                 }
                 
                 var id = $(this).attr('id');
                 
-                var searchButton = $("<input class='picker-search-button' type='button' value='Search'/>");
+                var searchButton = $("<div class = 'marginTopFive'></div><input class='btn btn-success' type='button' value='Find on Map'/>");
                 $(this).after(searchButton);
                 
-                var picker = $("<div id='" + id + "-picker' class='pickermap zindex8000'></div>").css({
+                var picker = $("<div id='" + id + "-picker' class='pickermap zindex8000' style = 'z-index:9999;'></div>").css({
                     width: options.width,
                     backgroundColor: options.backgroundColor,
                     border: options.border,
@@ -148,9 +148,9 @@
                 }
                 
                 function findAddress(){
-                    var address = $(that).val();
-                    if(address == ""){
-                        alert("Please enter an address or Lng/Lat position.");
+                    var address = $('#location').val() + ","+$('#city').val(); //$(that).val();
+                    if ( (address == "") || (address == ",") ){
+                        alert("Please enter the above fields");
                     }else{
                         if(isLngLat(address)){
                             showPicker();
@@ -178,9 +178,12 @@
                     event.stopPropagation();
                 });
                 
-                $(that).keydown(function(event) {
+                $('#city').keydown(function(event) {
                     if (event.keyCode == '13') { // enter
-                        findAddress();
+                    	if ($('#location').val() != "") {
+                        	findAddress();
+                        	event.stopPropagation();
+                        }
                     }
                 });
                 
