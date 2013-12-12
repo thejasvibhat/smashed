@@ -41,7 +41,7 @@ handlers:
 - url: /res1
   static_dir: res
 
-- url: /auth/.*
+- url: /auth[/]*.*
   script: User.um.application
 
 - url: .*

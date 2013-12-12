@@ -31,14 +31,11 @@ class Skel (AuthHandler):
             "skelbody" : "\n".join (self.skelbody)
             }
 
-        if (self.logged_in):
-            l_auth = auth.get_auth()
-            user_dict = self.auth.get_user_by_session()
-            userData = l_auth.store.user_model.get_by_id (user_dict['user_id'])
-            name = userData.name if userData.name else "myName"
+        if (self.isloggedin):
+            name = self.user_name if self.user_name else "myName"
 
             template_values.update ({
-                "avatar" : userData.avatar_url,
+                "avatar" : self.user.avatar_url,
                 "name"   : name
                 })
 

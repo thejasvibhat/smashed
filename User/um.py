@@ -14,8 +14,9 @@ import logging
 from simpleauth import SimpleAuthHandler
 from Cheetah.Template import Template
 
+from user import User
 from secrets import secrets
-from webapp2_extras import auth, sessions, jinja2
+from webapp2_extras import auth, sessions, jinja2, routes
 
 class LandingPage (webapp2.RequestHandler):
 
@@ -48,24 +49,25 @@ app_config = {
     'secret_key': secrets.SESSION_KEY
   },
   'webapp2_extras.auth': {
-    'user_attributes': []
+    'user_attributes': [],
+    'user_model' : User
   }
 }
 
 # Map URLs to handlers
-routes = [
+auth_routes = [
 
-  webapp2.Route ('/auth/', handler=LandingPage),
+  routes.RedirectRoute ('/auth', handler=LandingPage, name="auth", strict_slash=True),
 
   webapp2.Route ('/auth/profile',
                  handler='handlers.ProfileHandler', name='profile'),
-  webapp2.Route ('/auth/logout',
-                 handler='handlers.AuthHandler:logout', name='logout'),
+  routes.RedirectRoute ('/auth/logout',
+                 handler='handlers.AuthHandler:logout', name='logout', strict_slash=True),
   webapp2.Route ('/auth/<provider>',
                  handler='handlers.AuthHandler:_simple_auth', name='auth_login'),
   webapp2.Route ('/auth/<provider>/callback',
                  handler='handlers.AuthHandler:_auth_callback', name='auth_callback')
 ]
 
-application = webapp2.WSGIApplication (routes, config=app_config, debug=True)
+application = webapp2.WSGIApplication (auth_routes, config=app_config, debug=True)
 

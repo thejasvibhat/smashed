@@ -9,6 +9,7 @@ import logging
 from Cheetah.Template import Template
 
 from User.handlers import AuthHandler
+from User.user import User
 from secrets import secrets
 
 from MemeCreator.creatememe import *
@@ -42,6 +43,7 @@ from DataDump.download import GetIcon
 
 from landing.landing import LandingPage
 from checktoken import *
+
 class ComingSoon (AuthHandler):
 
     def get(self):
@@ -103,7 +105,8 @@ app_config = {
     'secret_key': secrets.SESSION_KEY
   },
   'webapp2_extras.auth': {
-    'user_attributes': []
+    'user_attributes': [],
+    'user_model' : User
   }
 }
 
