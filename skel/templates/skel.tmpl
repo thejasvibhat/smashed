@@ -18,28 +18,34 @@
     <link href="/static/css/font-awesome-ie7.css" rel="stylesheet">
     <![endif]-->
 
-    <!-- JavaScript plugins (requires jQuery) -->
     <script src="/static/js/jquery.js"></script>
-    
-    <!-- JavaScript easing plugins -->
     <script src="/static/js/jquery.easing.1.3.js"></script>	
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/static/js/bootstrap.min.js"></script>
 
-    <!-- Custom js -->
     <script src="/static/js/custom.js"></script>
 
     $morehead
+    
+    
+    <script type = "text/javascript">
+	jQuery(window).bind("load", function() { 
+       
+       stickFooter();
+     
+	});
+    
+    </script>
+    
+    
   </head>
 
   <body>
     <header>
       <div class="navbar">
         <div class="container">
-          <a class="navbar-brand" href="#">
-	    <img src="/static/img/slogotmp.png" alt="Smashed.in" />
-	  </a>
+          <a class="navbar-brand" href="/">
+	    	<img src="/static/img/slogotmp.png" alt="Smashed.in" />
+	  	  </a>
           <div class="nav-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
               <li><a href="/">Home</a></li>

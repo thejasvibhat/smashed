@@ -94,3 +94,25 @@ function uploadReviewInit()
 	
 }
 
+function stickFooter ()
+{
+	var $footer = $(".footer");
+    positionFooter();
+
+   function positionFooter() {
+
+          if ( $(document.body).height() < $(window).height() ) {
+               $footer.css({
+                    position: "fixed",
+                    bottom: 0,
+                    left:0,
+                    right:0
+               })
+           } else {
+               $footer.attr("style", "");
+           }
+
+   }
+   $(window).resize(positionFooter);
+}
+
