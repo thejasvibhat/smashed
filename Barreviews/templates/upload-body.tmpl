@@ -35,23 +35,43 @@
 	    Basic details. Won't take too long :)
 	  </div>
 	</div>
-	<div class = "col-lg-3">
+	<div class = "col-lg-4">
 	  <input type = "text" name = "name" class = "form-control validate[required]" placeholder = "Bar Name" />
 	</div>
-	<div class = "col-lg-3">
-	  <input id = "location" type = "text" name = "location" class = "form-control validate[required]" placeholder = "Area" />
-	  <div class = "marginTopFive"></div>
-	  <input id = "city" type = "text" name = "city" class = "form-control validate[required]" placeholder = "City" />
-	  <div class = "marginTopFive"></div>
-	  <input id = "addressLocator" type = "hidden" name = "address" class = "form-control validate[required]" placeholder = "Exact Address" />
-	  <div class = "marginBottomFive"></div>
-	</div>
-	<div class = "col-lg-3">
+	
+	<div class = "col-lg-4">
 	  <input type = "text" name = "phone" class = "form-control" placeholder = "Phone" />
 	</div>
-	<div class = "col-lg-3">
+	<div class = "col-lg-4">
 	  <input id = "rating" type = "text" name = "rating" class = "form-control" value = "1"/>
 	  <div>Rate it out of 5. You know the drill right?</div>
+	</div>
+	
+	<div class = "col-lg-12">
+		<div class = "col-lg-6 paddingNone">
+			<input placeholder = "Addres..." name = "address" placeholder = "Area" class = "form-control validate[required]" id="addresspicker_map" />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Locality..." name = "locality" class = "form-control" id="locality" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Street Address1..." name = "area1" class = "form-control" id="administrative_area_level_2" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Street Address2..." name = "area2" class = "form-control" id="administrative_area_level_1" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Country..." name = "country"  class = "form-control" id="country" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Zip..." name = "zip" class = "form-control" id="postal_code" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Latitude..." name = "lat"class = "form-control" id="lat" disabled=disabled value = "12.9667" />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Longitude..." name = "long"class = "form-control" id="lng" disabled=disabled value = "77.5667" />
+			<div class = "marginTopFive"></div>
+        	<input type = "hidden" placeholder = "Type..." name = "type"  class = "form-control" id="type" disabled=disabled /> 
+	  	</div>
+	  	
+	  	<div class = "col-lg-6">
+	  		<div id = "map"></div>
+	  	</div>
+	    <div class = "marginBottomFive"></div>
 	</div>
 	
       </div>

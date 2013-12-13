@@ -48,7 +48,7 @@ class SceneHandler(AuthHandler):
         l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
 
         c = {}
-        review_query = ReviewDb.query(ReviewDb.bid == bid)		
+        review_query = ReviewDb.query(ReviewDb.bid == bid)
         reviews = review_query.fetch(1)
 
         for review in reviews:
@@ -117,6 +117,7 @@ class SceneHandler(AuthHandler):
         path = os.path.join (os.path.dirname (__file__), 'templates/b-body.tmpl')
         l_skel.addtobody (str((Template.compile(file=path) (searchList=c))))
 
+        l_skel.title = "Smashed.in :: %s" % review.name
         self.response.out.write(l_skel.gethtml())
 
 

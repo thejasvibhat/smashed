@@ -89,8 +89,36 @@ function uploadReviewInit()
 	
 	$('#uploadReviewForm').validationEngine({promptPosition : "topLeft", scroll: false});
 	
-	/* Location Picker */
-	$('#addressLocator').locationPicker();
+	/* Address Picker */
+	
+	var addresspickerMap = $( "#addresspicker_map" ).addresspicker({
+	regionBias: "in",
+    updateCallback: showCallback,
+	elements: {
+		    map:      "#map",
+		    lat:      "#lat",
+		    lng:      "#lng",
+		    street_number: '#street_number',
+		    route: '#route',
+		    locality: '#locality',
+		    administrative_area_level_2: '#administrative_area_level_2',
+		    administrative_area_level_1: '#administrative_area_level_1',
+		    country:  '#country',
+		    postal_code: '#postal_code',
+        	type:    '#type' 
+		  }
+	});
+	
+	$("#addresspicker_map").addresspicker("option", "reverseGeocode","true");
+
+	var gmarker = addresspickerMap.addresspicker( "marker");
+	gmarker.setVisible(true);
+	addresspickerMap.addresspicker( "updatePosition");
+
+    function showCallback(geocodeResult, parsedGeocodeResult){
+      //?
+    }
+	
 	
 }
 
