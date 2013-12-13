@@ -6,7 +6,15 @@ from webapp2_extras import auth, sessions
 from review import ReviewDb
 from review import CommentReviewDb
 from User.handlers import AuthHandler
+from google.appengine.api import search
+_INDEX_NAME = 'localityTagSearch'
 REVIEW_DB_NAME = 'bars_db'
+
+class RegionDb(ndb.Model):
+    """Models an individual Guestbook entry with author, content, and date."""
+    city    = ndb.StringProperty()
+    locality = ndb.StringProperty()
+    pincode   = ndb.StringProperty()
 
 class ListScenesHandler (webapp2.RequestHandler):
     def get(self):
@@ -56,6 +64,33 @@ class ListComments(AuthHandler):
         finalDict['reviews'] = allReviewsDict
         self.response.write(json.dumps(finalDict))
 
+class AjaxLocality(AuthHandler):
+    def get (self):
+        resource = self.request.get ("search");
+        expr_list = [search.SortExpression(
+            expression='tags', default_value='',
+            direction=search.SortExpression.DESCENDING)]
+        # construct the sort options
+        sort_opts = search.SortOptions(
+             expressions=expr_list)
+        query_options = search.QueryOptions(
+            limit=10,
+            sort_options=sort_opts)
+        query_obj = search.Query(query_string=resource, options=query_options)
+        results = search.Index(name=_INDEX_NAME).search(query=query_obj)
+        for result in results:
+            self.response.write('%s' %result.fields[1].value)    
+        
+##        return
+##        regQuerry = RegionDb.query(RegionDb.locality < resource)
+##        regs = regQuerry.fetch(15)
+##        finalDict = {}
+##        allRegs = []
+##        for reg in regs:            
+##            allRegs.append('%s' %reg.locality)
+##        finalDict['results'] = allRegs
+##        self.response.write(json.dumps(finalDict))
+        
 class SearchHandler(webapp2.RequestHandler):
     def get(self):
         index = search.Index("name = prasanna")
