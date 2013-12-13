@@ -78,8 +78,12 @@ class AjaxLocality(AuthHandler):
             sort_options=sort_opts)
         query_obj = search.Query(query_string=resource, options=query_options)
         results = search.Index(name=_INDEX_NAME).search(query=query_obj)
+        finalDict = {}
+        allRegs = []
         for result in results:
-            self.response.write('%s' %result.fields[1].value)    
+            allRegs.append('%s' %result.fields[1].value)
+        finalDict['results'] = allRegs
+        self.response.write(json.dumps(finalDict))
         
 ##        return
 ##        regQuerry = RegionDb.query(RegionDb.locality < resource)
