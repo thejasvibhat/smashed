@@ -38,10 +38,10 @@ function SaveComments()
                     var klon = $("#commentItem" );
                     var container = $('#comContainer');
                     var oClone = klon.clone();
-                    $(oClone).find('#creatorname').html($("#curcreatorname").val());
-                    $(oClone).find('#creatoravatar').attr('src',$("#curcreatorname").attr('src'));
+                    $(oClone).find('#creatorname').html($("#curcreatorname").html());
+                    $(oClone).find('#creatoravatar').attr('src',$("#curcreatoravatar").attr('src'));
                    $(oClone).find('#creatordescription').html($("#curdescription").val());
-                    $(container).append('<div class = "separator"></div>');
+                    //$(container).append('<div class = "marginTopTen"></div>');
                     $(container).append(oClone);
                     $(oClone).show();
 

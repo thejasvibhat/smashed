@@ -10,7 +10,8 @@ function SaveReviewComments()
                     var klon = $("#reviewItem" );
                     var container = $('#revContainer');
                     var oClone = klon.clone();
-                    $(oClone).find('#creatorname').html($("#curcreatorname").val());
+                    $(oClone).find('#creatorname').html($("#curcreatorname").html());
+                    $(oClone).find('#creatoravatar').attr('src',$('#curcreatoravatar').attr('src'));
                     $(oClone).find('#creatoravatar').attr('src',$("#curcreatorname").attr('src'));
                    $(oClone).find('#creatordescription').html($("#curdescription").val());
                    if($("#rating").val() == 1)
@@ -31,7 +32,7 @@ function SaveReviewComments()
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_5.png');
                    if($("#rating").val() == 5)
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_5_0.png');
-                    $(container).prepend('<div class = "separator"></div>');
+                    //$(container).prepend('<div class = "separator"></div>');
                     $(container).prepend(oClone);
                     $(oClone).show();
 

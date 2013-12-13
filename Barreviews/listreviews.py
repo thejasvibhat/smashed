@@ -74,7 +74,7 @@ class AjaxLocality(AuthHandler):
         sort_opts = search.SortOptions(
              expressions=expr_list)
         query_options = search.QueryOptions(
-            limit=10,
+            limit=100,
             sort_options=sort_opts)
         query_obj = search.Query(query_string=resource, options=query_options)
         results = search.Index(name=_INDEX_NAME).search(query=query_obj)

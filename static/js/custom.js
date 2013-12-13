@@ -118,25 +118,38 @@ function stickFooter ()
 
 function uploadReviewAutoCompleteArea()
 {
-	var data = [
-		{"label" : "Aragorn"},
-		{"label" : "Arwen"},
-		{"label" : "Bilbo Baggins"},
-		{"label" : "Boromir"},
-		{"label" : "Frodo Baggins"},
-		{"label" : "Gandalf"},
-		{"label" : "Gimli"},
-		{"label" : "Gollum"},
-		{"label" : "Legolas"},
-		{"label" : "Meriadoc Merry Brandybuck"},
-		{"label" : "Peregrin Pippin Took"},
-		{"label" : "Samwise Gamgee"}
-		];
-		
-		$( "#location" ).autocomplete(
+		$('#location').keyup(function()
 		{
-		 	source:data
-		})
+			$.ajax({
+                type: 'GET',
+                dataType:'json',
+                url: '/api/b/ajaxlist?search='+$(this).val(),
+                success: function(responseData) {
+                
+                $( "#location" ).autocomplete(
+				{
+		 			source:responseData.results
+				});
+                
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //TODO
+                }
+       		 }); 
+
+		});
+}
+
+function BInit()
+{
+	$('#curContainer').find('#rating').stepper({
+    	wheel_step:0.5,       // Wheel increment is 1
+    	limit: [1,5],         // No negative values
+    	onStep: function( val, up )
+    	{
+        	// do something here...
+    	}
+	});
 }
 		
 

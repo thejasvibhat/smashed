@@ -34,7 +34,7 @@ function initialize() {
 #set $count = 0
 #for $img in $images
 #set $count += 1
-                 <div class = "ScreenShotWrap displayinlineblock">
+                 <div class = "col-lg-4 ScreenShotWrap displayinlineblock">
                      <a href = "/res/download/${img}" rel = "gal">
                          <img class = "img-responsive" src = "/res/download/${img}" />
                      </a>
@@ -84,7 +84,7 @@ function initialize() {
                 		<div class = "marginTopTen"></div>
                 		<!-- Rating Container ( Styles N/A ) -->
                 		<div class = "ratingContainer">
-			                 <img src = "/reviewhtml/assets/rate_${rating}.png" />
+			                 <img height = "64" src = "/reviewhtml/assets/rate_${rating}.png" />
                 		</div>
                 
 		                <!-- USP -->
@@ -104,172 +104,179 @@ function initialize() {
    		<div class = "col-lg-8 whiteCanvas">
 
             <div class = "col-lg-6">
-    				<div class = "reviewUspContainer">
-                        <span class = "check">
+    				<div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 							#if $budget == "on" 
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
-                        </span>
-                        <span class = "UspItem">
+                        </div>
+                        <div class = "col-lg-11 UspItem">
                             Budget
-                        </span>
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $ac == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
-                        <span class = "UspItem">
+                        </div>
+                        <div class = "col-lg-11 UspItem">
                             A/C
-                        </span>
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $carpark == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
-                        <span class = "UspItem">
+                        </div>
+                        <div class = "col-lg-11 UspItem">
                             Car Park
-                        </span>
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $bigscreen == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
-                        <span class = "UspItem">
+                        </div>
+                        <div class = "col-lg-11 UspItem">
                             Big Screen
-                        </span>
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $ladyok == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
-                        <span class = "UspItem">
+                        </div>
+                        <div class = "col-lg-11 UspItem">
                             Lady Friendly
-                        </span>
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $fightscene == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
-                        <span class = "UspItem">
+                        </div>
+                        <div class = "col-lg-11 UspItem">
                             Fight Scene
-                        </span>
+                        </div>
                     </div>
     			</div>
     			
     			<div class = "col-lg-6">
-    				<div class = "reviewUspContainer">
-                        <span class = "UspItem">
-                            Music / Video
-                        </span>
-                        <span class = "check">
+    				<div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $musicvideo == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
+                        </div>
+                        
+                        <div class = "col-lg-11 UspItem ">
+                            Music / Video
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "UspItem">
-                            Clean
-                        </span>
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $clean == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
+                        </div>
+                        
+                        <div class = "col-lg-11 UspItem">
+                            Clean
+                        </div>
+                        
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "UspItem">
-                            Smoking on Table
-                        </span>
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $smoke == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
+                        </div>
+                        
+                         <div class = "col-lg-11 UspItem ">
+                            Smoking on Table
+                        </div>
+                        
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "UspItem">
-                            Happy Hours
-                        </span>
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $happyhours == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
+                        </div>
+                        
+                         <div class = "col-lg-11 UspItem">
+                            Happy Hours
+                        </div>
+                        
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "UspItem">
-                            Card Accepted
-                        </span>
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
                         #if $check_card == "on"
                             <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
                         #else
                         	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
                         #end if
-                        </span>
+                        </div>
+                         <div class = "col-lg-11 UspItem">
+                            Card Accepted
+                        </div>
                     </div>
                     
-                    <div class = "reviewUspContainer">
-                        <span class = "UspItem">
-                            Events
-                        </span>
-                        <span class = "check">
+                    <div class = "row reviewUspContainer">
+                        <div class = "col-lg-1 check paddingNone">
 	                        #if $events == "on"
 	                            <img class = "verticalalignmiddle" src = "/reviewhtml/assets/green.png" />
 	                        #else
 	                        	<img class = "verticalalignmiddle" src = "/reviewhtml/assets/red.png" />
 	                        #end if
 
-                        </span>
+                        </div>
+                        <div class = "col-lg-11 UspItem">
+                            Events
+                        </div>
                     </div>
                 </div>
             
@@ -306,16 +313,17 @@ function initialize() {
     <div class = "marginTopTwenty"></div>
      <div class = "container" id="revContainer" >
 	      <div class = "col-lg-12 reviewWhiteBoxSmall" id="reviewItem" style="display:none">
-	      <div class = "col-lg-2">
-	       <img src = "" id="creatoravatar"/>
+	      <div class = "col-lg-1">
+	       <img class = "img-responsive" src = "" id="creatoravatar"/>
 	       <div class = "marginTopTen"></div>
-            <span id="creatorname" class = "bold marginTopTen"></span>	       
+	       <!--
+            <span id="creatorname" class = "bold marginTopTen"></span>-->	       
 	       <div class = "marginTopTen"></div>
 	       <div class = "ratingContainer">
-                <img id='creatorrating' src = "/reviewhtml/assets/rate_1_0.png" />
+                <img class = "img-responsive"  id='creatorrating' src = "/reviewhtml/assets/rate_1_0.png" />
 	       </div>
 	      </div>
-	      <div class = "col-lg-10">
+	      <div class = "col-lg-11">
               <span id="creatordescription" class = "bold"></span>	       
 	     
 	      </div>
@@ -324,19 +332,21 @@ function initialize() {
     <div class = "marginTopTwenty"></div>
         <div class = "container" id='curContainer' >
     	<div class = "col-lg-12 reviewWhiteBoxSmall">
-    		<div class = "col-lg-2">
-    			<img id="curcreatoravatar" src = "" />
+    		<div class = "col-lg-1">
+    			<img class = "img-responsive" id="curcreatoravatar" src = "" />
+    			<!--
     			<div class = "marginTopTen"></div>
-			<span id="curcreatorname" class = "bold"></span>
     			
+				<span id="curcreatorname" class = "bold"></span>
+    			-->
     			<div class = "marginTopTen"></div>
-    			<input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" disabled = "true" />
+    			<input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" />
    			</div>
-    		<div class = "col-lg-10">
-    			<textarea style = "width:100%;height:150px;resize:none;" id="curdescription">This is cool because..</textarea>
+    		<div class = "col-lg-11">
+    			<textarea style = "width:100%;height:150px;resize:none;" id="curdescription">Comment here..</textarea>
     		</div>
     		<div class = "col-lg-12 marginTopTen">
-    			<input type = "button" class = "btn btn-regular" value = "That's it" onclick="SaveReviewComments()" />
+    			<input type = "button" class = "btn btn-success" value = "Comment" onclick="SaveReviewComments()" />
     		</div>
 
     	</div>

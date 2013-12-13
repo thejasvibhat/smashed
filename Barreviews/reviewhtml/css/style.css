@@ -73,7 +73,7 @@
 {
     background:#ffffff;
     -webkit-box-shadow:1px 1px 2px #aaa;
-    box-shadow:1px 1px 2px #aaa;
+    box-shadow:1px 1px 2px #111;
     padding:5px;
     height:84px;
     text-align:center;
@@ -143,13 +143,12 @@
 {
     display:inline-block;
     margin-right:10px;
-    height:64px;
     width:auto;
 }
 
 .reviewUspContainer
 {
-    margin:10px 0 0 0;
+    margin:20px 0 20px 0;
 }
 
 .reviewUspContainer img
