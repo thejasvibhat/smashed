@@ -50,6 +50,12 @@
     height:259px;
 }
 
+.tableCell
+{
+    display:table-cell;
+    vertical-align:middle;
+}
+
 .reviewHeadingBig
 {
     font-size:80px;
@@ -60,13 +66,13 @@
     text-transform:uppercase;
     text-align:center;
     margin-top:60px;
+    line-height:80px;
 }
 
 .reviewScreenShotContainer
 {
-    margin-top:30px;
+    margin-top:45px;
     position:relative;
-    left:10px;
 }
 
 .ScreenShotWrap
