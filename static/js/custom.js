@@ -116,3 +116,40 @@ function stickFooter ()
    $(window).resize(positionFooter);
 }
 
+function uploadReviewAutoCompleteArea()
+{
+		$('#location').keyup(function()
+		{
+			$.ajax({
+                type: 'GET',
+                dataType:'json',
+                url: '/api/b/ajaxlist?search='+$(this).val(),
+                success: function(responseData) {
+                
+                $( "#location" ).autocomplete(
+				{
+		 			source:responseData.results
+				});
+                
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //TODO
+                }
+       		 }); 
+
+		});
+}
+
+function BInit()
+{
+	$('#curContainer').find('#rating').stepper({
+    	wheel_step:0.5,       // Wheel increment is 1
+    	limit: [1,5],         // No negative values
+    	onStep: function( val, up )
+    	{
+        	// do something here...
+    	}
+	});
+}
+		
+
