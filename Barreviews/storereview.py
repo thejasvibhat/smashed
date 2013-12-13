@@ -104,9 +104,7 @@ def UpdateReviewRating(curRating,reviewId):
 
 class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
     def post(self):
-        user_dict = self.auth.get_user_by_session()
-        userId = user_dict['user_id']        
-    
+
         review = ReviewDb(parent=review_dbkey(REVIEW_DB_NAME))
         review.bid = str(uuid.uuid4())
 
@@ -154,7 +152,7 @@ class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
         review.o_events = self.request.get('events')
         review.o_bigscreen = self.request.get('bigscreen')
         review.o_clean = self.request.get('clean')
-        review.reviewid = CreateReview(self.request, 'init', userId)
+        review.reviewid = CreateReview(self.request, 'init', self.user_id)
         #review.latlon = ndb.GeoPtProperty()    
         review.put()
 

@@ -163,14 +163,16 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
 
     # Remember auth data during redirect, just for this demo. You wouldn't
     # normally do this.
-    self.session.add_flash(data, 'data - from _on_signin(...)')
-    self.session.add_flash(auth_info, 'auth_info - from _on_signin(...)')
+    #self.session.add_flash(data, 'data - from _on_signin(...)')
+    #self.session.add_flash(auth_info, 'auth_info - from _on_signin(...)')
 
     # Go to the profile page
     self.redirect('/auth/profile')
 
   def logout(self):
     self.auth.unset_session()
+    #Use the following file is developers start using session/user interchangeably.
+    #self.session.clear()
     self.redirect('/')
 
   def handle_exception(self, exception, debug):

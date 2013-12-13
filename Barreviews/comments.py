@@ -49,9 +49,7 @@ def CreateReview (reviewDict,parentid,userid):
         
 class AddComment (AuthHandler):
     def get(self):
-        user_dict = self.auth.get_user_by_session()
-        userId = user_dict['user_id']        
-        commentid = CreateReview(self.request, self.request.get('reviewid'),userId)
+        commentid = CreateReview(self.request, self.request.get('reviewid'), self.user_id)
         storereview.UpdateReviewRating(self.request.get('rating'),self.request.get('reviewid'))
         self.response.write('%s' %commentid)     
         

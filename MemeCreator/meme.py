@@ -66,7 +66,7 @@ class ListMeme(webapp2.RequestHandler):
         for meme in memes:
             l_auth = auth.get_auth()
             userData = l_auth.store.user_model.get_by_id (meme.userid)
-            logging.info(userData)
+            #logging.info(userData)
             self.response.write('<meme>')
             self.response.write('<ts>')
             self.response.write('%s' %meme.date)
@@ -200,8 +200,7 @@ class SkelList (webapp2.RequestHandler):
               
 class SaveHandler(AuthHandler):
     def post(self):
-        user_dict = self.auth.get_user_by_session()
-        userId = user_dict['user_id']		
+        userId = self.user_id
         root = ET.fromstring(self.request.get('data'))
         remove_namespace(root,"http://www.w3.org/1999/xhtml")
         imgId = ''

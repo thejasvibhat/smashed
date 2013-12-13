@@ -38,8 +38,6 @@ def CreateComment (reviewDict,parentid,userid):
         
 class AddCommentOh (AuthHandler):
     def get(self):
-        user_dict = self.auth.get_user_by_session()
-        userId = user_dict['user_id']        
-        commentid = CreateComment(self.request, self.request.get('commentid'),userId)
+        commentid = CreateComment(self.request, self.request.get('commentid'), self.user_id)
         self.response.write('%s' %commentid)     
         
