@@ -9,6 +9,7 @@ import logging
 from Cheetah.Template import Template
 
 from User.handlers import AuthHandler
+from User.user import User
 from secrets import secrets
 
 from MemeCreator.creatememe import *
@@ -33,6 +34,7 @@ from Barreviews.listreviews import SearchHandler
 from Barreviews.review import SceneHandler
 from Barreviews.review import ReviewHandler
 from Barreviews.listreviews import ListComments
+from Barreviews.listreviews import AjaxLocality
 
 from Barreviews.storereview import *
 
@@ -42,6 +44,7 @@ from DataDump.download import GetIcon
 
 from landing.landing import LandingPage
 from checktoken import *
+from scrapper import *
 class ComingSoon (AuthHandler):
 
     def get(self):
@@ -81,6 +84,7 @@ routes = [
   webapp2.Route ('/api/b/comments', ListComments),
   webapp2.Route ('/api/b/updatecomment', AddComment),
   webapp2.Route ('/api/b/upload', BSaveHandler),
+  webapp2.Route ('/api/b/ajaxlist', AjaxLocality),
   
   # #Reviews/storereview.py
   #webapp2.Route ('/reviews/store/uploadreview', MainPageStore1), #BR create/upload (VIEW)
@@ -94,6 +98,7 @@ routes = [
   webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
   webapp2.Route ('/res/icon/<resource>', GetIcon), #OH res download (API/Path)
   webapp2.Route ('/gettoken', BaseRequestHandler), 
+  webapp2.Route ('/storelocality', PushLocality), 
 ]
 
 # webapp2 config
@@ -103,7 +108,8 @@ app_config = {
     'secret_key': secrets.SESSION_KEY
   },
   'webapp2_extras.auth': {
-    'user_attributes': []
+    'user_attributes': [],
+    'user_model' : User
   }
 }
 

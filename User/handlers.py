@@ -101,6 +101,20 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
     },
   }
 
+  @webapp2.cached_property
+  def user_id (self):
+    return self.current_user.key.id()
+  @webapp2.cached_property
+  def user_name (self):
+    return self.current_user.name
+  @webapp2.cached_property
+  def isloggedin (self):
+    return self.logged_in
+
+  @webapp2.cached_property
+  def user (self):
+    return self.current_user
+
   def _on_signin(self, data, auth_info, provider):
     """Callback whenever a new or existing user is logging in.
      data is a user info dictionary.
@@ -160,7 +174,7 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
     self.redirect('/')
 
   def handle_exception(self, exception, debug):
-    logging.error(exception)
+    logging.exception (exception)
     self.render('error.html', {'exception': exception})
     
   def _callback_uri_for(self, provider):
