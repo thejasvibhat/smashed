@@ -2814,7 +2814,7 @@ button.close {
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
-  line-height: 20px;
+  line-height: 25px;
   color: #777777;
   border-radius: 4px;
 }
@@ -2877,21 +2877,19 @@ button.close {
 .navbar-brand {
   display: block;
   max-width: 200px;
-  padding: 15px 15px;
+  padding: 0px 15px;
   margin-right: auto;
   margin-left: auto;
   font-size: 18px;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 46px;
   color: #777777;
   text-align: center;
 }
 
 .navbar-brand:hover,
 .navbar-brand:focus {
-  color: #5e5e5e;
-  text-decoration: none;
-  background-color: transparent;
+  background:transparent !important;
 }
 
 .navbar-toggle {

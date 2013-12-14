@@ -76,8 +76,10 @@ function readURL(input,id) {
 
 function uploadReviewInit()
 {
-	/* Steppers */
-	
+
+	$('#nav-review-record').addClass ('nav-highlight');
+
+	/* Steppers */	
 	$('#rating').stepper({
     	wheel_step:0.5,       // Wheel increment is 1
     	limit: [1,5],         // No negative values
@@ -170,6 +172,7 @@ function uploadReviewAutoCompleteArea()
 
 function BInit()
 {
+	$('#nav-reviews').addClass ('nav-highlight');
 	$('#curContainer').find('#rating').stepper({
     	wheel_step:0.5,       // Wheel increment is 1
     	limit: [1,5],         // No negative values
@@ -177,6 +180,55 @@ function BInit()
     	{
         	// do something here...
     	}
+	});
+}
+
+function reviewsInit()
+{
+	$('#nav-reviews').addClass ('nav-highlight');
+}
+
+function ohListInit()
+{
+	$('#nav-oh').addClass ('nav-highlight');
+}
+
+function recordOhInit()
+{
+	$('#nav-oh-record').addClass ('nav-highlight');
+	GetUploadURL();
+	// initialize scrollable
+	$('#color1').colorPicker();
+	//$(".scrollable").scrollable();
+	$("#BaseCanvas").droppable({
+		drop: function( event, ui ) {
+			curImage =  $("#backImage");
+			curImage.addClass('imagehide');
+			var iconsrc = ui.draggable.find("img").context.src;
+			var src = iconsrc.replace("icon", "download");
+			var value = iconsrc.split("/").pop();
+
+			$("#backImage").attr('src', src);
+		  
+			$("#backImage").attr('value', value);
+		  
+			$('#saveButton').removeClass("disabled");   
+			$('#saveButton').addClass("enabled");   
+			$("#saveButton").removeAttr("disabled");
+		}
+	});
+	GetThumbnails();
+	$('#tags_2').tagsInput({
+	width: 'auto',
+	onChange: function(elem, elem_tags)
+		{
+			var languages = ['php','ruby','javascript'];
+			$('.tag', elem_tags).each(function()
+			{
+				if($(this).text().search(new RegExp('\\b(' + languages.join('|') + ')\\b')) >= 0)
+					$(this).css('background-color', 'yellow');
+			});
+		}
 	});
 }
 		

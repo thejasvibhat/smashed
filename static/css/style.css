@@ -334,7 +334,7 @@ ul#gallery-list-memes li {
 
 .img-title-big
 {
-    height:120px;
+    height:auto;
     box-shadow:1px 1px 2px #dddddd;
     -webkit-box-shadow:1px 1px 2px #ddd;
 }
@@ -344,6 +344,7 @@ ul#gallery-list-memes li {
     margin:10px 0 10px 0;
     color:#666666;
     font-size:20px;
+	font-family:"rockwell",helvetica;
 }
 
 .img-title h6{
@@ -1173,13 +1174,15 @@ Custom responsive
 ======================================= */
 @media (min-width: 1200px) {
 	.navbar-nav > li > a {
-	  padding:25px 20px 25px 20px;
+	 padding:10px 15px 10px 15px;
 	  margin:0;
 	  font-size: 16px;
-	  line-height: 16px;
-	  font-weight:400;
+	  line-height: 30px;
 	  color: #fff;
 	  border-radius: 0;
+	  font-family:"Open Sans",helvetica;
+	  font-style:italic;
+	  font-weight:bold;
 	}
 	.location{
 		background:url(/static/img/contact-img.png) no-repeat bottom left;
@@ -1215,7 +1218,7 @@ Custom responsive
 		color: #a9b0b7;
 		border:1px solid #6a6f74;
 		background:#474e56;
-		margin-top:18px;
+		margin-top:8px;
 		padding:5px 15px 5px 15px;
 		font-size:12px;		
 	}
@@ -1265,7 +1268,7 @@ Custom responsive
 		color: #a9b0b7;
 		border:1px solid #6a6f74;
 		background:#474e56;
-		margin-top:8px;
+		margin-top:0px;
 		padding:5px 15px 5px 15px;
 		font-size:12px;		
 	}
@@ -1542,7 +1545,7 @@ gridGoogleMapContainer
 
 .clearNav
 {
-    margin-top:90px;
+    margin-top:70px;
 }
 
 .noteSmall
@@ -1705,6 +1708,11 @@ li
 #map
 {
 	width:100%;
-	height:340px;
+	height:310px;
+}
+
+.nav-highlight
+{
+	color:#1fb4da !important;
 }
 

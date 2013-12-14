@@ -2,10 +2,13 @@
 <script src ="/MEMEHTML/meme.js" type = "text/javascript"></script> 
 <script type = "text/javascript">
 var m_strCurTimeStamp = "";
-GetTickerInit();
-setTimeout(function(){
-GetTickerLatest();
+jQuery(document).ready(function()
+{
+	ohListInit();
+	GetTickerInit();
+	setTimeout(function(){
+		GetTickerLatest();
 
-},5000);
-
+	},5000);
+});
 </script>

@@ -17,17 +17,20 @@ def call_all(obj, *args, **kwargs):
 
 class LandingPage (AuthHandler):
     def get(self):
-        l_skel = Skel()
-        l_skel.title = "Smashed.In :: Stand n Deliver"
+        if self.logged_in:
+            self.redirect('/b')
+        else:
+            l_skel = Skel()
+            l_skel.title = "Smashed.In :: Stand n Deliver"
 
-        #Head
-        head_path = os.path.join (os.path.dirname (__file__), 'templates/landing-head.tmpl')
-        l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+            #Head
+            head_path = os.path.join (os.path.dirname (__file__), 'templates/landing-head.tmpl')
+            l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
 
-        path = os.path.join (os.path.dirname (__file__), 'templates/landing-body.tmpl')
-        l_skel.addtobody (str((Template.compile(file=path) (searchList={}))))
+            path = os.path.join (os.path.dirname (__file__), 'templates/landing-body.tmpl')
+            l_skel.addtobody (str((Template.compile(file=path) (searchList={}))))
 
-        #logging.error ("SESSION digging %s" % self.session)
-        #logging.error ("AUTH digging %s" % self.auth.get_session_data())
+            #logging.error ("SESSION digging %s" % self.session)
+            #logging.error ("AUTH digging %s" % self.auth.get_session_data())
 
-        self.response.out.write(l_skel.gethtml())
+            self.response.out.write(l_skel.gethtml())

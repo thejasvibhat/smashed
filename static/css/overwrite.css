@@ -208,7 +208,7 @@ Navbar
 ==================================== */
 .navbar {
   position: fixed;
-  min-height: 40px;
+  height: 30px;
   padding:0;
   margin-bottom: 0;
   background-color: #2f343a;
@@ -220,8 +220,8 @@ Navbar
 }
 
 .navbar-brand{
-	margin:0 20px 0 0;
-	padding:13px 0 12px 0;	
+	margin:0 40px 0 0;
+	padding:0px 0 12px 0;	
 }
 
 .navbar-brand:hover{
@@ -229,15 +229,16 @@ Navbar
 }
 
 .navbar-nav > li > a {
-  padding:25px 15px 25px 15px;
+  padding:10px 15px 10px 15px;
   margin:0;
   font-size: 14px;
-  line-height: 14px;
   font-weight:400;
   color: #fff;
   border-radius: 0;
   outline:none;
-  font-family:"rockwell";
+  font-family:"Open Sans",helvetica;
+  font-style:italic;
+  font-weight:bold;
 }
 
 header .navbar-nav > .dropdown > a .caret{
@@ -250,11 +251,12 @@ header .navbar-nav > .dropdown > a .caret{
 .navbar-nav > .active > a,
 .navbar-nav > .active > a:hover,
 .navbar-nav > .active > a:focus {
-  color: #c5c5c5;
+  color: #1fb4da;
   background:none;
 }
 
 .navbar-nav li{
+	border-left:2px solid #222;
 }
 
 header .navbar-nav > .dropdown.active > a .caret, 

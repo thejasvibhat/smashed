@@ -149,7 +149,7 @@ function Apply()
     var fontsize = $("#fontsize").val() + 'px';
     cuTextBox.css("font-size",fontsize);
 }
-
+/*
 $(function() {
     GetUploadURL();
       // initialize scrollable
@@ -186,6 +186,7 @@ $(function() {
 				}
 			});
 });
+*/
 function SelectCrop(div,selection)
 {
     curSelectionX = selection.x1/450;
