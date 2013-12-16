@@ -182,12 +182,21 @@
     },
     
     _findInfo: function(result, type) {
+        var onType = type;
+        if(type == 'locality')
+        {
+            type = 'sublocality';
+            onType = "neighborhood";
+        }
+      var place = [];
       for (var i = 0; i < result.address_components.length; i++) {
         var component = result.address_components[i];
-        if (component.types.indexOf(type) !=-1) {
-          return component.long_name;
+        if (component.types.indexOf(type) !=-1 || component.types.indexOf(onType) !=-1) {
+            place.push(component.long_name);
+          //return component.long_name;
         }
       }
+        return place.join(',');
       return false;
     },
     
