@@ -1177,7 +1177,7 @@ Custom responsive
 	 padding:10px 15px 10px 15px;
 	  margin:0;
 	  font-size: 16px;
-	  line-height: 30px;
+	  line-height: 50px;
 	  color: #fff;
 	  border-radius: 0;
 	  font-family:"Open Sans",helvetica;
@@ -1545,7 +1545,7 @@ gridGoogleMapContainer
 
 .clearNav
 {
-    margin-top:70px;
+    margin-top:90px;
 }
 
 .noteSmall

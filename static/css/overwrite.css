@@ -208,7 +208,7 @@ Navbar
 ==================================== */
 .navbar {
   position: fixed;
-  height: 30px;
+  height: 70px;
   padding:0;
   margin-bottom: 0;
   background-color: #2f343a;
@@ -221,7 +221,9 @@ Navbar
 
 .navbar-brand{
 	margin:0 40px 0 0;
-	padding:0px 0 12px 0;	
+	padding:0px 0 12px 0;
+	line-height:62px !important;
+	margin-left:10px !important;	
 }
 
 .navbar-brand:hover{
