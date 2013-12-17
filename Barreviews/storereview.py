@@ -18,6 +18,7 @@ sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), '../li
 from comments import CreateReview
 from Cheetah.Template import Template
 from User.handlers import AuthHandler
+from address import CreateAddress
 REVIEW_DB_NAME = 'bars_db'
 def review_dbkey(review_dbname=REVIEW_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
@@ -37,6 +38,7 @@ class ReviewDb(ndb.Model):
     images = ndb.BlobKeyProperty (repeated=True)
 
     name = ndb.StringProperty()
+    addressid = ndb.StringProperty()
     address = ndb.StringProperty()
     phone  = ndb.StringProperty()
     rating = ndb.StringProperty()
@@ -62,7 +64,7 @@ class ReviewDb(ndb.Model):
     o_events = ndb.StringProperty()
     o_clean = ndb.StringProperty()
     o_bigscreen = ndb.StringProperty()
-    latlon = ndb.GeoPtProperty()    
+    latlon = ndb.StringProperty()    
     reviewid = ndb.StringProperty()
     userid   = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
@@ -124,7 +126,7 @@ class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
         review.images.append(icon6[0].key())
         
         review.name = self.request.get('name')
-        review.address = self.request.get('address')
+        
         review.phone = self.request.get('phone')
         rating = float(self.request.get('rating'))
         rating = 0.5 * math.ceil(2.0 * rating)
@@ -153,6 +155,7 @@ class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
         review.o_bigscreen = self.request.get('bigscreen')
         review.o_clean = self.request.get('clean')
         review.reviewid = CreateReview(self.request, 'init', self.user_id)
+        review.addressid,review.address = CreateAddress(self.request, review.bid)
         #review.latlon = ndb.GeoPtProperty()    
         review.put()
 

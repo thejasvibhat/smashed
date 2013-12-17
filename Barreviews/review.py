@@ -5,6 +5,7 @@ import logging
 from google.appengine.ext import ndb
 from storereview import ReviewDb
 from comments import CommentReviewDb
+from address import LocationDb
 from webapp2_extras import auth, sessions
 import math
 import json
@@ -33,6 +34,12 @@ class ReviewHandler(webapp2.RequestHandler):
         #Body
         review_query = ReviewDb.query(ancestor=review_dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
         reviews = review_query.fetch(12)
+        for review in reviews:
+            addressid = str(review.addressid)
+            add_querry = LocationDb.query(LocationDb.addressid == addressid)
+            addresses = add_querry.fetch()
+            for addressLoc in addresses:
+                review.latlon = '%s:%s' %(addressLoc.lat,addressLoc.lng)
 
         template_values = {"reviews" : reviews}
         path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')
@@ -76,16 +83,20 @@ class SceneHandler(AuthHandler):
                 logging.info(reviewsDict)
                 rating = rating/totalReviews
                 rating = 0.5 * math.ceil(2.0 * rating)
-                
+                c['rating'] = '%s' %rating
+                addressid = str(review.addressid)
+                add_querry = LocationDb.query(LocationDb.addressid == addressid)
+                addresses = add_querry.fetch()
+                for addressLoc in addresses:
+                    c['lat'] = '%s' %addressLoc.lat
+                    #c['lon'] = '%s' % review.latlon.lon
+                    c['lon'] = '%s' %addressLoc.lng
+                    add = "<br />".join(addressLoc.formattedaddress.split("\n"))                
+                    c['address'] = '%s' % add                    
                 c['reviewlist'] = allReviewsDict
                 #12.913762,77.600119                
                 c['name'] = '%s' % review.name
                 #c['lat'] = '%s' % review.latlon.lat
-                c['lat'] = '12.913762'
-                #c['lon'] = '%s' % review.latlon.lon
-                c['lon'] = '77.600119'
-                add = "<br />".join(review.address.split("\n"))                
-                c['address'] = '%s' % add
                 c['phone'] ='%s' % review.phone
                 desc = "<br />".join(userreviews[0].review.split("\n"))
                 c['description'] = '%s' %desc
@@ -93,7 +104,7 @@ class SceneHandler(AuthHandler):
 
                 c['images'] = review.images
                 
-                c['rating'] = '%s' %rating
+                
 				
                 c['budget'] = '%s' %review.o_budget
                 c['ac'] = '%s' %review.o_ac

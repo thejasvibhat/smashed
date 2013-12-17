@@ -65,8 +65,9 @@ class ListComments(AuthHandler):
 class AjaxLocality(AuthHandler):
     def get (self):
         resource = self.request.get ("search");
+        stype = self.request.get ("type");
         expr_list = [search.SortExpression(
-            expression='tags', default_value='',
+            expression='tagsAddress', default_value='',
             direction=search.SortExpression.DESCENDING)]
         # construct the sort options
         sort_opts = search.SortOptions(
@@ -74,12 +75,20 @@ class AjaxLocality(AuthHandler):
         query_options = search.QueryOptions(
             limit=100,
             sort_options=sort_opts)
-        query_obj = search.Query(query_string=resource, options=query_options)
+        if stype == 'bar':
+            q = 'tagsName:%s'%resource
+        else:
+            q = 'tagsAddress:%s'%resource
+        query_obj = search.Query(query_string=q, options=query_options)
         results = search.Index(name=_INDEX_NAME).search(query=query_obj)
         finalDict = {}
         allRegs = []
         for result in results:
-            allRegs.append('%s' %result.fields[1].value)
+            locRes = {}
+            locRes['name'] = '%s' %result.fields[3].value
+            locRes['locality'] = '%s' %result.fields[2].value
+            locRes['bid'] = '%s' %result.fields[6].value
+            allRegs.append(locRes)#'%s' %result.fields[2].value)
         finalDict['results'] = allRegs
         self.response.write(json.dumps(finalDict))
         
