@@ -45,6 +45,9 @@ from DataDump.download import GetIcon
 from landing.landing import LandingPage
 from checktoken import *
 from scrapper import *
+
+from SitePages.sitepages import *
+
 class ComingSoon (AuthHandler):
 
     def get(self):
@@ -79,6 +82,10 @@ routes = [
   webapp2.Route ('/b/record', BRecordHandler), #BR create/upload (VIEW)
   webapp2.Route ('/b/<resource>', SceneHandler), #BR Single (VIEW)
   webapp2.Route ('/b/<resource>/<name>', SceneHandler), #BR Single (VIEW)
+  
+  webapp2.Route ('/pages/privacy', PrivacyHandler), #SitePages
+  webapp2.Route ('/pages/about', AboutHandler), #SitePages
+  webapp2.Route ('/pages/terms', TermsHandler), #SitePages
  
   webapp2.Route ('/api/b/list', ListScenesHandler),
   webapp2.Route ('/api/b/comments', ListComments),
