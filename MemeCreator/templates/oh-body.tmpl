@@ -2,7 +2,7 @@
 
 <!-- Content -->    
 <div class = "container">
-  <div class = "col-lg-7 paddingNone">    
+  <div class = "col-lg-7">    
 
 #for $meme in $memes
     <div class = "row memeIndvItem">
@@ -18,10 +18,10 @@
 	    <a onClick = "shareOhOnFaceBook('${meme.resid}');" href = "javascript:void(0);">Share on Facebook</a>
 	  </div>
 	  <div class = "marginTopTen shareTwitter">
-	    <a onClick = "shareOhOnTwitter('${meme.resid}');" href = "javascript:void(0);">Share on Twitter
+	    <a onClick = "shareOhOnTwitter('${meme.resid}');" href = "javascript:void(0);">Share on Twitter</a>
 	  </div>
-	  <div class = "marginTopTen">
-	    <a href = "javascript:void(0);"><img class = "img-responsive" src = "/assets/pinbutton.png" title = "Pin It!" /></a>
+	  <div class = "marginTopTen shareGoogle">
+	    <a style = "height:auto;" onClick = "shareOnGooglePlus('${meme.resid}');" href = "javascript:void(0);">Share on Google +</a>
 	  </div>
 	</div>
       </div>

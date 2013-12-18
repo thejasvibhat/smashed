@@ -253,7 +253,7 @@ header .navbar-nav > .dropdown > a .caret{
 .navbar-nav > .active > a,
 .navbar-nav > .active > a:hover,
 .navbar-nav > .active > a:focus {
-  color: #1fb4da;
+  color: #ef8405;
   background:none;
 }
 
@@ -416,7 +416,7 @@ Tabs
 }
 
 .nav-tabs li a.tab-bg8{
-	background-color:#1fb4da;
+	background-color:#ef8405;
 }
 
 .nav-tabs li a.tab-bg1:hover{

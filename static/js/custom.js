@@ -172,6 +172,7 @@ function uploadReviewAutoCompleteArea()
 
 function BInit()
 {
+	$('#bSearch').show();
 	$('#nav-reviews').addClass ('nav-highlight');
 	$('#curContainer').find('#rating').stepper({
     	wheel_step:0.5,       // Wheel increment is 1
@@ -181,11 +182,20 @@ function BInit()
         	// do something here...
     	}
 	});
+	$('#bSearchInput').live("keyup",function(event)
+	{
+		getBarListing($(this).val());
+	});
 }
 
 function reviewsInit()
 {
+	$('#bSearch').show();
 	$('#nav-reviews').addClass ('nav-highlight');
+	$('#bSearchInput').live("keyup",function(event)
+	{
+		getBarListing($(this).val());
+	});
 }
 
 function ohListInit()
@@ -230,6 +240,37 @@ function recordOhInit()
 			});
 		}
 	});
+}
+
+function getBarListing(a_val)
+{
+	$.ajax({
+            type: 'GET',
+            dataType:'json',
+            url: '/api/b/ajaxlist?type=bar&search='+a_val,
+            success: function(responseData) {
+            	$( "#bSearchInput" ).autocomplete({
+					minLength: 0,
+					source: responseData.results,
+					focus: function( event, ui ) {
+						$( "#bSearchInput" ).val( ui.item.name );
+						return false;
+					},
+					select: function( event, ui ) {
+						$( "#bSearchInput" ).val( ui.item.name );
+						return false;
+					}
+				})
+				.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+					return $( "<li>" )
+					.append( "<a>" + item.name + "<br>" + item.locality + "</a>" )
+					.appendTo( ul );
+				};
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                //TODO
+            }
+    }); 
 }
 		
 

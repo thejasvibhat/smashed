@@ -21,7 +21,7 @@
 <div class = "marginTopTwenty"></div> 
 
 <div class="container">
-  	<div class = "col-lg-3 whiteCanvas paddingNone paddingBottom">
+  	<div class = "col-lg-3 whiteCanvas paddingBottom" style = "max-height:550px;overflow-y:auto;">
 	    <div class = "marginTen">
 			<span class = "rockwellTextBig cursorPointer" onclick="ChangeBackground();"> Upload new ( + )</span>
 		</div>
@@ -37,11 +37,11 @@
         <div class = "col-lg-6">
                         
             <div id="BaseCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#ababab;width:550px;height:550px;">             
-                <img id="backImage" src="/MEMEHTML/assets/drophere.jpg" onload="OnImageLoad()" > 
+                <img id="backImage" src="/static/img/drophere.png" onload="OnImageLoad()" > 
             </div>
         </div>
     
-       <div class = "col-lg-3 whiteCanvas paddingNone paddingBottom">
+       <div class = "col-lg-3 whiteCanvas paddingBottom">
            <label class = "labelBig">Font Size</label>
           <dd class='stepper_widget' ><input style = "width:120px;" type='text' class="form-control" placeholder="20" id='fontSizeText' value='20' class='min_20_max_100' onblur="FontSizeChange(this.value);">  
 	      <div class = "marginTopTen"></div> 
@@ -66,8 +66,8 @@
           <label class = "labelBig">Font Weight</label>
           <div>
               <select  onchange="UpdateFontweight(this.value);">                        
+              	  <option>Bold</option>
                   <option>Normal</option>
-                  <option>Bold</option>
               </select>
           </div>
           <div class = "sep"></div>
@@ -82,14 +82,14 @@
               </select>
           </div>
           <div class = "sep"></div>          
-          <input type="button" class = "btn btn-primary" value="Add Caption ( + )" onclick="AddCaption();" />   
-          <input type="button" class = "btn btn-danger" value="Remove" onclick="RemoveCaption();" />   
-          <div class = "sep"></div>          
-          <input type="button" class = "btn btn-warning" value="Crop" onclick="Crop();" />   
+          <input type="button" class = "btn btn-primary" value="Caption(+)" onclick="AddCaption();" />   
+          <input type="button" class = "btn btn-danger" value="Remove" onclick="RemoveCaption();" />
           <input type="button" class = "btn btn-success" value="Save" onclick="Save();" />   
+          
+          <!--<input type="button" class = "btn btn-warning" value="Crop" onclick="Crop();" />   -->
       
       
-      	  <div id = "memeSpinner" class = "col-lg-12 loaderTop" style = "padding:0;display:none;">
+      	  <div id = "memeSpinner" class = "col-lg-12 loaderTop marginTopTen" style = "padding:0;display:none;">
 	      <img src = "/assets/pacman.gif" />
 	      &nbsp;&nbsp;
 	      <span id = "spinnerMg">Cooking your Meme.. Hang on!</span>

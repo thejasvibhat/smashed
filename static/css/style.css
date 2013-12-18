@@ -1169,6 +1169,19 @@ Ui to top
 	outline:none;
 }
 
+.navbar-nav > li.search {
+	display:none;
+	 padding:10px 15px 10px 15px;
+	  margin:0;
+	  font-size: 14px;
+	  line-height: 50px;
+	  color: #fff;
+	  border-radius: 0;
+	  font-family:"rockwell",helvetica;
+	  font-style:italic;
+	  font-weight:bold;
+	}
+
 /*
 Custom responsive
 ======================================= */
@@ -1432,9 +1445,8 @@ gridGoogleMapContainer
 
 .dottedBorder
 {
-    border:6px dashed #707070;
-    -webkit-border-radius:8px;
-    border-radius:8px;
+    box-shadow:1px 1px 10px #2b2b2b;
+    -webkit-border-radius:1px 1px 10px #2b2b2b;
 }
 
 #backImage
@@ -1713,6 +1725,6 @@ li
 
 .nav-highlight
 {
-	color:#1fb4da !important;
+	color:#ef8405 !important;
 }
 
