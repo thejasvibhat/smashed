@@ -2,7 +2,7 @@ var isDragging = false;
 var iTextCnt = 0;
 var cuTextBox;
 var curDemoBox;
-var curColor = 0;
+var curColor = '#fff';
 var curFontSize = 20;
 var curfontFamily = "Arial";
 var curfontWeight = "Normal";
@@ -80,7 +80,7 @@ function ChangeBackground()
 }
 function reset()
 {
-    curColor = 0;
+    curColor = '#fff';
     curFontSize = 30;
     curfontFamily = "Arial";
     curfontWeight = "Normal";
@@ -98,7 +98,7 @@ function AddCaption()
         top = 400;
         
         
-    $("#BaseCanvas").append("<div class='demo"+iTextCnt+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:50px;top:"+top+"px;background-color:transparent;cursor:move;'><textarea  id='myText"+iTextCnt+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;'>Add caption here</textarea></div>");  
+    $("#BaseCanvas").append("<div class='demo"+iTextCnt+"' style='width:200px;height:40px;x:0px;y:0px;position:absolute;left:50px;top:"+top+"px;background-color:transparent;cursor:move;'><textarea  id='myText"+iTextCnt+"' class='displayBlock' style='width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'>Add caption here</textarea></div>");  
     
     cuTextBox = $('#myText'+iTextCnt+'');     
     m_arrTextBoxes.push(cuTextBox);
