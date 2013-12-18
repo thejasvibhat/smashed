@@ -39,12 +39,13 @@ def user_meme_dbkey(meme_userdbname=USER_MEME_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('user_meme_db', meme_userdbname)
 
-def SaveFinalMeme(userid,file_name):
+def SaveFinalMeme(userid,file_name,tags):
     usermeme = UserMemeDb(parent=user_meme_dbkey(USER_MEME_DB_NAME))
     usermeme.resid = str(uuid.uuid4()) 
     usermeme.blobid = file_name
     usermeme.userid = userid
     usermeme.shareid = ''
+    usermeme.tags = tags
     usermeme.commentid = CreateComment({}, 'init', userid)
     usermeme.put();
     return usermeme.resid;
@@ -58,7 +59,12 @@ def UpdateFacebookId(resid,postid):
 	
 class ListMeme(webapp2.RequestHandler):
     def get(self):
-        meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+        tag = self.request.get('tag',default_value="auto")        
+        if tag == "auto":
+            meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+        else:
+            meme_query = UserMemeDb.query(UserMemeDb.tags == tag).order(-UserMemeDb.date)
+        
         oLimit = int(self.request.get("limit"))
         oOffset = int(self.request.get("offset"))
         memes = meme_query.fetch(oLimit,offset=oOffset)
@@ -210,7 +216,7 @@ class SaveHandler(AuthHandler):
         style = ''
         weight = ''
         textlayers = []
-    
+        tags = []
         for objects in root:
             selectionx = objects.get('x')
             selectiony = objects.get('y')
@@ -228,7 +234,7 @@ class SaveHandler(AuthHandler):
                     for meme in memes:
                         blob_reader = blobstore.BlobReader(meme.resid)
                         background = images.Image(blob_reader.read())
-                        
+                        tags = meme.tags
                         background.resize(width=int(imgwidth), height=int(imgheight))
                         background.im_feeling_lucky()
                         thumbnail = background.execute_transforms(output_encoding=images.JPEG)
@@ -301,7 +307,7 @@ class SaveHandler(AuthHandler):
             f.write(merged)
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
-        memeid = SaveFinalMeme(userId,blob_key)
+        memeid = SaveFinalMeme(userId,blob_key,tags)
         oauth_access_token = 'CAADlzuSdjcIBAFxne9wAoAbNvXAvlaGZAOacJ0lPzmhGsMmp9cM0hKuzRY0nqn95qMubeDZAVguyD2ZBkK1hFLwunNXyAq6WgTAogxtaoftnR9AEnZCCarIdEgg0tYamLptwZAZB7YzOIABMuZB8vXzDS4verdwzSGUm5xWkkFdk4r4hVnxDyYV'
         graph = GraphAPI(oauth_access_token)
 

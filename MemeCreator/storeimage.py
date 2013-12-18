@@ -53,6 +53,7 @@ class UserMemeDb(ndb.Model):
     userid   = ndb.IntegerProperty()
     shareid   = ndb.StringProperty()
     commentid = ndb.StringProperty()
+    tags    = ndb.StringProperty(repeated=True)
 
     '''
 class MainPageStore(AuthHandler):
