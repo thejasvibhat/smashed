@@ -155,7 +155,7 @@ class GetOhList (AuthHandler):
         template_values = {
             "memes" : memes[offset:offset+items_per_page],
             "currentpage" : pagenum,
-            "totalpageacount" : math.ceil(totalCount / items_per_page)
+            "totalpagecount" : math.ceil(totalCount / items_per_page)
             }
 
         l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
