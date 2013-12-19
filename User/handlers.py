@@ -71,14 +71,6 @@ class BaseRequestHandler(webapp2.RequestHandler):
   def head(self, *args):
     """Head is used by Twitter. If not there the tweet button shows 0"""
     pass
-    
-class ProfileHandler(BaseRequestHandler):
-  def get(self):
-    """Handles GET /profile"""
-    self.response.write ("User = %s Session = %s" % (self.current_user ,
-                                                     self.auth.get_user_by_session()))
-    self.redirect(self.session.get('redirect_url'))
-    return
 
 
 class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
@@ -167,7 +159,7 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
     #self.session.add_flash(auth_info, 'auth_info - from _on_signin(...)')
 
     # Go to the profile page
-    self.redirect('/auth/profile')
+    self.redirect(self.session.get('redirect_url'))
 
   def logout(self):
     self.auth.unset_session()

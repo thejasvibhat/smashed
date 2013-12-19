@@ -126,5 +126,18 @@ app_config = {
   }
 }
 
+def handle_404 (request, response, exception):
+    logging.exception (exception)
+    response.write ('Oops! I could swear this page was here!')
+    response.set_status (404)
+
+def handle_500 (request, response, exception):
+    logging.exception (exception)
+    response.write ('A server error occurred!')
+    response.set_status (500)
+
 application = webapp2.WSGIApplication (routes, config=app_config, debug=True)
+
+application.error_handlers[500] = handle_500
+application.error_handlers[404] = handle_404
 

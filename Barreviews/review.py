@@ -50,7 +50,7 @@ class ReviewHandler(AuthHandler):
         template_values = {
 		"reviews" : reviews[offset:offset+items_per_page],
 		"currentpage" : pagenum,
-		"userid": self.user_id,
+		"userid": (self.user_id if self.logged_in else 0),
 		"totalpagecount" : math.ceil (len(reviews) / items_per_page)
 	}
         path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')

@@ -44,6 +44,9 @@ handlers:
 - url: /auth[/]*.*
   script: User.um.application
 
+- url: /merrymaker[/]*.*
+  script: User.um.application
+
 - url: .*
   script: smashed.application
 

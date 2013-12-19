@@ -16,6 +16,8 @@ from Cheetah.Template import Template
 
 from user import User
 from secrets import secrets
+from handlers import AuthHandler
+from skel.skel import Skel
 from webapp2_extras import auth, sessions, jinja2, routes
 
 class LandingPage (webapp2.RequestHandler):
@@ -41,6 +43,34 @@ class LandingPage (webapp2.RequestHandler):
         #output the template to screen
         self.response.out.write(tmpl)
 
+class SelfProfileHandler(AuthHandler):
+    def get(self):
+        l_skel = Skel()
+        l_skel.title = "Smashed.in :: Me"
+
+        template_values = {
+            "user" : self.user,
+            "session1" : self.auth.get_user_by_session()
+            }
+        path = os.path.join (os.path.dirname (__file__), 'templates/me-body.tmpl')
+        l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+
+        self.response.out.write(l_skel.gethtml())
+
+class ProfileHandler(AuthHandler):
+    def get (self, user):
+        #TODO
+        l_skel = Skel()
+        l_skel.title = "Smashed.in :: MerryMaker"
+
+        template_values = {
+            "user" : "fellow drinker",
+            "session1" : "session partner"
+            }
+        path = os.path.join (os.path.dirname (__file__), 'templates/profile-body.tmpl')
+        l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+
+        self.response.out.write(l_skel.gethtml())
 
 # webapp2 config
 app_config = {
@@ -58,9 +88,11 @@ app_config = {
 auth_routes = [
 
   routes.RedirectRoute ('/auth', handler=LandingPage, name="auth", strict_slash=True),
+  routes.RedirectRoute ('/merrymaker',
+                        handler=SelfProfileHandler, name='selfprofile', strict_slash=True),
+  routes.RedirectRoute ('/merrymaker/<user>',
+                        handler=ProfileHandler, name='profile', strict_slash=True),
 
-  webapp2.Route ('/auth/profile',
-                 handler='handlers.ProfileHandler', name='profile'),
   routes.RedirectRoute ('/auth/logout',
                  handler='handlers.AuthHandler:logout', name='logout', strict_slash=True),
   webapp2.Route ('/auth/<provider>',
@@ -69,5 +101,17 @@ auth_routes = [
                  handler='handlers.AuthHandler:_auth_callback', name='auth_callback')
 ]
 
+def handle_404 (request, response, exception):
+    logging.exception (exception)
+    response.write ('Oops! I could swear this page was here!')
+    response.set_status (404)
+
+def handle_500 (request, response, exception):
+    logging.exception (exception)
+    response.write ('Server did not see this coming.!')
+    response.set_status (500)
+
 application = webapp2.WSGIApplication (auth_routes, config=app_config, debug=True)
 
+application.error_handlers[500] = handle_500
+application.error_handlers[404] = handle_404
