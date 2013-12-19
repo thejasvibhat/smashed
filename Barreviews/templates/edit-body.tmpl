@@ -1,0 +1,226 @@
+
+<div class = "container">
+  <div class = "col-lg-12 whiteCanvas">
+    <h3>Write a review. Help others to put a scene</h3>
+    <div class = "sep"></div>
+    <form id = "uploadReviewForm" action="$upload_url" method="POST" enctype="multipart/form-data" >
+      <div class = "row">
+	<div class = "col-lg-12">
+	  <h4>Images</h4>
+	  <div class = "noteSmall">
+	    Upload upto <b>SIX</b> of the bar. Upload images of the place / food and ofcourse the menu ( If the bar has one! )
+	  </div>
+	</div>
+
+#set $loop = 1
+#for $loopid in ['One', 'Two', 'Three', 'Four', 'Five', 'Six']
+	<input id = "i$loopid" name = "icon$loop" type = "file" style = "display:none;">
+#set $loop += 1
+#end for
+
+#set $loop = 0
+#for $loopid in ['One', 'Two', 'Three', 'Four', 'Five', 'Six']  
+	<div class = "col-lg-2 frontImages">
+	  <img id = "$loopid" class = "img-responsive cursorPointer"  src = "/res/download/${images[$loop]}" />
+	</div>
+#set $loop += 1
+#end for
+
+      </div>
+      
+      <div class = "sep"></div>
+      
+      <div class = "row">
+	<div class = "col-lg-12">
+	  <h4>Basic Information</h4>
+	  <div class = "noteSmall">
+	    Basic details. Won't take too long :)
+	  </div>
+	</div>
+	<div class = "col-lg-4">
+	  <input type = "text" name = "name" class = "form-control validate[required]" placeholder = "Bar Name" value="$name" />
+	</div>
+	
+	<div class = "col-lg-4">
+	  <input type = "text" name = "phone" class = "form-control" placeholder = "Phone" value="$phone" />
+	</div>
+	<div class = "col-lg-4">
+	  <input id = "rating" type = "text" name = "rating" class = "form-control" value="$rating"/>
+	  <div>Rate it out of 5. You know the drill right?</div>
+	</div>
+	
+	<div class = "col-lg-12">
+		<div class = "col-lg-6 paddingNone">
+			<input placeholder = "Addres..." name = "address" placeholder = "Area" value="$address" class = "form-control validate[required]" id="addresspicker_map" />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Locality..." name = "locality" class = "form-control" id="locality" value="$locality" />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Street Address1..." name = "area1" class = "form-control" id="administrative_area_level_2"  />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Street Address2..." name = "area2" class = "form-control" id="administrative_area_level_1" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Country..." name = "country"  class = "form-control" id="country" disabled=disabled />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Zip..." name = "zip" class = "form-control" id="postal_code" />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Latitude..." name = "lat" class = "form-control" id="lat"  value = "12.9667" />
+			<div class = "marginTopFive"></div>
+			<input placeholder = "Longitude..." name = "long" class = "form-control" id="lng" value = "77.5667" />
+			<div class = "marginTopFive"></div>
+        	<input type = "hidden" placeholder = "Type..." name = "type"  class = "form-control" id="type" /> 
+	  	</div>
+	  	
+	  	<div class = "col-lg-6">
+	  		<div id = "map"></div>
+	  	</div>
+	    <div class = "marginBottomFive"></div>
+	</div>
+	
+      </div>
+      
+      <div class = "sep"></div>
+      
+      <div class = "row">
+	<div class = "col-lg-12">
+	  <h4>Core Details</h4>
+	  <div class = "noteSmall">
+	    This is where people are going to decide they are going or not! . Use checkboxes to tell people what's there and what's not.
+	  </div>
+	</div>
+	
+	<div class = "col-lg-6">
+	  <div class = "col-lg-6">
+	    <div>
+        #if $budget == "on" 
+	      <input type = "checkbox" name = "budget" checked='true' />
+        #else
+          <input type = "checkbox" name = "budget" />
+        #end if
+          Budget
+	    </div>
+	    <div>
+	    #if $ac == "on" 
+	      <input type = "checkbox" name = "ac" checked='true' />
+        #else
+          <input type = "checkbox" name = "ac" />
+        #end if
+        A/C
+	    </div>
+	    <div>
+	    #if $carpark == "on" 
+	      <input type = "checkbox" name = "carpark" checked='true' />
+        #else
+          <input type = "checkbox" name = "carpark" />
+        #end if
+        Car Park
+	    </div>
+	    <div>
+        #if $bigscreen == "on"
+	      <input type = "checkbox" name = "bigscreen" />
+        #else
+          <input type = "checkbox" name = "bigscreen" />
+        #end if
+          Big Screen
+	    </div>
+	    <div>
+        #if $ladyfriendly == "on"
+	      <input type = "checkbox" name = "ladyfriendly" />
+        #else
+          <input type = "checkbox" name = "ladyfriendly" />
+        #end if
+          Lady Friendly
+	    </div>
+	    <div>
+        #if $fightscene == "on"
+	      <input type = "checkbox" name = "fightscene" />
+        #else
+          <input type = "checkbox" name = "fightscene" />
+        #end if
+          Fight Scene
+	    </div>
+	  </div>
+	  <div class = "col-lg-6">
+	    <div>
+        #if $music == "on"
+	      <input type = "checkbox" name = "music" />
+        #else
+          <input type = "checkbox" name = "music" />
+        #end if
+          Music / Video
+	    </div>
+	    <div>
+        #if $clean == "on"
+	      <input type = "checkbox" name = "clean" />
+        #else
+          <input type = "checkbox" name = "clean" />
+        #end if
+          Clean
+	    </div>
+	    <div>
+        #if $smokingontable == "on"
+	      <input type = "checkbox" name = "smokingontable" />
+        #else
+          <input type = "checkbox" name = "smokingontable" />
+        #end if
+          Smoking On Table
+	    </div>
+	    <div>
+        #if $happyhours == "on"
+	      <input type = "checkbox" name = "happyhours" />
+        #else
+          <input type = "checkbox" name = "happyhours" />
+        #end if
+          Happy Hours
+	    </div>
+	    <div>
+        #if $cardaccepted == "on"
+	      <input type = "checkbox" name = "cardaccepted" />
+         #else
+          <input type = "checkbox" name = "cardaccepted" />
+        #end if
+          Card Accepted
+	    </div>
+	    <div>
+        #if $events == "on"
+	      <input type = "checkbox" name = "events" />
+        #else
+          <input type = "checkbox" name = "events" />
+        #end if
+          Events
+	    </div>
+	  </div>
+	</div>
+	
+	<div class = "col-lg-6">
+	  <div><textarea class = "validate[required]" name = "description" placeholder = "General details about the place..." wrap = "hard" style = "width:100%;" >$description</textarea>
+	  </div>
+	  <div class = "marginTopFive">
+	    <input type = "text" name = "favsnack1" placeholder = "Favorite Snack 1" value="$snack1" />
+	  </div>					
+	  <div class = "marginTopFive">
+	    <input type = "text" name = "favsnack2" placeholder = "Favorite Snack 2" value="$snack2" />
+	  </div>
+	</div>
+	
+      </div>
+      
+      <div class = "marginTopTen"></div>
+      <div class = "row">
+	<div class = "col-lg-1">
+	  <input type = "submit" class = "btn btn-primary" value = "Update it!" />
+	</div>
+	
+	<div id = "uploadSpinner" class = "col-lg-11 loaderTop" style = "display:none;">
+	  <img src = "/assets/pacman.gif" />
+	  &nbsp;&nbsp;
+	  <span id = "spinnerMg">Submitting your awesome review...Hang in there!
+	</div>
+      </div>
+      
+      <div class = "marginTopTen"></div>
+<input type="hidden" id="bid" name="bid" value="$bid" />
+    </form>
+    
+  </div>
+  
+</div>

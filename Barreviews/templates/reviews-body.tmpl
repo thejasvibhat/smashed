@@ -8,8 +8,13 @@
     <li class="item col-lg-4 all">
     	<a href = "/b/$r.bid">
 			<div class="image-wrapper">
-	  			<img class = "img-responsive" src = "/res/download/${r.images[0]}" />
+	  			<img onmouseover = "toggleEditOption(this);" class = "img-responsive" src = "/res/download/${r.images[0]}" />
 			</div>
+#if $r.userid == $userid
+            <div id = "bEditWrapper" class = "bEditWrapper">
+                <img src = "/static/img/edit.png" onClick = "return editBar(this);" value = "${r.bid}" />
+            </div>
+#end if
 			<div class="img-title-big">
 	  			<div class = "col-lg-9">
 	    			<h6>$r.name</h6>

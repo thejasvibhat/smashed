@@ -23,7 +23,7 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
     return ndb.Key('bars_db', review_dbname) 
 
 
-class ReviewHandler(webapp2.RequestHandler):
+class ReviewHandler(AuthHandler):
     def get(self,pagenum=1):
         pagenum = int(pagenum)
         items_per_page = 12
@@ -50,6 +50,7 @@ class ReviewHandler(webapp2.RequestHandler):
         template_values = {
 		"reviews" : reviews[offset:offset+items_per_page],
 		"currentpage" : pagenum,
+		"userid": self.user_id,
 		"totalpagecount" : math.ceil (len(reviews) / items_per_page)
 	}
         path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')

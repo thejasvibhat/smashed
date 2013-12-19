@@ -83,6 +83,7 @@ routes = [
   routes.RedirectRoute ('/b', handler=ReviewHandler, name = "b", strict_slash=True),
   routes.RedirectRoute ('/b/page/<pagenum>', handler=ReviewHandler, name = "bpage", strict_slash=True),
   webapp2.Route ('/b/record', BRecordHandler), #BR create/upload (VIEW)
+  webapp2.Route ('/b/edit/<resource>', BEditHandler), #BR create/upload (VIEW)
   webapp2.Route ('/b/<resource>', SceneHandler), #BR Single (VIEW)
   webapp2.Route ('/b/<resource>/<name>', SceneHandler), #BR Single (VIEW)
   
@@ -95,6 +96,7 @@ routes = [
   webapp2.Route ('/api/b/updatecomment', AddComment),
   webapp2.Route ('/api/b/updateusercomment', UpdateComment),
   webapp2.Route ('/api/b/upload', BSaveHandler),
+  webapp2.Route ('/api/b/update', BSaveUpdateHandler),
   webapp2.Route ('/api/b/ajaxlist', AjaxLocality),
   
   # #Reviews/storereview.py

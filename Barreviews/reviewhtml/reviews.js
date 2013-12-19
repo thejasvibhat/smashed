@@ -142,3 +142,14 @@ $(function () {
                }
     });
 });
+function editBar(ele)
+{
+    var bid = $(ele).attr('value');
+    window.location =  "/b/edit/"+bid;
+    return false;
+}
+function toggleEditOption (ele)
+{
+    var parent = $(ele).parent().parent();
+    $(parent).find('#bEditWrapper').toggle();
+}
