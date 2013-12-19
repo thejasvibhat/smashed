@@ -46,7 +46,20 @@ def CreateReview (reviewDict,parentid,userid):
     review.put()
     return str(review.reviewid)
         
-        
+class UpdateComment (AuthHandler):
+    def get(self):
+        reviewid = self.request.get('reviewid')
+        comment = self.request.get('review')
+        rating = self.request.get('rating')
+        storereview.UpdateReviewRating(rating,reviewid)
+        review_query = CommentReviewDb.query(CommentReviewDb.reviewid == reviewid)		
+        reviews = review_query.fetch(1)
+        for review in reviews:
+            review.rating = rating
+            review.review = comment
+            review.put()
+        self.response.write('%s' %reviewid)     
+    
 class AddComment (AuthHandler):
     def get(self):
         commentid = CreateReview(self.request, self.request.get('reviewid'), self.user_id)
