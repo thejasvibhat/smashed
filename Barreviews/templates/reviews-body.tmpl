@@ -32,6 +32,25 @@
   </ul>
 </div>
 
+<div class = "marginTopTwenty"></div>
+<div class = "container">
+<div class = "row">
+    <div class = "col-lg-12">
+#if $currentpage != 1
+#set $prevpagenum = $currentpage - 1
+        <div class = "col-lg-1">
+	    <a href = "/b/page/${prevpagenum}">&lt; Prev</a>
+        </div>
+#end if
+#if $currentpage < $totalpagecount
+#set $nextpagenum = $currentpage + 1
+	<div class = "col-lg-2">
+	    <a href = "/b/page/${nextpagenum}">&gt; Next</a>
+        </div>
+#end if
+    </div>
+</div>
+</div>
 <div id = "mapModal" style = "display:none;" title = "Location">
 	<div id = "map_canvas" style = "height:300px;"></div>
 </div>

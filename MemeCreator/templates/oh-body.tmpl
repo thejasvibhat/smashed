@@ -7,27 +7,28 @@
 #for $meme in $memes
     <div class = "row memeIndvItem">
       <div class = "col-lg-8">
-	<a href = "/oh/${meme.resid}">
-	  <img class = "img-responsive" src = "/res/download/${meme.blobid}" />
-	</a>
+	  	<a href = "/oh/${meme.resid}">
+	  		<img class = "img-responsive" src = "/res/download/${meme.blobid}" />
+		</a>
       </div>
 
       <div class = "col-lg-4">
-	<div class = "memeShareContainer">
-	  <div class = "marginTopTen shareFB">
-	    <a onClick = "shareOhOnFaceBook('${meme.resid}');" href = "javascript:void(0);">Share on Facebook</a>
-	  </div>
-	  <div class = "marginTopTen shareTwitter">
-	    <a onClick = "shareOhOnTwitter('${meme.resid}');" href = "javascript:void(0);">Share on Twitter</a>
-	  </div>
-	  <div class = "marginTopTen shareGoogle">
-	    <a style = "height:auto;" onClick = "shareOnGooglePlus('${meme.resid}');" href = "javascript:void(0);">Share on Google +</a>
-	  </div>
-	</div>
+	  	<div class = "memeShareContainer">
+	  		<div class = "marginTopTen shareFB">
+	    		<a onClick = "shareOhOnFaceBook('${meme.resid}');" href = "javascript:void(0);">Share on Facebook</a>
+	  		</div>
+	  		<div class = "marginTopTen shareTwitter">
+	    		<a onClick = "shareOhOnTwitter('${meme.resid}');" href = "javascript:void(0);">Share on Twitter</a>
+	  		</div>
+	  		<div class = "marginTopTen shareGoogle">
+	    		<a style = "height:auto;" onClick = "shareOnGooglePlus('${meme.resid}');" href = "javascript:void(0);">Share on Google +</a>
+	  		</div>
+		</div>
       </div>
     </div>
 #end for
   </div>
+
 
   <div class = "col-lg-5">
     <div class = "memeTicker">
@@ -40,6 +41,22 @@
   <div class "clearfloat"></div>
 </div>
 
+<div class = "marginTopTwenty"></div>
+  
+<div class = "col-lg-12 paddingNone">
+#if $currentpage != 1
+#set $prevpagenum = $currentpage - 1
+  <div class = "col-lg-1">
+    <a class = "btn btn-regular" href = "/oh/page/${prevpagenum}">&lt;&lt Prev</a>
+  </div>
+#end if
+#if $currentpage != $totalpagecount
+#set $nextpagenum = $currentpage + 1
+  <div class = "col-lg-2">
+    <a class = "btn btn-regular" href = "/oh/page/${nextpagenum}">Next &gt;&gt;</a>
+  </div>
+#end if
+</div>
 
 <div class = "row tickerIndvItem noMargin" id ="tickItem" style = "display:none;" >
 	<a id="ticks" href="">

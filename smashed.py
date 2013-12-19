@@ -6,6 +6,7 @@ sys.path.append (os.path.join(os.path.abspath(os.path.dirname(__file__)), 'lib')
 import webapp2
 import logging
 #from webapp2_extras import auth, sessions, jinja2, users
+from webapp2_extras import routes
 from Cheetah.Template import Template
 
 from User.handlers import AuthHandler
@@ -64,7 +65,8 @@ class ComingSoon (AuthHandler):
 routes = [
   webapp2.Route ('/', handler=LandingPage),
 
-  webapp2.Route ('/oh', GetOhList),    #OH List (VIEW)
+  routes.RedirectRoute ('/oh', handler=GetOhList, name = "oh", strict_slash=True),
+  routes.RedirectRoute ('/oh/page/<pagenum>', handler=GetOhList, name = "ohpage", strict_slash=True), 
   webapp2.Route ('/oh/record', OhRecordHandler),    #oh creator (VIEW)
   webapp2.Route ('/oh/<resource>', GetOh),    #OH Single (VIEW)
 
@@ -78,7 +80,8 @@ routes = [
   webapp2.Route ('/api/oh/list', ListMeme), #OH List (API), Used for ticker
 
 
-  webapp2.Route ('/b', ReviewHandler), #BR list (VIEW)
+  routes.RedirectRoute ('/b', handler=ReviewHandler, name = "b", strict_slash=True),
+  routes.RedirectRoute ('/b/page/<pagenum>', handler=ReviewHandler, name = "bpage", strict_slash=True),
   webapp2.Route ('/b/record', BRecordHandler), #BR create/upload (VIEW)
   webapp2.Route ('/b/<resource>', SceneHandler), #BR Single (VIEW)
   webapp2.Route ('/b/<resource>/<name>', SceneHandler), #BR Single (VIEW)

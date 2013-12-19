@@ -1,4 +1,5 @@
 import webapp2
+import math
 import urllib
 import os
 import json
@@ -132,20 +133,32 @@ class GetOh (AuthHandler):
         self.response.out.write(l_skel.gethtml())
 
 class GetOhList (AuthHandler):
-    def get(self):
-	l_skel = Skel()
-	l_skel.title = "Smashed.in :: OverHeards"
+    def get(self, pagenum=1):
+        pagenum = int(pagenum)
+        l_skel = Skel()
+        l_skel.title = "Smashed.in :: OverHeards"
+        items_per_page = 10
+        offset = 0
+        if pagenum != 1:
+            offset = (pagenum * items_per_page) - 1
 
-	#Head
-	head_path = os.path.join (os.path.dirname(__file__), 'templates/oh-head.tmpl')
-	l_skel.addtohead(str((Template.compile(file=head_path)(searchList={}))))
+        #Head
+        head_path = os.path.join (os.path.dirname(__file__), 'templates/oh-head.tmpl')
+        l_skel.addtohead(str((Template.compile(file=head_path)(searchList={}))))
 
-	#body
+        #body
         path = os.path.join (os.path.dirname (__file__), 'templates/oh-body.tmpl')
         meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
-        memes = meme_query.fetch(5)
-        template_values = {"memes" : memes}
-	l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
+        memes = meme_query.fetch()
+        totalCount = len(memes)
+
+        template_values = {
+            "memes" : memes[offset:offset+items_per_page],
+            "currentpage" : pagenum,
+            "totalpageacount" : math.ceil(totalCount / items_per_page)
+            }
+
+        l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
 
         self.response.out.write(l_skel.gethtml())	   
         

@@ -24,7 +24,13 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
 
 
 class ReviewHandler(webapp2.RequestHandler):
-    def get(self):
+    def get(self,pagenum=1):
+        pagenum = int(pagenum)
+        items_per_page = 12
+        offset = 0
+        if pagenum != 1:
+            offset = (pagenum * items_per_page) - 1
+ 
         l_skel = Skel()
 	l_skel.title = "Smashed.in :: Latest Additions"
         #Head
@@ -33,15 +39,19 @@ class ReviewHandler(webapp2.RequestHandler):
 
         #Body
         review_query = ReviewDb.query(ancestor=review_dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
-        reviews = review_query.fetch(12)
-        for review in reviews:
+        reviews = review_query.fetch()
+        for review in reviews[offset:offset+items_per_page]:
             addressid = str(review.addressid)
             add_querry = LocationDb.query(LocationDb.addressid == addressid)
             addresses = add_querry.fetch()
             for addressLoc in addresses:
                 review.latlon = '%s:%s' %(addressLoc.lat,addressLoc.lng)
-
-        template_values = {"reviews" : reviews}
+        
+        template_values = {
+		"reviews" : reviews[offset:offset+items_per_page],
+		"currentpage" : pagenum,
+		"totalpagecount" : math.ceil (len(reviews) / items_per_page)
+	}
         path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')
         l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
 
