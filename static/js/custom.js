@@ -272,5 +272,40 @@ function getBarListing(a_val)
             }
     }); 
 }
+
+/* Function to show google map */
+
+function showBarOnMapModal (a_ele)
+{
+	var latlon      = $(a_ele).attr('value');
+	var locationArr = latlon.split(":");
+	var lat         = locationArr[0];
+	var lon			= locationArr[1];
+	$( "#mapModal" ).dialog({ 
+		open: drawMap (lat,lon),
+		modal:true,
+		minWidth:400,
+		resizable:false,
+		draggable:false
+	});
+}
+
+function drawMap (lat,lon)
+{
+	var myLatLng = new google.maps.LatLng(lat,lon);
+    var map_canvas = document.getElementById('map_canvas');
+    var map_options = {
+      center: myLatLng,
+       zoom: 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(map_canvas, map_options)
+    var marker = new google.maps.Marker({
+ 		position: myLatLng,
+  		map: map
+	}); 
+	
+}
+
 		
 
