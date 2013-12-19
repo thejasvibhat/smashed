@@ -298,6 +298,7 @@ class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
         review.o_events = self.request.get('events')
         review.o_bigscreen = self.request.get('bigscreen')
         review.o_clean = self.request.get('clean')
+        review.userid = self.user_id
         review.reviewid = CreateReview(self.request, 'init', self.user_id)
         review.addressid,review.address = CreateAddress(self.request, review.bid)
         #review.latlon = ndb.GeoPtProperty()    

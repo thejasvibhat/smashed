@@ -63,14 +63,12 @@ class SceneHandler(AuthHandler):
         l_skel = Skel()
         bid = resource 
         head_path = os.path.join (os.path.dirname (__file__), 'templates/b-head.tmpl')
-        l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
-
         c = {}
         review_query = ReviewDb.query(ReviewDb.bid == bid)
         reviews = review_query.fetch(1)
 
         for review in reviews:
-            if review.bid == bid:
+            if review.bid == bid:                               
                 revid = str(review.reviewid)
                 userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid)
                 userreviews = userreview_querry.fetch()
@@ -135,7 +133,14 @@ class SceneHandler(AuthHandler):
 				
                 c['usp1'] = "Bottle Rate"
                 c['usp2'] = "Lady Friendly"
+                template_values = {
+                    'name':   review.name,
+                    'img':   review.images,
+                    'conturl':   '/b/%s' % review.bid,
+                    'description': '%s' % desc,
+                    }
                 
+                l_skel.addtohead (str((Template.compile(file=head_path) (searchList=template_values))))      
         path = os.path.join (os.path.dirname (__file__), 'templates/b-body.tmpl')
         l_skel.addtobody (str((Template.compile(file=path) (searchList=c))))
 
