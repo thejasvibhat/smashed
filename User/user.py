@@ -30,12 +30,13 @@ class User(Webapp2User):
         obj = future.get_result()
         if obj.hasPermission is None:
             obj.hasPermission = Permission()
-            obj.put()
         else:
             if obj.hasPermission.addBar == True:
                 obj.hasPermission.editBar = True
 
     def _pre_put_hook (self):
-        if self.hasPermission is not None:
+        if self.hasPermission is None:
+            self.hasPermission = Permission()
+        else:
             if self.hasPermission.addBar == True:
                 self.hasPermission.editBar = True

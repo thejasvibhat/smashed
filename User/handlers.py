@@ -156,7 +156,11 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
     #self.session.add_flash(auth_info, 'auth_info - from _on_signin(...)')
 
     # Go to the profile page
-    self.redirect(self.session.get('redirect_url'))
+    url = self.session.get_flashes (key='redirect_url')
+    url = url[0][0]
+    url = url if url else "/"
+    logging.info ("redirecting to %s" % url)
+    self.redirect(str(url))
 
   def logout(self):
     self.auth.unset_session()
@@ -183,3 +187,12 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
       user_attrs.setdefault(*attr)
 
     return user_attrs
+
+  def user_gatekeeper (self):
+    logging.info ("logged in %s" % str(self.request.path_url))
+    if not self.logged_in:
+      #self.session['redirect_url'] = str(self.request.path_url)
+      self.session.add_flash (self.request.path_url, key='redirect_url')
+      self.redirect('/auth/')
+      self.abort (302)
+

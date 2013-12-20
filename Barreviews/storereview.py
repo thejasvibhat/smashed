@@ -74,38 +74,33 @@ from skel.skel import Skel
 
 class BRecordHandler (AuthHandler):
     def get(self):
-        if not self.logged_in:
-            self.session['redirect_url'] = '/b/record'
-            self.redirect('/auth/')
-        else:
-            self._gatekeeper ()
-            l_skel = Skel()
-            l_skel.title = "Smashed.in :: Write a Review"
+        self.user_gatekeeper ()
+        self._gatekeeper ()
+        l_skel = Skel()
+        l_skel.title = "Smashed.in :: Write a Review"
 
             #Head
-            head_path = os.path.join (os.path.dirname (__file__), 'templates/upload-head.tmpl')
-            l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+        head_path = os.path.join (os.path.dirname (__file__), 'templates/upload-head.tmpl')
+        l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
 
             #Body
-            upload_url = blobstore.create_upload_url ('/api/b/upload')
+        upload_url = blobstore.create_upload_url ('/api/b/upload')
 
-            path = os.path.join (os.path.dirname (__file__), 'templates/upload-body.tmpl')
-            template_values = {'upload_url': upload_url}
-            l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+        path = os.path.join (os.path.dirname (__file__), 'templates/upload-body.tmpl')
+        template_values = {'upload_url': upload_url}
+        l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
 
-            self.response.out.write(l_skel.gethtml())
+        self.response.out.write(l_skel.gethtml())
 
     def _gatekeeper (self):
         if self.user.hasPermission.addBar is True:
             return
         self.abort (403)
+
             
 class BEditHandler (AuthHandler):
     def get(self,resource):
-        if not self.logged_in:
-            self.session['redirect_url'] = '/b/record'
-            self.redirect('/auth/')
-        else:
+            self.user_gatekeeper ()
             l_skel = Skel()
             l_skel.title = "Smashed.in :: Edit a Review"
             bid = resource 

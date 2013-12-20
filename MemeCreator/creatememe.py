@@ -6,11 +6,8 @@ from Cheetah.Template import Template
 from skel.skel import Skel
 
 class OhRecordHandler (AuthHandler):
-    def get(self):  
-        if not self.logged_in:
-            self.session['redirect_url'] = '/oh/record'
-            self.redirect('/auth/')
-        else:
+    def get(self):
+            self.user_gatekeeper ()
             l_skel = Skel()
             l_skel.title = "Smashed.in :: Record Your Overheard"
 
