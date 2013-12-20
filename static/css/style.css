@@ -1174,13 +1174,18 @@ Ui to top
 	 padding:10px 15px 10px 15px;
 	  margin:0;
 	  font-size: 14px;
-	  line-height: 50px;
 	  color: #fff;
 	  border-radius: 0;
 	  font-family:"rockwell",helvetica;
 	  font-style:italic;
 	  font-weight:bold;
 	  height:65px;
+	}
+	
+	.navbar-nav > li.search > input
+	{
+		position:relative;
+		top:10px;
 	}
 
 /*

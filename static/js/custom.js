@@ -312,5 +312,21 @@ function drawMap (lat,lon)
 	
 }
 
+/* Share on social Networks */
+
+function shareOhOnFaceBook (a_id)
+{
+	
+}
+
+function shareOhOnTwitter (a_id)
+{
+	
+}
+
+function shareOhOnGoogle (a_id)
+{
+	
+}
 		
 
