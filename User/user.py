@@ -35,5 +35,6 @@ class User(Webapp2User):
                 obj.hasPermission.editBar = True
 
     def _pre_put_hook (self):
-        if self.hasPermission.addBar == True:
-            self.hasPermission.editBar = True
+        if self.hasPermission is not None:
+            if self.hasPermission.addBar == True:
+                self.hasPermission.editBar = True

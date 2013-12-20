@@ -6,10 +6,9 @@ sys.path.insert (0, os.path.join(os.path.abspath(os.path.dirname(__file__)), '..
 
 import logging
 from secrets import secrets
-
+from skel.skelerr import SkelErr
 import webapp2
-from webapp2_extras import auth, sessions, jinja2
-from jinja2.runtime import TemplateNotFound
+from webapp2_extras import auth, sessions
 
 from simpleauth import SimpleAuthHandler
 
@@ -24,11 +23,6 @@ class BaseRequestHandler(webapp2.RequestHandler):
     finally:
       # Save all sessions.
       self.session_store.save_sessions(self.response)
-  
-  @webapp2.cached_property    
-  def jinja2(self):
-    """Returns a Jinja2 renderer cached in the app registry"""
-    return jinja2.get_jinja2(app=self.app)
     
   @webapp2.cached_property
   def session(self):
@@ -50,23 +44,22 @@ class BaseRequestHandler(webapp2.RequestHandler):
     """Returns true if a user is currently logged in, false otherwise"""
     return self.auth.get_user_by_session() is not None
 
-      
-  def render(self, template_name, template_vars={}):
-    # Preset values for the template
+  def render(self, template_vars={}):
     values = {
       'url_for': self.uri_for,
       'logged_in': self.logged_in,
       'flashes': self.session.get_flashes()
     }
-    
-    # Add manually supplied template values
+
     values.update(template_vars)
-    
-    # read the template or 404.html
-    try:
-      self.response.write(self.jinja2.render_template(template_name, **values))
-    except TemplateNotFound:
-      self.abort(404)
+
+    l_skel = SkelErr()
+    l_skel.title = "Smashed.in :: Pukeee.. "
+
+    l_skel.addtobody ("Have not found what you are looking for.")
+
+    self.response.set_status (template_vars["exception"].code)
+    self.response.out.write (l_skel.gethtml())
 
   def head(self, *args):
     """Head is used by Twitter. If not there the tweet button shows 0"""
@@ -169,7 +162,7 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
 
   def handle_exception(self, exception, debug):
     logging.exception (exception)
-    self.render('error.html', {'exception': exception})
+    self.render({'exception': exception})
     
   def _callback_uri_for(self, provider):
     return self.uri_for('auth_callback', provider=provider, _full=True)

@@ -49,7 +49,9 @@
             <ul class="nav navbar-nav">
               <li><a id = "nav-home" href="/">Home</a></li>
               <li><a id = "nav-reviews" href="/b">Reviews</a></li>
+#if $permisionAddBar
               <li><a id = "nav-review-record" href="/b/record">Write Reviews</a></li>
+#end if
               <li><a id = "nav-oh" href="/oh">OverHeards</a></li>
               <li><a id = "nav-oh-record" href="/oh/record">Record OverHeards</a></li>
               <li class = "search" id = "bSearch"><input type = "text" placeholder = "Search for a bar..." id = "bSearchInput" /></li>

@@ -1,12 +1,10 @@
 import pprint
 import os
 import sys
-from webapp2_extras import auth, sessions
 
-from User.handlers import AuthHandler
 from Cheetah.Template import Template
 
-class Skel (AuthHandler):
+class SkelErr (object):
     def __init__ (self):
         self.title = ""
         self.morehead = []
@@ -26,23 +24,13 @@ class Skel (AuthHandler):
 
         template_values = {
             "title" : self.title,
-            "logged_in": self.logged_in,
-            "permisionAddBar": (self.user.hasPermission.addBar if self.logged_in else False),
+            "logged_in": False,
             "morehead" : "\n".join (self.morehead),
             "skelbody" : "\n".join (self.skelbody)
             }
 
-        if (self.isloggedin):
-            name = self.user_name if self.user_name else "myName"
-
-            template_values.update ({
-                "avatar" : self.user.avatar_url,
-                "name"   : name
-                })
-
         t = tclass (searchList=template_values)
         return t
-    
         
 if __name__ == "__main__":
     skel01 = Skel ()

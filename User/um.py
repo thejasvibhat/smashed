@@ -45,6 +45,7 @@ class LandingPage (webapp2.RequestHandler):
 
 class SelfProfileHandler(AuthHandler):
     def get(self):
+        # self._gatekeeper ("addBar")
         l_skel = Skel()
         l_skel.title = "Smashed.in :: Me"
 
@@ -56,6 +57,11 @@ class SelfProfileHandler(AuthHandler):
         l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
 
         self.response.out.write(l_skel.gethtml())
+
+    # def _gatekeeper (self, action):
+    #     if self.user.hasPermission.addBar is not True:
+    #         return
+    #     self.abort (500, headers={"X-error" : "This is shit"}, detail="Details", comment="No comments")
 
 class ProfileHandler(AuthHandler):
     def get (self, user):
