@@ -92,8 +92,10 @@ class AjaxLocality(AuthHandler):
         allRegs = []
         for result in results:
             locRes = {}
-            locRes['name'] = '%s' %result.fields[3].value
-            locRes['locality'] = '%s' %result.fields[2].value
+            #locRes['name'] = '%s' %result.fields[3].value
+            #locRes['locality'] = '%s' %result.fields[2].value
+            locRes['label'] = '%s in %s' %(result.fields[3].value,result.fields[2].value)
+            locRes['value'] = '%s' %result.fields[3].value
             locRes['bid'] = '%s' %result.fields[6].value
             allRegs.append(locRes)#'%s' %result.fields[2].value)
         finalDict['results'] = allRegs

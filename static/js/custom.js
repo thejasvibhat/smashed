@@ -190,6 +190,19 @@ function BInit()
 
 function reviewsInit()
 {
+                	 $( "#bSearchInput" ).autocomplete({
+					minLength: 0,
+					source: null,
+					focus: function( event, ui ) {
+						$( "#bSearchInput" ).val( ui.item.name );
+						return true;
+					},
+					select: function( event, ui ) {
+						$( "#bSearchInput" ).val( ui.item.name );
+						window.location = "/b/"+ui.item.bid;
+					}
+				});
+
 
 	$('#c').isotope({
 		itemSelector : '.bIndv',
@@ -249,7 +262,6 @@ function recordOhInit()
 
 function getBarListing(a_val)
 {
-	var sourceone = ["fuck","you"];
 	$.ajax({
             type: 'GET',
             dataType:'json',
@@ -259,19 +271,15 @@ function getBarListing(a_val)
 					minLength: 0,
 					source: responseData.results,
 					focus: function( event, ui ) {
-						$( "#bSearchInput" ).val( ui.item.name );
-						return false;
+						$( "#bSearchInput" ).val( ui.item.label );
+						return true;
 					},
 					select: function( event, ui ) {
 						$( "#bSearchInput" ).val( ui.item.name );
 						window.location = "/b/"+ui.item.bid;
+                        return true;
 					}
-				})
-					.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-					return $( "<li>" )
-					.append( "<a>" + item.name + "<br>" + item.locality + "</a>" )
-					.appendTo( ul );
-				};
+				});
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 //TODO
