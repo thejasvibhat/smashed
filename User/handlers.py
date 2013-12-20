@@ -58,7 +58,11 @@ class BaseRequestHandler(webapp2.RequestHandler):
 
     l_skel.addtobody ("Have not found what you are looking for.")
 
-    self.response.set_status (template_vars["exception"].code)
+    if isinstance(template_vars["exception"], webapp2.HTTPException):
+      self.response.set_status(template_vars["exception"].code)
+    else:
+      self.response.set_status (500)
+
     self.response.out.write (l_skel.gethtml())
 
   def head(self, *args):
