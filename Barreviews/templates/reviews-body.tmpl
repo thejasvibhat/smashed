@@ -1,13 +1,12 @@
 <!-- Main Content -->
 <div class = "marginTopTwenty"></div>
 
-<div class = "container">
-  <ul id="gallery-list-reviews" class="clearfix">
+<div id = "c" class = "container">
 #for $r in $reviews
 #set $rating = $r.rating.replace('.', '_')
-    <li class="item col-lg-4 all">
+    <div class="bIndv col-lg-4">
     	<a href = "/b/$r.bid">
-			<div class="image-wrapper">
+			<div class="">
 	  			<img onmouseover = "toggleEditOption(this);" class = "img-responsive" src = "/res/download/${r.images[0]}" />
 			</div>
 #if $r.userid == $userid
@@ -32,9 +31,8 @@
 	  			</div>
 			</div>
       </a>
-    </li>
+    </div>
 #end for
-  </ul>
 </div>
 
 <div class = "marginTopTwenty"></div>

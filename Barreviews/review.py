@@ -72,8 +72,9 @@ class SceneHandler(AuthHandler):
                 revid = str(review.reviewid)
                 userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid)
                 userreviews = userreview_querry.fetch()
-                userDetails = self.current_user
-                c['currentuser'] = userDetails
+                if self.logged_in:
+                    userDetails = self.current_user
+                    c['currentuser'] = userDetails
                 rating = 0
                 totalReviews = 0
                 allReviewsDict = []

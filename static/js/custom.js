@@ -190,6 +190,11 @@ function BInit()
 
 function reviewsInit()
 {
+
+	$('#c').isotope({
+		itemSelector : '.bIndv',
+    	layoutMode   : 'masonry'
+	});
 	$('#bSearch').show();
 	$('#nav-reviews').addClass ('nav-highlight');
 	$('#bSearchInput').live("keyup",function(event)
@@ -244,12 +249,13 @@ function recordOhInit()
 
 function getBarListing(a_val)
 {
+	var sourceone = ["fuck","you"];
 	$.ajax({
             type: 'GET',
             dataType:'json',
             url: '/api/b/ajaxlist?type=bar&search='+a_val,
             success: function(responseData) {
-            	$( "#bSearchInput" ).autocomplete({
+            	 $( "#bSearchInput" ).autocomplete({
 					minLength: 0,
 					source: responseData.results,
 					focus: function( event, ui ) {
@@ -258,10 +264,10 @@ function getBarListing(a_val)
 					},
 					select: function( event, ui ) {
 						$( "#bSearchInput" ).val( ui.item.name );
-						return false;
+						window.location = "/b/"+ui.item.bid;
 					}
 				})
-				.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+					.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 					return $( "<li>" )
 					.append( "<a>" + item.name + "<br>" + item.locality + "</a>" )
 					.appendTo( ul );
@@ -307,5 +313,28 @@ function drawMap (lat,lon)
 	
 }
 
+/* Share on social Networks */
+
+function shareOhOnFaceBook (a_id)
+{
+	shareSocial('http://www.facebook.com/sharer.php?u=http://www.smashed.in/oh/'+a_id);
+}
+
+function shareOhOnTwitter (a_id)
+{
+	var text = "Check out this cool OverHeard";
+	shareSocial('http://www.twitter.com/share?url=http://www.smashed.in/oh/'+a_id+'&text='+text+'&counturl=/oh/'+a_id+'&hashtags=smashed,overheards,fun,scene,core');
+	
+}
+
+function shareOhOnGoogle (a_id)
+{
+	shareSocial('https://plus.google.com/share?url=http://www.smashed.in/oh/'+a_id);
+}
+
+function shareSocial (a_url)
+{
+	window.open( a_url, "Smashed", "status = 1, height = 350, width =650, resizable = 0" );
+}
 		
 

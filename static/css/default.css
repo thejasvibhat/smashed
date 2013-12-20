@@ -25,14 +25,14 @@ Color
 
 a, a:hover, .color, .navbar-nav > li > a:hover, .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus, 
 .nav li a:hover, .nav li a.selected, .nav li a.active, #filter-bar ul#filters li a.selected, #filter-bar ul#filters li a:hover, .social-network:hover i{
-	color:#1fb4da !important;
+	color:#ef8405 !important;
 }
 
 /*
 Background color
 ================================================== */
 .default-bg, .icon-square:hover, .icon-circle:hover, .social-icon i, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .pricing-table li.featured ul li.plan_name, .pricing-table li.featured ul li.plan_price {
-	background-color:#1fb4da;
+	background-color:#ef8405;
 }
 
 /*
