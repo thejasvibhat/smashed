@@ -30,6 +30,7 @@ class User(Webapp2User):
         obj = future.get_result()
         if obj.hasPermission is None:
             obj.hasPermission = Permission()
+            obj.put()
         else:
             if obj.hasPermission.addBar == True:
                 obj.hasPermission.editBar = True
