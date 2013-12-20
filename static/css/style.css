@@ -1736,3 +1736,19 @@ li
     right:20px;
 }
 
+.memberWrapper
+{
+	position:absolute;
+	top:50%;
+	left:-10px;
+	opacity:0.5;
+}
+
+.memberWrapper img
+{
+	box-shadow:1px 1px 3px #2b2b2b;
+	border-radius:3px;
+	-webkit-border-radius:3px;
+}
+
+
