@@ -249,12 +249,13 @@ function recordOhInit()
 
 function getBarListing(a_val)
 {
+	var sourceone = ["fuck","you"];
 	$.ajax({
             type: 'GET',
             dataType:'json',
             url: '/api/b/ajaxlist?type=bar&search='+a_val,
             success: function(responseData) {
-            	$( "#bSearchInput" ).autocomplete({
+            	 $( "#bSearchInput" ).autocomplete({
 					minLength: 0,
 					source: responseData.results,
 					focus: function( event, ui ) {
@@ -263,10 +264,10 @@ function getBarListing(a_val)
 					},
 					select: function( event, ui ) {
 						$( "#bSearchInput" ).val( ui.item.name );
-						return false;
+						window.location = "/b/"+ui.item.bid;
 					}
 				})
-				.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+					.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 					return $( "<li>" )
 					.append( "<a>" + item.name + "<br>" + item.locality + "</a>" )
 					.appendTo( ul );
