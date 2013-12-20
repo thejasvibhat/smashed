@@ -317,17 +317,24 @@ function drawMap (lat,lon)
 
 function shareOhOnFaceBook (a_id)
 {
-	
+	shareSocial('http://www.facebook.com/sharer.php?u=http://www.smashed.in/oh/'+a_id);
 }
 
 function shareOhOnTwitter (a_id)
 {
+	var text = "Check out this cool OverHeard";
+	shareSocial('http://www.twitter.com/share?url=http://www.smashed.in/oh/'+a_id+'&text='+text+'&counturl=/oh/'+a_id+'&hashtags=smashed,overheards,fun,scene,core');
 	
 }
 
 function shareOhOnGoogle (a_id)
 {
-	
+	shareSocial('https://plus.google.com/share?url=http://www.smashed.in/oh/'+a_id);
+}
+
+function shareSocial (a_url)
+{
+	window.open( a_url, "Smashed", "status = 1, height = 350, width =650, resizable = 0" );
 }
 		
 
