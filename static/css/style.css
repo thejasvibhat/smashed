@@ -1180,6 +1180,7 @@ Ui to top
 	  font-family:"rockwell",helvetica;
 	  font-style:italic;
 	  font-weight:bold;
+	  height:65px;
 	}
 
 /*
@@ -1749,6 +1750,11 @@ li
 	box-shadow:1px 1px 3px #2b2b2b;
 	border-radius:3px;
 	-webkit-border-radius:3px;
+}
+
+.bIndv
+{
+	margin-bottom:20px;
 }
 
 

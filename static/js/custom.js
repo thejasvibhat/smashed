@@ -190,6 +190,11 @@ function BInit()
 
 function reviewsInit()
 {
+
+	$('#c').isotope({
+		itemSelector : '.bIndv',
+    	layoutMode   : 'masonry'
+	});
 	$('#bSearch').show();
 	$('#nav-reviews').addClass ('nav-highlight');
 	$('#bSearchInput').live("keyup",function(event)
