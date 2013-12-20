@@ -27,7 +27,7 @@ class Skel (AuthHandler):
         template_values = {
             "title" : self.title,
             "logged_in": self.logged_in,
-            "permisionAddBar": (self.user.hasPermission.addBar if self.logged_in else False),
+            "permissionAddBar": (self.user.hasPermission.addBar if self.logged_in else False),
             "morehead" : "\n".join (self.morehead),
             "skelbody" : "\n".join (self.skelbody)
             }

@@ -49,7 +49,7 @@
             <ul class="nav navbar-nav">
               <li><a id = "nav-home" href="/">Home</a></li>
               <li><a id = "nav-reviews" href="/b">Reviews</a></li>
-#if $permisionAddBar
+#if $getVar("permissionAddBar", 0)
               <li><a id = "nav-review-record" href="/b/record">Write Reviews</a></li>
 #end if
               <li><a id = "nav-oh" href="/oh">OverHeards</a></li>

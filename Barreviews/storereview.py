@@ -78,6 +78,7 @@ class BRecordHandler (AuthHandler):
             self.session['redirect_url'] = '/b/record'
             self.redirect('/auth/')
         else:
+            self._gatekeeper ()
             l_skel = Skel()
             l_skel.title = "Smashed.in :: Write a Review"
 
@@ -92,7 +93,12 @@ class BRecordHandler (AuthHandler):
             template_values = {'upload_url': upload_url}
             l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
 
-            self.response.out.write(l_skel.gethtml())    
+            self.response.out.write(l_skel.gethtml())
+
+    def _gatekeeper (self):
+        if self.user.hasPermission.addBar is True:
+            return
+        self.abort (403)
             
 class BEditHandler (AuthHandler):
     def get(self,resource):
