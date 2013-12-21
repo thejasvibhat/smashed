@@ -1,5 +1,5 @@
 application: smashedat
-version: 2
+version: 3
 runtime: python27
 api_version: 1
 threadsafe: false
@@ -46,6 +46,14 @@ handlers:
 
 - url: /merrymaker[/]*.*
   script: User.um.application
+
+- url: /favicon.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
+
+- url: /ico/favicon.png
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
 
 - url: .*
   script: smashed.application

@@ -1,6 +1,7 @@
 import pprint
 import os
 import sys
+import smashedmisc
 
 from Cheetah.Template import Template
 
@@ -26,6 +27,7 @@ class SkelErr (object):
         template_values = {
             "title" : self.title,
             "logged_in": self.logged_in,
+            "production": smashedmisc.is_production (),
             "morehead" : "\n".join (self.morehead),
             "skelbody" : "\n".join (self.skelbody)
             }

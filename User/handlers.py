@@ -175,6 +175,9 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
     self.redirect('/')
 
   def handle_exception(self, exception, debug):
+    if isinstance(exception, webapp2.HTTPException):
+      if exception.code == 302:
+        return
     logging.exception (exception)
     self.render(exception)
     

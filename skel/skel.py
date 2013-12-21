@@ -1,6 +1,7 @@
 import pprint
 import os
 import sys
+import smashedmisc
 from webapp2_extras import auth, sessions
 
 from User.handlers import AuthHandler
@@ -27,6 +28,7 @@ class Skel (AuthHandler):
         template_values = {
             "title" : self.title,
             "logged_in": self.logged_in,
+            "production": smashedmisc.is_production (),
             "permissionAddBar": (self.user.hasPermission.addBar if self.logged_in else False),
             "morehead" : "\n".join (self.morehead),
             "skelbody" : "\n".join (self.skelbody)
