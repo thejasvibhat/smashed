@@ -44,25 +44,28 @@ class BaseRequestHandler(webapp2.RequestHandler):
     """Returns true if a user is currently logged in, false otherwise"""
     return self.auth.get_user_by_session() is not None
 
-  def render(self, template_vars={}):
-    values = {
-      'url_for': self.uri_for,
-      'logged_in': self.logged_in,
-      'flashes': self.session.get_flashes()
-    }
+  def render(self, exception):
+    # values = {
+    #   'url_for': self.uri_for,
+    #   'logged_in': self.logged_in,
+    #   'flashes': self.session.get_flashes()
+    # }
 
-    values.update(template_vars)
+    # values.update(exception)
 
     l_skel = SkelErr()
     l_skel.title = "Smashed.in :: Pukeee.. "
+    l_skel.logged_in = self.logged_in
 
-    l_skel.addtobody ("Have not found what you are looking for.")
-
-    if isinstance(template_vars["exception"], webapp2.HTTPException):
-      self.response.set_status(template_vars["exception"].code)
+    message = "Have not found what you are looking for."
+    if isinstance(exception, webapp2.HTTPException):
+      self.response.set_status(exception.code)
+      if exception.code == 403:
+        message = "Page under construction. We developers are too sober to open this yet"
     else:
       self.response.set_status (500)
 
+    l_skel.addtobody (message)    
     self.response.out.write (l_skel.gethtml())
 
   def head(self, *args):
@@ -157,20 +160,23 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
 
     # Go to the profile page
     url = self.session.get_flashes (key='redirect_url')
+    if not url:
+      self.redirect ("/")
+      return
     url = url[0][0]
-    url = url if url else "/"
+    url = str(url) if url else "/"
     logging.info ("redirecting to %s" % url)
-    self.redirect(str(url))
+    self.redirect(url)
 
   def logout(self):
     self.auth.unset_session()
-    #Use the following file is developers start using session/user interchangeably.
+    #UC: Use the following file is developers start using session/user interchangeably.
     #self.session.clear()
     self.redirect('/')
 
   def handle_exception(self, exception, debug):
     logging.exception (exception)
-    self.render({'exception': exception})
+    self.render(exception)
     
   def _callback_uri_for(self, provider):
     return self.uri_for('auth_callback', provider=provider, _full=True)
@@ -191,7 +197,6 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
   def user_gatekeeper (self):
     logging.info ("logged in %s" % str(self.request.path_url))
     if not self.logged_in:
-      #self.session['redirect_url'] = str(self.request.path_url)
       self.session.add_flash (self.request.path_url, key='redirect_url')
       self.redirect('/auth/')
       self.abort (302)

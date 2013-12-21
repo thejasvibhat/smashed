@@ -100,80 +100,80 @@ class BRecordHandler (AuthHandler):
             
 class BEditHandler (AuthHandler):
     def get(self,resource):
-            self.user_gatekeeper ()
-            l_skel = Skel()
-            l_skel.title = "Smashed.in :: Edit a Review"
-            bid = resource 
-            c = {}
-            review_query = ReviewDb.query(ReviewDb.bid == bid)
-            reviews = review_query.fetch(1)
-            #Head
-            head_path = os.path.join (os.path.dirname (__file__), 'templates/edit-head.tmpl')
-            l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
+        self.user_gatekeeper ()
+        l_skel = Skel()
+        l_skel.title = "Smashed.in :: Edit a Review"
+        bid = resource 
+        c = {}
+        review_query = ReviewDb.query(ReviewDb.bid == bid)
+        reviews = review_query.fetch(1)
+        #Head
+        head_path = os.path.join (os.path.dirname (__file__), 'templates/edit-head.tmpl')
+        l_skel.addtohead (str((Template.compile(file=head_path) (searchList={}))))
 
-            #Body
-            upload_url = blobstore.create_upload_url ('/api/b/update')
-            c['bid'] = bid
-            for review in reviews:
-                if review.bid == bid:
-                    revid = str(review.reviewid)
-                    userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid)
-                    userreviews = userreview_querry.fetch()
-                    userDetails = self.current_user
-                    rating = 0
-                    totalReviews = 0
-                    allReviewsDict = []
-                    for userreview in userreviews:
-                        c['rating'] = '%s' %userreview.rating
-                    
-                    addressid = str(review.addressid)
-                    add_querry = LocationDb.query(LocationDb.addressid == addressid)
-                    addresses = add_querry.fetch()
-                    for addressLoc in addresses:
-                        c['lat'] = '%s' %addressLoc.lat
-                        #c['lon'] = '%s' % review.latlon.lon
-                        c['lon'] = '%s' %addressLoc.lng
-                        c['locality'] = '%s' %addressLoc.locality
-                        add = "<br />".join(addressLoc.formattedaddress.split("\n"))                
-                        c['address'] = '%s' % add                    
-                    c['reviewlist'] = allReviewsDict
-                    #12.913762,77.600119                
-                    c['name'] = '%s' % review.name
-                    #c['lat'] = '%s' % review.latlon.lat
-                    c['phone'] ='%s' % review.phone
-                    desc = "<br />".join(userreviews[0].review.split("\n"))
-                    c['description'] = '%s' %desc
-                    c['reviewid'] = '%s' %review.reviewid
-    
-                    c['images'] = review.images
-                    
-                    
-                    
-                    c['budget'] = '%s' %review.o_budget
-                    c['ac'] = '%s' %review.o_ac
-                    c['carpark'] = '%s' %review.o_carpark
-                    c['bigscreen'] = '%s' %review.o_bigscreen
-                    c['ladyfriendly'] = '%s' %review.o_ladyok
-                    c['fightscene'] = '%s' %review.o_fightscene
-                    c['music'] = '%s' %review.o_musicvideo
-                    c['clean'] = '%s' %review.o_clean
-                    c['smokingontable'] = '%s' %review.o_smoke
-                    c['happyhours'] = '%s' %review.o_happyhours
-                    c['cardaccepted'] = '%s' %review.o_cardaccept
-                    c['events'] = '%s' %review.o_events
-                    c['bottlerate'] = '%s' %review.o_bottlerate
-                    c['snack1'] = '%s' %userreviews[0].snack1
-                    c['snack2'] = '%s' %userreviews[0].snack2				
-                    
-                    c['usp1'] = "Bottle Rate"
-                    c['usp2'] = "Lady Friendly"
-            c['upload_url'] = upload_url
-            logging.info('%s'%c)
-            path = os.path.join (os.path.dirname (__file__), 'templates/edit-body.tmpl')
-            template_values = c
-            l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+        #Body
+        upload_url = blobstore.create_upload_url ('/api/b/update')
+        c['bid'] = bid
+        for review in reviews:
+            if review.bid == bid:
+                revid = str(review.reviewid)
+                userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid)
+                userreviews = userreview_querry.fetch()
+                userDetails = self.current_user
+                rating = 0
+                totalReviews = 0
+                allReviewsDict = []
+                for userreview in userreviews:
+                    c['rating'] = '%s' %userreview.rating
+                
+                addressid = str(review.addressid)
+                add_querry = LocationDb.query(LocationDb.addressid == addressid)
+                addresses = add_querry.fetch()
+                for addressLoc in addresses:
+                    c['lat'] = '%s' %addressLoc.lat
+                    #c['lon'] = '%s' % review.latlon.lon
+                    c['lon'] = '%s' %addressLoc.lng
+                    c['locality'] = '%s' %addressLoc.locality
+                    add = "<br />".join(addressLoc.formattedaddress.split("\n"))                
+                    c['address'] = '%s' % add                    
+                c['reviewlist'] = allReviewsDict
+                #12.913762,77.600119                
+                c['name'] = '%s' % review.name
+                #c['lat'] = '%s' % review.latlon.lat
+                c['phone'] ='%s' % review.phone
+                desc = "<br />".join(userreviews[0].review.split("\n"))
+                c['description'] = '%s' %desc
+                c['reviewid'] = '%s' %review.reviewid
 
-            self.response.out.write(l_skel.gethtml())    
+                c['images'] = review.images
+                
+                
+                
+                c['budget'] = '%s' %review.o_budget
+                c['ac'] = '%s' %review.o_ac
+                c['carpark'] = '%s' %review.o_carpark
+                c['bigscreen'] = '%s' %review.o_bigscreen
+                c['ladyfriendly'] = '%s' %review.o_ladyok
+                c['fightscene'] = '%s' %review.o_fightscene
+                c['music'] = '%s' %review.o_musicvideo
+                c['clean'] = '%s' %review.o_clean
+                c['smokingontable'] = '%s' %review.o_smoke
+                c['happyhours'] = '%s' %review.o_happyhours
+                c['cardaccepted'] = '%s' %review.o_cardaccept
+                c['events'] = '%s' %review.o_events
+                c['bottlerate'] = '%s' %review.o_bottlerate
+                c['snack1'] = '%s' %userreviews[0].snack1
+                c['snack2'] = '%s' %userreviews[0].snack2				
+                
+                c['usp1'] = "Bottle Rate"
+                c['usp2'] = "Lady Friendly"
+        c['upload_url'] = upload_url
+        logging.info('%s'%c)
+        path = os.path.join (os.path.dirname (__file__), 'templates/edit-body.tmpl')
+        template_values = c
+        l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))
+
+        self.response.out.write(l_skel.gethtml())    
 
 def UpdateReviewRating(curRating,reviewId):
     review_query = ReviewDb.query(ReviewDb.reviewid == reviewId)		

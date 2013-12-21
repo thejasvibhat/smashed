@@ -7,6 +7,7 @@ from Cheetah.Template import Template
 class SkelErr (object):
     def __init__ (self):
         self.title = ""
+        self.logged_in = False
         self.morehead = []
         self.skelbody = []
 
@@ -24,7 +25,7 @@ class SkelErr (object):
 
         template_values = {
             "title" : self.title,
-            "logged_in": False,
+            "logged_in": self.logged_in,
             "morehead" : "\n".join (self.morehead),
             "skelbody" : "\n".join (self.skelbody)
             }

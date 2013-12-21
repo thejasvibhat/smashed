@@ -31,7 +31,6 @@ class LandingPage (webapp2.RequestHandler):
         if l_auth.get_user_by_session():
             user_dict = l_auth.get_user_by_session()
             username = l_auth.store.user_model.get_by_id (user_dict['user_id'])
-            self.redirect(self.session.get('redirect_url'))            
             template_values.update ({'user_loggedin' : 1,
                                      'username': username})
         else:
