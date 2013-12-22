@@ -334,7 +334,7 @@ class SaveHandler(AuthHandler):
 
         urlfetch.set_default_fetch_deadline(45)
         postid = graph.post(
-                       path = '/10153430700220062/photos',
+                       path = '/1429151370649518/photos',
                        message = 'photo description',
                        url = 'http://smashed.thejasvi.in/res/download/%s' % blob_key
                        )
