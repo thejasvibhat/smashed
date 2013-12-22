@@ -326,7 +326,7 @@ class SaveHandler(AuthHandler):
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
         memeid = SaveFinalMeme(userId,blob_key,tags)
-        oauth_access_token = 'CAABvnvDx5ZAgBAKgqY3ci6hIlnKxaiOM9zEyc3AZAhbEc97JtEAhpUpTbwZAMONaScwq1xL2TgefulTFJ7FMRuKwIihLBwifzDX9sFfVxuytOwoVU1jPPDKPP13bvZBp7hin9aDjZCKfbKWFZCuRtOSPAcqgWUuC31CvFeXDpuzsvgKEguQ8ZCig7IWL1h8ElUZD&expires=5183863'
+        oauth_access_token = 'CAABvnvDx5ZAgBAOdVwFJtYvDZCN2dEv4VzseRqMvaJQ5yVip7WTfD2o0UsTPWCBUrOalrXswN6N06eXTZBNsOphvlZAp55RM3J3RUdEf8zUZCV6EKrN0I4FMA5jrDhKRAZB3vCm8PuIUze8K284pIzTgCtFvl02FcUMPD9XiwEZAZC1wk01DI0icAt5ZBnGJf48QZD'
         graph = GraphAPI(oauth_access_token)
 
         # Get my latest posts
@@ -336,7 +336,7 @@ class SaveHandler(AuthHandler):
         postid = graph.post(
                        path = '/1429151370649518/photos',
                        message = 'photo description',
-                       url = 'http://smashed.thejasvi.in/res/download/%s' % blob_key
+                       url = 'http://www.smashed.in/res/download/%s' % blob_key
                        )
         #logging.info('theju/%s' % postid['id'])
         UpdateFacebookId (memeid,postid['id'])
