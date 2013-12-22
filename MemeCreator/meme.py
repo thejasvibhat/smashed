@@ -356,6 +356,8 @@ def GetFontName(oFamily,oStyle,oWeight):
         name = 'fonts/times'
     elif oFamily == "Trebucet":
         name = 'MemeCreator/fonts/trebuc'
+    elif oFamily == "Impact":
+        name = 'MemeCreator/fonts/impact'
         
     if oWeight == "Bold":
         if oStyle == "Italic":
