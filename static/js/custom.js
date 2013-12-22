@@ -204,10 +204,13 @@ function reviewsInit()
 				});
 
 
-	$('#c').isotope({
+	$('#c').imagesLoaded( function(){
+	{
+	    $('#c').isotope({
 		itemSelector : '.bIndv',
-    	layoutMode   : 'masonry'
-	});
+    	        layoutMode   : 'masonry'
+	    });
+        });
 	$('#bSearch').show();
 	$('#nav-reviews').addClass ('nav-highlight');
 	$('#bSearchInput').live("keyup",function(event)
