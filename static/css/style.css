@@ -1244,7 +1244,7 @@ Custom responsive
 		color: #a9b0b7;
 		border:1px solid #6a6f74;
 		background:#474e56;
-		margin-top:8px;
+		margin-top:20px;
 		padding:5px 15px 5px 15px;
 		font-size:12px;		
 	}
@@ -1261,6 +1261,10 @@ Custom responsive
 		float:left;
 		width:100%;
 		margin-top:60px;
+	}
+	#bSearch
+	{
+		display:none !important;
 	}
 }
 
@@ -1294,7 +1298,7 @@ Custom responsive
 		color: #a9b0b7;
 		border:1px solid #6a6f74;
 		background:#474e56;
-		margin-top:0px;
+		margin-top:10px;
 		padding:5px 15px 5px 15px;
 		font-size:12px;		
 	}
@@ -1346,10 +1350,19 @@ Custom responsive
 		float:left;
 		width:100%;
 		margin-top:60px;
-	}	
+	}
+       #bSearch
+       {
+	    display:none !important;
+       }	
 }
 
 @media only screen and (max-width: 479px) {
+	#bSearch
+	{
+	    display:none !important;
+	}
+
 	.da-slide h2{
 		font-size:18px;
 		line-height:26px;
