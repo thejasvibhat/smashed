@@ -4,8 +4,8 @@ var cuTextBox;
 var curDemoBox;
 var curColor = '#fff';
 var curFontSize = 20;
-var curfontFamily = "rockwell";
-var curfontWeight = "Bold";
+var curfontFamily = "Impact";
+var curfontWeight = "Normal";
 var curfontStyle = "Normal";
 var curImage;
 var curImageId;
@@ -82,7 +82,7 @@ function reset()
 {
     curColor = '#fff';
     curFontSize = 30;
-    curfontFamily = "Arial";
+    curfontFamily = "Impact";
     curfontWeight = "Normal";
     curfontStyle = "Normal";
 }

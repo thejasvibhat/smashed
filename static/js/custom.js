@@ -203,14 +203,18 @@ function reviewsInit()
 					}
 				});
 
-
-	$('#c').imagesLoaded( function(){
-	{
-	    $('#c').isotope({
-		itemSelector : '.bIndv',
-    	        layoutMode   : 'masonry'
-	    });
+	var $container = $('#c');
+        $container.imagesLoaded( function(){
+                $container.isotope({
+                        // options
+                        itemSelector : '.bIndv',
+                        layoutMode   : 'masonry'
+                });
         });
+
+
+
+
 	$('#bSearch').show();
 	$('#nav-reviews').addClass ('nav-highlight');
 	$('#bSearchInput').live("keyup",function(event)
