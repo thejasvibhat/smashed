@@ -4,6 +4,8 @@ class BaseRequestHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write ("theju%s" % self.request)  
 		
-#https://www.facebook.com/dialog/oauth?client_id=252676761554370&redirect_uri=http://smashed.thjeasvi.in/gettoken&scope=publish_stream
+#https://www.facebook.com/dialog/oauth?client_id=xxxxxxx&redirect_uri=http://smashed.in/gettoken&scope=manage_pages
 
-#https://graph.facebook.com/oauth/access_token?client_id=252676761554370&redirect_uri=http://smashed.thejasvi.in/gettoken&client_secret=f47dc57744f2abe248beb705fde437f6&code=AQAQwCWzJfYHsxO-mSKU8QKOM5GZZSqjVAYRV0cGecrzkWvZvx_iR6u7XYyO_32aI1q6v6Pvadz8u05Eh0zTWezJskwa62joqdV31B2WRiSXY_uGq_ZEQONq9tSlVISjMZrGFAr2Hkjdr_jzkf54c-8mHCycdgR1e2DIMueqwBrKSrCwWq05ZqVq0BMyoEe49px6_QppKZigu2BdgS8kbUU9kW8XSi-E7IR5isSv9HNmgXbKoSElRKnwYLavhZ4K8OkS1eLNnCDyCKgOs-KJBiI7fbHFAClibKwg2nsOm_lDgISlG-e78n97LkO31BTNWf4
+#https://graph.facebook.com/oauth/access_token?client_id=xxxxxx&redirect_uri=http://smashed.in/gettoken&client_secret=xxxxxx&code=AQAPqKtA27TCQCtw8qt7aPxLK9RgiHeMif6pZr5Ww8zYVTr2trcK0jD38FN0G5QFZQ5vo4BVqrtCGPVAqFujUrXt5mCqNUHhXtvk9xN5f5ZJy6c2ffiJeWvt8a9bUz3zzd6zfgjn_XvqaZK7L1nLhXQVHfi9aoL5VH4AkNH5tolquCV5Vlf7sVsRJnQVtl3cqtrK0SXvofUZFuagB8bHzc5tiBlP0EaRkWyOzTF3r44CKpKEB7PG6cYWi71oqYm7jxWO1byFIe3QLYJN74NBJNgNXBoqSuuCuuS8QwjjNSTqjfoBcF39p-4DQ3_EakxZcQA
+
+#https://graph.facebook.com/smashed.in.7/accounts
