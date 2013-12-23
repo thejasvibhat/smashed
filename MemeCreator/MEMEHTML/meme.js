@@ -278,6 +278,13 @@ function FontSizeChange(val)
 }
 function UpdateFamily(val)
 {
+	if (val != "Impact") {
+		$('#fontStyle').attr('disabled',false);
+		$('#fontWeight').attr('disabled',false);	
+	} else {
+		$('#fontStyle').attr('disabled',true);
+		$('#fontWeight').attr('disabled',true);	
+	}
     curfontFamily = val;
     cuTextBox.css("font-family",val);
 }
