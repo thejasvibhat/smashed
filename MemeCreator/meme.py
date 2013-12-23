@@ -17,7 +17,7 @@ from google.appengine.ext import db
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from webapp2_extras import auth, sessions
-
+from secrets import secrets
 from google.appengine.api import files
 
 import xml.etree.ElementTree as ET
@@ -252,7 +252,7 @@ class SaveHandler(AuthHandler):
                         background.resize(width=int(imgwidth), height=int(imgheight))
                         background.im_feeling_lucky()
                         thumbnail = background.execute_transforms(output_encoding=images.JPEG)
-                        back_layer = Image.new('RGBA', (550,550), (100, 0, 0, 100))
+                        back_layer = Image.new('RGBA', (550,550), (204, 204, 204, 100))
                         output = StringIO.StringIO()
                         back_layer.save(output, format="png")
                         back_layer = output.getvalue()
@@ -326,7 +326,7 @@ class SaveHandler(AuthHandler):
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
         memeid = SaveFinalMeme(userId,blob_key,tags)
-        oauth_access_token = 'CAABvnvDx5ZAgBAOdVwFJtYvDZCN2dEv4VzseRqMvaJQ5yVip7WTfD2o0UsTPWCBUrOalrXswN6N06eXTZBNsOphvlZAp55RM3J3RUdEf8zUZCV6EKrN0I4FMA5jrDhKRAZB3vCm8PuIUze8K284pIzTgCtFvl02FcUMPD9XiwEZAZC1wk01DI0icAt5ZBnGJf48QZD'
+        oauth_access_token = secrets.GetAccessToken() 
         graph = GraphAPI(oauth_access_token)
 
         # Get my latest posts
@@ -334,8 +334,8 @@ class SaveHandler(AuthHandler):
 
         urlfetch.set_default_fetch_deadline(45)
         postid = graph.post(
-                       path = '/1429151370649518/photos',
-                       message = 'photo description',
+                       path = '/431907476935431/photos',
+                       message = 'Created from smashed.in. Go to www.smashed.in to create yours!' %memeid,
                        url = 'http://www.smashed.in/res/download/%s' % blob_key
                        )
         #logging.info('theju/%s' % postid['id'])
