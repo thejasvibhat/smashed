@@ -209,7 +209,7 @@ class BSaveUpdateHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler)
                 review.images[3] = icon4[0].key()
             if len(icon5):
                 review.images[4] = icon5[0].key()
-            if len(icon5):
+            if len(icon6):
                 review.images[5] = icon6[0].key()
             
             review.name = self.request.get('name')
