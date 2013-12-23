@@ -335,7 +335,7 @@ class SaveHandler(AuthHandler):
         urlfetch.set_default_fetch_deadline(45)
         postid = graph.post(
                        path = '/431907476935431/photos',
-                       message = 'Created from smashed.in. Go to www.smashed.in to create yours!' %memeid,
+                       message = 'Created from smashed.in. Go to www.smashed.in to create yours!',
                        url = 'http://www.smashed.in/res/download/%s' % blob_key
                        )
         #logging.info('theju/%s' % postid['id'])
