@@ -54,7 +54,11 @@ class ListComments(AuthHandler):
             l_auth = auth.get_auth()
             userData = l_auth.store.user_model.get_by_id(userreview.userid)
             reviewsDict = {}
+            reviewsDict['username'] = userData.name
+            reviewsDict['avatar'] = userData.avatar_url
+            finalDict['curuser'] = reviewsDict
             curUserId = self.user_id
+            reviewsDict = {}
             if curUserId == userreview.userid:
                 reviewsDict['rating'] = userreview.rating
                 reviewsDict['review'] = userreview.review
@@ -66,6 +70,7 @@ class ListComments(AuthHandler):
                 reviewsDict['username'] = userData.name
                 reviewsDict['avatar'] = userData.avatar_url
                 allReviewsDict.append(reviewsDict)
+        
         finalDict['reviews'] = allReviewsDict
         self.response.write(json.dumps(finalDict))
 
