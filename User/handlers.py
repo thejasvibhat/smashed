@@ -94,6 +94,9 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
   }
 
   @webapp2.cached_property
+  def getPermission (self):
+    return self.current_user.hasPermission
+  @webapp2.cached_property
   def user_id (self):
     return self.current_user.key.id()
   @webapp2.cached_property

@@ -9,7 +9,7 @@
 			<div class="">
 	  			<img onmouseover = "toggleEditOption(this);" class = "img-responsive" src = "/res/download/${r.images[0]}" />
 			</div>
-#if $r.userid == $userid
+#if $userid == 1
             <div id = "bEditWrapper" class = "bEditWrapper">
                 <img src = "/static/img/edit.png" onClick = "return editBar(this);" value = "${r.bid}" />
             </div>

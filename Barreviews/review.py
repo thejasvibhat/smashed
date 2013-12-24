@@ -46,11 +46,16 @@ class ReviewHandler(AuthHandler):
             addresses = add_querry.fetch()
             for addressLoc in addresses:
                 review.latlon = '%s:%s' %(addressLoc.lat,addressLoc.lng)
+        editPermission = 0
+        if self.logged_in:
+            permission = self.getPermission
+            if permission.editBar == True:
+                editPermission = 1
         
         template_values = {
 		"reviews" : reviews[offset:offset+items_per_page],
 		"currentpage" : pagenum,
-		"userid": (self.user_id if self.logged_in else 0),
+		"userid": editPermission,
 		"totalpagecount" : math.ceil (len(reviews) / items_per_page)
 	}
         path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')
