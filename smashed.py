@@ -40,6 +40,7 @@ from Barreviews.listreviews import AjaxLocality
 from Barreviews.storereview import *
 
 from Barreviews.comments import *
+from Barreviews.delete import *
 from DataDump.download import GetRes
 from DataDump.download import GetIcon
 
@@ -98,6 +99,7 @@ routes = [
   webapp2.Route ('/api/b/upload', BSaveHandler),
   webapp2.Route ('/api/b/update', BSaveUpdateHandler),
   webapp2.Route ('/api/b/ajaxlist', AjaxLocality),
+  webapp2.Route ('/api/b/delete', BDeleteHandler),
   
   # #Reviews/storereview.py
   #webapp2.Route ('/reviews/store/uploadreview', MainPageStore1), #BR create/upload (VIEW)
