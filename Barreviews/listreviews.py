@@ -47,28 +47,43 @@ class ListComments(AuthHandler):
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
         userreviews = userreview_querry.fetch(oLimit,offset=oOffset)
-        curuserdata = self.current_user 
         finalDict = {}
         reviewsDict = {}
-        reviewsDict['username'] = curuserdata.name
-        reviewsDict['avatar'] = curuserdata.avatar_url
-        finalDict['curuser'] = reviewsDict
+        if self.logged_in:
+            curuserdata = self.current_user             
+            reviewsDict['username'] = curuserdata.name
+            reviewsDict['avatar'] = curuserdata.avatar_url
+            finalDict['curuser'] = reviewsDict
+        
         allReviewsDict = []
         for userreview in userreviews:
             l_auth = auth.get_auth()
             userData = l_auth.store.user_model.get_by_id(userreview.userid)
-            curUserId = self.user_id
             reviewsDict = {}
-            if curUserId == userreview.userid:
-                reviewsDict['rating'] = userreview.rating
-                reviewsDict['review'] = userreview.review
-                reviewsDict['reviewid'] = userreview.reviewid
-                finalDict['curuserreview'] = reviewsDict
+            if self.logged_in:
+                curUserId = self.user_id
+                if curUserId == userreview.userid:
+                    reviewsDict['rating'] = userreview.rating
+                    reviewsDict['review'] = userreview.review
+                    reviewsDict['reviewid'] = userreview.reviewid
+                    if userreview.parentid == userreview.reviewid:
+                        reviewsDict['desreview'] = 1        
+                    finalDict['curuserreview'] = reviewsDict
+                else:
+                    reviewsDict['rating'] = userreview.rating
+                    reviewsDict['review'] = userreview.review
+                    reviewsDict['username'] = userData.name
+                    reviewsDict['avatar'] = userData.avatar_url
+                    if userreview.parentid == userreview.reviewid:
+                        reviewsDict['desreview'] = 1        
+                    allReviewsDict.append(reviewsDict)                    
             else:
                 reviewsDict['rating'] = userreview.rating
                 reviewsDict['review'] = userreview.review
                 reviewsDict['username'] = userData.name
                 reviewsDict['avatar'] = userData.avatar_url
+                if userreview.parentid == userreview.reviewid:
+                    reviewsDict['desreview'] = 1        
                 allReviewsDict.append(reviewsDict)
         
         finalDict['reviews'] = allReviewsDict
