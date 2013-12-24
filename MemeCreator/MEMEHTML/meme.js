@@ -98,7 +98,7 @@ function AddCaption()
         top = 400;
         
         
-    $("#BaseCanvas").append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:550px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
+    $("#BaseCanvas").append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:550px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
     
     cuTextBox = $('#myText'+iTextCnt+'');     
     m_arrTextBoxes.push(cuTextBox);
