@@ -391,7 +391,7 @@ function Crop()
 
 function UpdateStepperUp()
 {
-    var targInput = $("#fontSizeText");
+    var targInput = $("#fontSize");
     var value = targInput.val();
     value++;
     var min = 20;
@@ -402,7 +402,7 @@ function UpdateStepperUp()
 }
 function UpdateStepperDown()
 {
-    var targInput = $("#fontSizeText");
+    var targInput = $("#fontSize");
     var value = targInput.val();
     value--;
     var min = 20;

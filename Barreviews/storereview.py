@@ -185,6 +185,13 @@ def UpdateReviewRating(curRating,reviewId):
         rating = 0.5 * math.ceil(2.0 * rating)
         review.rating = '%s' %rating
         review.put()
+        
+def UpdateReviewReview(curReview,reviewId):
+    review_query = ReviewDb.query(ReviewDb.reviewid == reviewId)		
+    reviews = review_query.fetch(1)
+    for review in reviews:
+        review.description = '%s' %curReview
+        review.put()
 
 class BSaveUpdateHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
     def post(self):

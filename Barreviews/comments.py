@@ -52,6 +52,7 @@ class UpdateComment (AuthHandler):
         comment = self.request.get('review')
         rating = self.request.get('rating')
         storereview.UpdateReviewRating(rating,reviewid)
+        storereview.UpdateReviewReview(comment,reviewid)
         review_query = CommentReviewDb.query(CommentReviewDb.reviewid == reviewid)		
         reviews = review_query.fetch(1)
         for review in reviews:
