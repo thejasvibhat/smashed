@@ -311,6 +311,48 @@ function initialize() {
     	</div>
     </div>
     
+     <div class = "marginTopTwenty"></div>
+        <div class = "container" id='curContainer' style = "display:none;">
+    	<div class = "col-lg-12 reviewWhiteBoxSmall">
+    		<div class = "col-lg-1">
+    			<img class = "img-responsive" id="curcreatoravatar" src = "" />
+    			<div class = "marginTopTen"></div>
+    			<input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" />
+   			</div>
+    		<div class = "col-lg-11">
+    			<textarea style = "width:100%;height:150px;resize:none;" id="curdescription">Write your review here..</textarea>
+    		</div>
+    		<div class = "col-lg-12 marginTopTen">
+    			<input type = "button" class = "btn btn-success" value = "Save" onclick="SaveReviewComments()" />
+    		</div>
+
+    	</div>
+    </div>
+    
+    <div class = "marginTopTwenty"></div>
+        <div class = "container" id='curEditContainer' style = "display:none;">
+    	<div class = "col-lg-12 reviewWhiteBoxSmall">
+    		<div class = "col-lg-1">
+    			<img class = "img-responsive" id="curcreatoravatar" src = "" />
+    			<div class = "marginTopTen"></div>
+    			<input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" />
+   			</div>
+    		<div class = "col-lg-11">
+    			<textarea style = "width:100%;height:150px;resize:none;" id="curdescription">Write your review here..</textarea>
+    		</div>
+    		<div class = "col-lg-1 marginTopTen">
+    			<input type = "hidden" id = "rid" value = ""/ >
+    			<input type = "button" class = "btn btn-success" value = "Update" onclick="UpdateReviewComments()" />
+    		</div>
+    		
+    		<div id = "spinner" class = "col-lg-11 loaderTop" style = "display:none;top:12px;">
+	  			<img src = "/assets/pacman.gif" />
+	  			&nbsp;&nbsp;
+	  			<span id = "spinnerMg">Submitting your awesome review...Hang in there!
+			</div>
+
+    	</div>
+    
     <div class = "marginTopTwenty"></div>
      <div class = "container" id="revContainer" >
 	      <div class = "col-lg-12 reviewWhiteBoxSmall" id="reviewItem" style="display:none">
@@ -330,27 +372,7 @@ function initialize() {
 	      </div>
 	     </div>
 	    </div>
-    <div class = "marginTopTwenty"></div>
-        <div class = "container" id='curContainer' >
-    	<div class = "col-lg-12 reviewWhiteBoxSmall">
-    		<div class = "col-lg-1">
-    			<img class = "img-responsive" id="curcreatoravatar" src = "" />
-    			<!--
-    			<div class = "marginTopTen"></div>
-    			
-				<span id="curcreatorname" class = "bold"></span>
-    			-->
-    			<div class = "marginTopTen"></div>
-    			<input id = "rating" type = "text" name = "rating" class = "form-control" value = "1" />
-   			</div>
-    		<div class = "col-lg-11">
-    			<textarea style = "width:100%;height:150px;resize:none;" id="curdescription">Comment here..</textarea>
-    		</div>
-    		<div class = "col-lg-12 marginTopTen">
-    			<input type = "button" class = "btn btn-success" value = "Comment" onclick="SaveReviewComments()" />
-    		</div>
-
-    	</div>
+	    
     </div>	
     
 

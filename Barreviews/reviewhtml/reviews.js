@@ -41,6 +41,22 @@ function SaveReviewComments()
     });
 }
 
+function UpdateReviewComments()
+{
+	$('#curEditContainer').find('#spinner').show();
+    var data = {'rating': $('#curEditContainer').find("#rating").val(),'review': $('#curEditContainer').find("#curdescription").val(),'reviewid':$('#curEditContainer').find('#rid').val()};
+    console.log(data);
+     $.ajax({
+               type: "GET",
+               url: "/api/b/updateusercomment",
+               data:data,
+               success: function(response){
+			   		$('#curEditContainer').find('#spinnerMg').html("Updated your Review...").delay(5000).hide();
+			   		$('#curEditContainer').find('#spinner').hide();
+               }
+    });
+}
+
 function ListLatestReviews()
 {
     $.ajax({
@@ -100,14 +116,24 @@ $(function () {
                url: "/api/b/comments?reviewid="+$("#reviewid").val()+"&limit=10&offset=0",
                success: function(response){
                     oObj = $.parseJSON(response);
-                   $("#curContainer").find('#curcreatorname').html(oObj.currentuser);
-                   $("#curContainer").find('#curcreatoravatar').attr('src',oObj.currentavatar);
+                    if (oObj.curuserreview) {
+                   		$('#curEditContainer').show();
+                   		$('#curEditContainer').find('textarea').val(oObj.curuserreview.review);
+                   		$('#curEditContainer').find('#rid').val(oObj.curuserreview.reviewid);
+                   		$("#curEditContainer").find('#curcreatorname').html(oObj.curuser.username);
+                   	    $("#curEditContainer").find('#curcreatoravatar').attr('src',oObj.curuser.avatar);
+                   	    $("#curEditContainer").find('#rating').val(oObj.curuserreview.rating);
+                    }
+                    else
+                    {
+                   		$('#curContainer').show();
+                   		$("#curContainer").find('#curcreatorname').html(oObj.curuser.username);
+                    	$("#curContainer").find('#curcreatoravatar').attr('src',oObj.curuser.avatar);
+                    }
                     i = 0;
                     (oObj.reviews).forEach(function(eachRev) 
                     {
                         i++;
-                        if(i != 1)
-                        {
 	                        var klon = $("#reviewItem" );
 	                        var container = $('#revContainer');
 	                        var oClone = klon.clone();
@@ -135,7 +161,7 @@ $(function () {
 	                        $(container).prepend('<div class = "separator"></div>');
 	                        $(container).prepend(oClone);
 	                        $(oClone).show();
-	                      }
+	                      
                     });
                    
 

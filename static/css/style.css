@@ -51,7 +51,10 @@ CSS structure
   url('/assets/impact.eot'); /* IE9 */
 }
 
-
+textarea
+{
+	border:1px solid #ddd !important;
+}
 
 /*
 Home
@@ -1780,6 +1783,10 @@ li
 .bIndv
 {
 	margin-bottom:20px;
+}
+
+#about{
+	background:url(/static/skin/img/pattern1.png) repeat top left, url(/static/skin/img/green-bg.png) repeat top left;
 }
 
 

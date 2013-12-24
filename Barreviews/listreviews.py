@@ -47,16 +47,16 @@ class ListComments(AuthHandler):
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
         userreviews = userreview_querry.fetch(oLimit,offset=oOffset)
-        
+        curuserdata = self.current_user 
         finalDict = {}
+        reviewsDict = {}
+        reviewsDict['username'] = curuserdata.name
+        reviewsDict['avatar'] = curuserdata.avatar_url
+        finalDict['curuser'] = reviewsDict
         allReviewsDict = []
         for userreview in userreviews:
             l_auth = auth.get_auth()
             userData = l_auth.store.user_model.get_by_id(userreview.userid)
-            reviewsDict = {}
-            reviewsDict['username'] = userData.name
-            reviewsDict['avatar'] = userData.avatar_url
-            finalDict['curuser'] = reviewsDict
             curUserId = self.user_id
             reviewsDict = {}
             if curUserId == userreview.userid:

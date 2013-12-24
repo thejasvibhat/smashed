@@ -182,6 +182,14 @@ function BInit()
         	// do something here...
     	}
 	});
+	$('#curEditContainer').find('#rating').stepper({
+    	wheel_step:0.5,       // Wheel increment is 1
+    	limit: [1,5],         // No negative values
+    	onStep: function( val, up )
+    	{
+        	// do something here...
+    	}
+	});
 	$('#bSearchInput').live("keyup",function(event)
 	{
 		getBarListing($(this).val());
