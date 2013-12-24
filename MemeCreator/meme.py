@@ -294,12 +294,13 @@ class SaveHandler(AuthHandler):
                         y_text = 0
                         for line in lines:
                             font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
-                            width1, height1 = font.getsize(line)    
-                            draw.text((-2, y_text-2), line, font=font, fill=shadowcolor)
-                            draw.text((+2, y_text-2), line, font=font, fill=shadowcolor)
-                            draw.text((-2, y_text+2), line, font=font, fill=shadowcolor)
-                            draw.text((+2, y_text+2), line, font=font, fill=shadowcolor)
-                            draw.text((0, y_text), line, font = font,fill=color)
+                            width1, height1 = font.getsize(line)
+                            offset = (int(width) - int(width1))/2
+                            draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                            draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                            draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                            draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                            draw.text((0+offset, y_text), line, font = font,fill=color)
                             y_text += height1
                         #draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
                 
