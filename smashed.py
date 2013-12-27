@@ -15,16 +15,7 @@ from secrets import secrets
 
 from MemeCreator.creatememe import *
 
-#from MemeCreator.storeimage import MainPageStore
 from MemeCreator.storeimage import *
-
-# from MemeCreator.meme import ListFiles
-# from MemeCreator.meme import SaveHandler
-# from MemeCreator.meme import ListMeme
-# from MemeCreator.meme import GetMeme
-# from MemeCreator.meme import GetShareMemeView
-# from MemeCreator.meme import GetListMemeView
-# from MemeCreator.meme import UploadFacebook
 
 from MemeCreator.meme import *
 from MemeCreator.comments import *
@@ -100,15 +91,6 @@ routes = [
   webapp2.Route ('/api/b/update', BSaveUpdateHandler),
   webapp2.Route ('/api/b/ajaxlist', AjaxLocality),
   webapp2.Route ('/api/b/delete', BDeleteHandler),
-  
-  # #Reviews/storereview.py
-  #webapp2.Route ('/reviews/store/uploadreview', MainPageStore1), #BR create/upload (VIEW)
-  #webapp2.Route ('/reviews/store/upload', UploadHandler1), #BR create/upload (API)
-
-
-  # #DataDump.download.py
-  # webapp2.Route ('/download/review/icon/<resource>', GetIconReview), #BR resource
-  # webapp2.Route ('/download/review/file/<resource>', GetFileReview) #BR resource
 
   webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
   webapp2.Route ('/res/icon/<resource>', GetIcon), #OH res download (API/Path)

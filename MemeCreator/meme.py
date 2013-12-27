@@ -201,13 +201,14 @@ class UploadFacebook(AuthHandler):
 
 class SkelList (webapp2.RequestHandler):
     def get(self):
-
-        tag = self.request.get('tag',default_value="auto")        
+        tag = self.request.get('tag',default_value="auto")
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
         if tag == "auto":
             meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
         else:
             meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
-        memes = meme_query.fetch(10)        	
+        memes = meme_query.fetch(oLimit,offset=oOffset)
 
         #TODO: Make this valid XML or JSON
         self.response.write('<head>')
