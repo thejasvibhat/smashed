@@ -213,60 +213,43 @@ function GetThumbnails(tags)
         type: 'GET',
         crossDomain: true,
     }).done(function ( data ) {
-               theXmlDoc = $.parseXML(data);
-			   var theRow = $(theXmlDoc).find('url').get();
-			   $(theRow).each(function(i) 
-				{
-				    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass tilt" id="image_'+i+'"  src="'+$(this).text()+'"/></div>';                   
-				    $('.itemsCore').append(test); 
-                   /* $( "#image_"+i+"" ).draggable({
-                      revert: "invalid", // when not dropped, the item will revert back to its initial position
-                      containment: "document",
-                      helper: "clone",
-                        start: function (e, ui) {
-                        ui.helper.animate({
-                            width: 120,
-                            height: 120,
-                        },0);
-                    },
-                        //cursorAt: {left:0, top:0},
-                      cursor: "move",
-                    zIndex:10000,
-                    appendTo:$("#BaseCanvas")
-                    });*/
-                    $( "#image_"+i+"" ).click(function(){
-                        curImage =  $("#backImage");
-                        curImage.addClass('imagehide');
-                        var iconsrc = this.src;
-                        var src = iconsrc.replace("icon", "download");
-                        var value = iconsrc.split("/").pop();                            
-                        $("#backImage").attr('src', src);       
-                        $("#BaseCanvas").addClass('load');       
-                        $("#backImage").attr('value', value);                                  
-                        $('#saveButton').removeClass("disabled");   
-                        $('#saveButton').addClass("enabled");   
-                        $("#saveButton").removeAttr("disabled");
+	$(data).find("skel").each (function() {
+	    var id = $(this).find("id").text();
+	    var thumburl = $(this).find("thumburl").text();
+	    var url = $(this).find("url").text();
 
-                    });
-                    $( "#image_"+i+"" ).load(function (){
-                        
-                        if((this.height) > (this.width))
-                        {       
-                             $(this).removeClass("widthCLass");
-                            $(this).addClass("heightCLass");
-                            
-                        }
-                        else
-                        {
-                            var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
-                            $(this).attr('style',margin);
-                        }
-                    });
+	    html_id = id.replace (/[^\w\s]/gi, '');
+	    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass tilt" id="image_'+html_id+'" src="'+thumburl+'"/></div>';
+	    $('.itemsCore').append(test);
 
-				});
+	    $( "#image_"+html_id ).click(function() {
+                curImage =  $("#backImage");
+                curImage.addClass('imagehide');
+                var iconsrc = this.src;
+                var src = iconsrc.replace("icon", "download");
+                var value = iconsrc.split("/").pop();
+		$("#backImage").attr('src', url);
+                $("#BaseCanvas").addClass('load');  
+                $("#backImage").attr('value', id);
+                $('#saveButton').removeClass("disabled");   
+                $('#saveButton').addClass("enabled");   
+                $("#saveButton").removeAttr("disabled");
+	    });
+	    $( "#image_"+html_id ).load(function () {                
+                if((this.height) > (this.width))
+                {       
+		    $(this).removeClass("widthCLass");
+		    $(this).addClass("heightCLass");
+                }
+                else
+                {
+		    var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
+		    $(this).attr('style',margin);
+                }
+	    });
+
+	});
     });
-	 
-	
     return false;
 }
 

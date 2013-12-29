@@ -210,13 +210,16 @@ class SkelList (webapp2.RequestHandler):
             meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
         memes = meme_query.fetch(oLimit,offset=oOffset)
 
-        #TODO: Make this valid XML or JSON
-        self.response.write('<head>')
         for meme in memes:
-            self.response.write('<url>')
-            self.response.write('/res/icon/%s' % meme.resid)
-            self.response.write('</url>')
-        self.response.write('</head>')
+            meme.thumburl = images.get_serving_url (meme.resid, size=100)
+            meme.url = images.get_serving_url (meme.resid, size=550)
+
+        path = os.path.join(os.path.dirname(__file__), 'templates/ohskel-list.tmpl')
+        tclass = Template.compile (file = path)
+        template_values = {"memes" : memes}
+
+        self.response.headers['Content-Type'] = 'text/xml'
+        self.response.write (tclass (searchList=template_values))
               
 class SaveHandler(AuthHandler):
     def post(self):

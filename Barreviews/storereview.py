@@ -20,6 +20,8 @@ from comments import CreateReview
 from Cheetah.Template import Template
 from User.handlers import AuthHandler
 from address import CreateAddress
+from skel.skel import Skel
+
 REVIEW_DB_NAME = 'bars_db'
 def review_dbkey(review_dbname=REVIEW_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
@@ -28,13 +30,6 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
 class ReviewDb(ndb.Model):
     """Models an individual Guestbook entry with author, content, and date."""
     bid   = ndb.StringProperty()
-    
-    # icon_1 = ndb.BlobKeyProperty()
-    # icon_2 = ndb.BlobKeyProperty()
-    # icon_3 = ndb.BlobKeyProperty()
-    # icon_4 = ndb.BlobKeyProperty()
-    # icon_5 = ndb.BlobKeyProperty()
-    # icon_6 = ndb.BlobKeyProperty()
 
     images = ndb.BlobKeyProperty (repeated=True)
 
@@ -70,8 +65,6 @@ class ReviewDb(ndb.Model):
     userid   = ndb.IntegerProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
     
-from skel.skel import Skel
-
 class BRecordHandler (AuthHandler):
     def get(self):
         self.user_gatekeeper ()
