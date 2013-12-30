@@ -30,16 +30,19 @@ handlers:
 
 - url: /assets
   static_dir: assets
-
+  expiration: "1d"
 
 - url: /home/
   static_dir: static
+  expiration: "1d"
 
 - url: /static
   static_dir: static
+  expiration: "1d"
 
 - url: /res1
   static_dir: res
+  expiration: "1d"
 
 - url: /auth[/]*.*
   script: User.um.application
