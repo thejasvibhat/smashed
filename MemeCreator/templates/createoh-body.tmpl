@@ -39,9 +39,39 @@
             <div id="BaseCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#cccccc;width:550px;height:550px;">             
                 <img id="backImage" src="/static/img/drophere.png" onload="OnImageLoad()" > 
             </div>
+            <div id="ConversationCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#cccccc;width:550px;height:600px;display:none;">             
+                <div id="canCon" style="background-color:#cccccc;width:550px;height:600px;" onclick="ConGridClicked(this)">
+                <!--img id="backImage" src="/static/img/drophere.png" onload="OnImageLoad()" --> 
+                </div>
+                <div class = "sepcon" id="sepcon"></div>  
+            </div>
         </div>
     
        <div class = "col-lg-3 whiteCanvas paddingBottom">
+       <label class = "labelBig">OverHeard Type</label>
+          <div>
+              <select  onchange="UpdateType(this.value);">                        
+              	  <option>Single</option>   
+                  <option>Conversation</option>   
+              </select>
+          </div>
+          <div class = "sep"></div>  
+          <div id="conType" style="display:none">
+             <label class = "labelBig">Rows </label>
+          <dd class='stepper_widget' ><input id = "rows" style = "width:120px;" type='text' class="form-control" placeholder="20"  value='1' class='min_1_max_4' onblur="RowCountChange(this.value);">  
+	      <div class = "marginTopTen"></div> 
+              <button class="upbutton" onclick="UpdateStepperUpRows();">+</button>
+              <button class="dnbutton" onclick="UpdateStepperDownRows();">-</button>     
+          </dd>             
+          <div class = "sep"></div>
+           <label class = "labelBig">Columns </label>
+          <dd class='stepper_widget' ><input id = "columns" style = "width:120px;" type='text' class="form-control" placeholder="20"  value='1' class='min_1_max_3' onblur="ColumnCountChange(this.value);">  
+	      <div class = "marginTopTen"></div> 
+              <button class="upbutton" onclick="UpdateStepperUpColumns();">+</button>
+              <button class="dnbutton" onclick="UpdateStepperDownColumns();">-</button>     
+          </dd>             
+          <div class = "sep"></div>
+          </div>
            <label class = "labelBig">Font Size</label>
           <dd class='stepper_widget' ><input id = "fontSize" style = "width:120px;" type='text' class="form-control" placeholder="20" id='fontSizeText' value='20' class='min_20_max_100' onblur="FontSizeChange(this.value);">  
 	      <div class = "marginTopTen"></div> 
@@ -98,3 +128,6 @@
           </div>  
     </div>     
 </div>
+<img id="backImageCon" src="/static/img/drophere.png" style="display:none;position:absolute;" onLoad="OnImageLoadConGrid(this)" /> 
+
+<img id = "removePanel" src="/assets/delete.png" onclick="ResetToDefault()" style = "display:none;position:absolute;"/> 

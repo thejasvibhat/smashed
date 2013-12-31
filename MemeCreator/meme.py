@@ -240,6 +240,26 @@ class SaveHandler(AuthHandler):
             selectiony = objects.get('y')
             selectionwidth = objects.get('width')
             selectionheight = objects.get('height')
+            rows = 1
+            columns = 1
+            panelwidth = 550
+            panelheight = 550
+            otype = 'normal'
+            if objects.get('type') == "conversation":
+                rows = objects.get('rows')
+                columns = objects.get('columns')
+                panelwidth = 550/int(columns)
+                panelheight = 600/int(rows)
+                otype = 'conv'
+                con_back_layer = Image.new('RGBA', (550,600), (204, 204, 204, 100))
+                output = StringIO.StringIO()
+                con_back_layer.save(output, format="png")
+                con_back_layer = output.getvalue()
+                output.close() 
+            woffset = 0
+            hofsset = 0
+            rrindex = 0
+            rcindex = 0
             for texts in objects:                
                 if texts.tag == "imagebase":                    
                     imgId = texts.get('id')
@@ -249,6 +269,7 @@ class SaveHandler(AuthHandler):
                     meme_query =  MemeDb.query(MemeDb.myid == imgId)
                     #meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
                     memes = meme_query.fetch(1)
+                    
                     for meme in memes:
                         blob_reader = blobstore.BlobReader(meme.resid)
                         background = images.Image(blob_reader.read())
@@ -256,16 +277,40 @@ class SaveHandler(AuthHandler):
                         background.resize(width=int(imgwidth), height=int(imgheight))
                         background.im_feeling_lucky()
                         thumbnail = background.execute_transforms(output_encoding=images.JPEG)
-                        back_layer = Image.new('RGBA', (550,550), (204, 204, 204, 100))
-                        output = StringIO.StringIO()
-                        back_layer.save(output, format="png")
-                        back_layer = output.getvalue()
-                        output.close()               
-                        #merge
-                        merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
-                                                   (thumbnail, (550-int(imgwidth))/2, (550 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
-                                                   550, 550)
-
+                        if otype == 'normal':
+                            back_layer = Image.new('RGBA', (550,550), (204, 204, 204, 100))
+                            output = StringIO.StringIO()
+                            back_layer.save(output, format="png")
+                            back_layer = output.getvalue()
+                            output.close()               
+                            #merge
+                            merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
+                                                       (thumbnail, (550-int(imgwidth))/2, (550 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
+                                                       550, 550)
+                        else:
+                            back_layer = Image.new('RGBA', (panelwidth,panelheight), (204, 204, 204, 100))
+                            output = StringIO.StringIO()
+                            back_layer.save(output, format="png")
+                            back_layer = output.getvalue()
+                            output.close()               
+                            #merge
+                            merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
+                                                       (thumbnail, (panelwidth-int(imgwidth))/2, (panelheight - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
+                                                       panelwidth, panelheight)
+                            if rrindex == int(rows):
+                                rrindex = 0
+                                rcindex = rcindex + 1
+                            woffset = rrindex*panelwidth
+                            if rcindex == int(columns):
+                                rcindex = 0
+                                
+                            hoffset = rcindex*panelheight
+                            logging.info("%stheju%s" %(rrindex,rcindex))
+                            con_back_layer = images.composite([(con_back_layer, 0,0, 1.0, images.TOP_LEFT), 
+                                                       (merged, woffset,hoffset, 1.0, images.TOP_LEFT)], 
+                                                       550, 600)
+                            merged = con_back_layer
+                            rrindex = rrindex + 1
 
                 for child in texts.iter('text'):
                     for props in child:

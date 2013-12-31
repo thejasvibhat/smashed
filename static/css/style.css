@@ -1505,7 +1505,13 @@ gridGoogleMapContainer
     border-bottom:1px solid #ffffff;
     height:2px;
 }
-
+.sepcon
+{
+    margin:0px 0 0px 0;
+    background:#dddddd;
+    border-bottom:1px solid #ffffff;
+    height:2px;
+}
 .marginTopTen
 {
     margin:10px 0 0px 0;

@@ -96,9 +96,10 @@ function AddCaption()
         top = 10;
     else if(iTextCnt == 2)
         top = 400;
-        
-        
-    $("#BaseCanvas").append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:550px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
+    var base = $("#BaseCanvas");
+    if(ohtype == "Conversation")
+        base = $("#ConversationCanvas");
+    $(base).append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:550px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
     
     cuTextBox = $('#myText'+iTextCnt+'');     
     m_arrTextBoxes.push(cuTextBox);
@@ -117,11 +118,11 @@ function AddCaption()
     textBox.mousedown(function down(ev){cuTextBox = textBox;isDragging = true;
                                         demoBox.removeClass("backgroundTransparent");});
   
-   $("#BaseCanvas").mousemove(function moveall(event){
+   $(base).mousemove(function moveall(event){
         
         if(isDragging)
         {
-            var localCoordinates = $("#BaseCanvas").globalToLocal(
+            var localCoordinates = $(base).globalToLocal(
 						event.pageX,
 						event.pageY
 					);
@@ -228,7 +229,45 @@ function GetThumbnails(tags)
                 var iconsrc = this.src;
                 var src = iconsrc.replace("icon", "download");
                 var value = iconsrc.split("/").pop();
-		$("#backImage").attr('src', url);
+                if(ohtype == "Conversation")
+                {
+                        $.each(m_arrGrids,function(index,grid){
+                            var curImg = $(grid).find("#backImageCon");
+                            if(curImg.val() == 'default')
+                            {
+                                curImg.attr('src', url);
+                                curImg.attr('sid', id);
+                                curImg.val('actual');
+                                $(grid).mouseenter(function(){
+                                    if(curImg.val() == 'actual')
+                                    {
+                                        var oPd = $("#removePanel").clone();
+                                        
+                                        $(grid).append(oPd);
+                                        $(oPd).show();
+                                    
+                                   
+                                        $(oPd).click(function(event){
+                                        
+                                            $(curImg).val('default');
+                                            curImg.attr('src', '/static/img/drophere.png');
+                                            $( grid ).find( "#removePanel" ).remove();
+                                        });
+                                    }
+                               
+                                });
+                                 $(grid).mouseleave(function() {
+                                    $( grid ).find( "#removePanel" ).remove();
+                                
+                                });
+                            }
+                        });
+                }
+                else
+                {
+                    $("#backImage").attr('src', url);        
+                }
+		
                 $("#BaseCanvas").addClass('load');  
                 $("#backImage").attr('value', id);
                 $('#saveButton').removeClass("disabled");   
@@ -289,20 +328,44 @@ function ColorChanged(val)
 }
 function Save()
 {
+    var base = $("#BaseCanvas");
     
     removeSelection();
     var xmlDocument = $.parseXML("<root/>");
     var oObjetcs = document.createElement('objects');
+    if(ohtype == "Conversation")
+    {
+        base = $("#ConversationCanvas");
+        oObjetcs.setAttribute("type","conversation");
+        var rows = $("#rows").val();
+        var columns = $("#columns").val();
+        oObjetcs.setAttribute("rows",rows);
+        oObjetcs.setAttribute("columns",columns);
+    }
     oObjetcs.setAttribute("x",curSelectionX);
     oObjetcs.setAttribute("y",curSelectionY);
     oObjetcs.setAttribute("width",curSelectionWidth);
     oObjetcs.setAttribute("height",curSelectionHeight);
-    
-    var oImages = document.createElement('imagebase')
-    oImages.setAttribute("id",curImage.val());
-    oImages.setAttribute("width",curImage.width());
-    oImages.setAttribute("height",curImage.height());
-    oObjetcs.appendChild(oImages);
+    if(ohtype == "Conversation")
+    {
+        for(i=0;i<m_arrGrids.length;i++)
+        {
+            curImage = $(m_arrGrids[i]).find('#backImageCon');
+            var oImages = document.createElement('imagebase')
+            oImages.setAttribute("id",curImage.attr('sid'));
+            oImages.setAttribute("width",curImage.width());
+            oImages.setAttribute("height",curImage.height());
+            oObjetcs.appendChild(oImages);
+        }
+    }
+    else
+    {
+        var oImages = document.createElement('imagebase')
+        oImages.setAttribute("id",curImage.val());
+        oImages.setAttribute("width",curImage.width());
+        oImages.setAttribute("height",curImage.height());
+        oObjetcs.appendChild(oImages);
+    }
     var oTextBoxes = document.createElement('texts')
     for(var i=0; i < m_arrTextBoxes.length ; i++)
     {
@@ -314,8 +377,8 @@ function Save()
         oProperty.setAttribute("style",oTextBox.css("font-style"));
         oProperty.setAttribute("weight",oTextBox.css("font-weight"));
         oProperty.setAttribute("name",oTextBox.css("font-family"));
-        oProperty.setAttribute("left",m_arrDemoBoxes[i].css("left").split("p")[0] - $("#BaseCanvas").position().left);
-        oProperty.setAttribute("top",m_arrDemoBoxes[i].css("top").split("p")[0] - $("#BaseCanvas").position().top);
+        oProperty.setAttribute("left",m_arrDemoBoxes[i].css("left").split("p")[0] - $(base).position().left);
+        oProperty.setAttribute("top",m_arrDemoBoxes[i].css("top").split("p")[0] - $(base).position().top);
         oProperty.setAttribute("width",oTextBox.width());
         oProperty.setAttribute("height",oTextBox.height());
         oProperty.setAttribute("textVal",oTextBox.val());
@@ -394,6 +457,142 @@ function UpdateStepperDown()
         targInput.val(value);
     FontSizeChange(targInput.val());
 }
+function UpdateStepperUpRows()
+{
+    var targInput = $("#rows");
+    var value = targInput.val();
+    value++;
+    var min = 1;
+    var max = 4;
+    if ((value > min)&&(value <= max))
+        targInput.val(value);
+    GridChange();
+}
+function UpdateStepperDownRows()
+{
+    var targInput = $("#rows");
+    var value = targInput.val();
+    value--;
+    var min = 1;
+    var max = 4;
+    if ((value < max)&&(value >= min))
+        targInput.val(value);
+    GridChange();
+}
+function UpdateStepperUpColumns()
+{
+    var targInput = $("#columns");
+    var value = targInput.val();
+    value++;
+    var min = 1;
+    var max = 4;
+    if ((value > min)&&(value <= max))
+        targInput.val(value);
+    GridChange();
+}
+function UpdateStepperDownColumns()
+{
+    var targInput = $("#columns");
+    var value = targInput.val();
+    value--;
+    var min = 1;
+    var max = 4;
+    if ((value < max)&&(value >= min))
+        targInput.val(value);
+    GridChange();
+}
+var canCon;
+var sepCon;
+var m_arrGrids = [];
+var currentGrid;
+var ohtype;
+var backImageCon;
+function GridChange()
+{
+    m_arrGrids.splice(0,m_arrGrids.length);
+    if(!canCon)
+    {
+        canCon = $("#canCon");
+        sepCon = $("#sepcon").clone();
+    }
+    $('#ConversationCanvas').empty()
+   // $('#ConversationCanvas').append(canCon);
+  //  $('#ConversationCanvas').append(sepCon);
+    
+    var rows = $("#rows").val();
+    var columns = $("#columns").val();
+    var cheight = 600/rows;
+    var cwidth = 550/columns;
+    //alert(cheight);
+    $(canCon).height(cheight);
+    $(canCon).width(cwidth);
+    for(i=0 ; i < rows ; i++)
+    {
+        var sepCon = $(sepCon).clone();
+        var cloneCan = $(canCon).clone();
+        cloneCan.attr("id","cloneRow"+i);
+        $("#ConversationCanvas").append(cloneCan);
+        cloneCan.css('border-bottom', "solid 1px white");
+        if(columns > 1)
+        {
+            cloneCan.css('border-right', "solid 1px white");
+            cloneCan.css('display', "inline-block");
+        }
+        m_arrGrids.push(cloneCan);
+        for (j=1 ; j < columns ; j++)
+        {
+            var cloneCanCol = $(canCon).clone();
+            cloneCanCol.attr("id",cloneCan.attr('id')+j);
+            $("#ConversationCanvas").append(cloneCanCol); 
+            cloneCanCol.css('border-right', "solid 1px white");
+            cloneCanCol.css('border-bottom', "solid 1px white");
+            cloneCanCol.css('display', "inline-block");
+            m_arrGrids.push(cloneCanCol);
+        }
+        
+    }
+    ConGridClicked(m_arrGrids[0])
+}
+
+function ConGridClicked(grid)
+{
+    if(!backImageCon)
+        backImageCon = $("#backImageCon").clone();
+    $.each(m_arrGrids,function(index,grid){
+        var curImg = $(grid).find("#backImageCon");
+        if(curImg.val() == 'default')
+            curImg.remove();
+    });
+    currentGrid = grid;
+    if($(currentGrid).children().length == 0)
+    {
+        var imgsrc = $(backImageCon).clone();
+        //$(imgsrc).width($(currentGrid).width());
+        //$(imgsrc).height($(currentGrid).height());
+        imgsrc.val('default');
+        $(imgsrc).show();
+        $(currentGrid).append(imgsrc);
+    }
+   
+}
+function UpdateType(val)
+{
+    ohtype = val;   
+    if(val == "Conversation")
+    {
+        $("#conType").show();
+        $("#ConversationCanvas").show();
+        $("#BaseCanvas").hide();
+        GridChange();
+    }
+    else
+    {
+        $("#conType").hide();
+        $("#ConversationCanvas").hide();
+        $("#BaseCanvas").show();
+
+    }
+}
 function OnImageLoad()
 {
     //alert($("#BaseCanvas").height());
@@ -415,6 +614,31 @@ function OnImageLoad()
 
         var margin = 'margin: '+($("#BaseCanvas").height() - curImage.height())/2+'px 0px 0px 0px;';                            
         curImage.attr('style',margin);
+    }
+}
+function OnImageLoadConGrid(curImageView)
+{
+    if(ohtype == "Conversation"){
+        curImage = $(curImageView);
+        if(curImage.width() == 0)
+            return;
+        
+        
+        if((curImage.height()) > (curImage.width()))
+        {     
+            var ht = 'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px';                            
+            curImage.attr('style',ht);
+            var margin = 'margin: 0px 0px 0px '+($(currentGrid).width() - curImage.width())/2+'px;'+'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px;position:absolute;';                            
+            curImage.attr('style',margin);
+            
+        }
+        else
+        {
+            var wt = 'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px';                                               
+            curImage.attr('style',wt);
+            var margin = 'margin: '+($(currentGrid).height() - curImage.height())/2+'px 0px 0px 0px;'+'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px;position:absolute;';                            
+            curImage.attr('style',margin);
+        }
     }
 }
 function removeSelection()
