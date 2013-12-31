@@ -242,16 +242,20 @@ class SaveHandler(AuthHandler):
             selectionheight = objects.get('height')
             rows = 1
             columns = 1
+            totalwidth = 550
+            totalheight = 550
             panelwidth = 550
             panelheight = 550
             otype = 'normal'
             if objects.get('type') == "conversation":
+                totalwidth = 550
+                totalheight = 600
                 rows = objects.get('rows')
                 columns = objects.get('columns')
                 panelwidth = 550/int(columns)
                 panelheight = 600/int(rows)
                 otype = 'conv'
-                con_back_layer = Image.new('RGBA', (550,600), (204, 204, 204, 100))
+                con_back_layer = Image.new('RGBA', (totalwidth,totalheight), (204, 204, 204, 100))
                 output = StringIO.StringIO()
                 con_back_layer.save(output, format="png")
                 con_back_layer = output.getvalue()
@@ -278,15 +282,15 @@ class SaveHandler(AuthHandler):
                         background.im_feeling_lucky()
                         thumbnail = background.execute_transforms(output_encoding=images.JPEG)
                         if otype == 'normal':
-                            back_layer = Image.new('RGBA', (550,550), (204, 204, 204, 100))
+                            back_layer = Image.new('RGBA', (totalwidth,totalheight), (204, 204, 204, 100))
                             output = StringIO.StringIO()
                             back_layer.save(output, format="png")
                             back_layer = output.getvalue()
                             output.close()               
                             #merge
                             merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
-                                                       (thumbnail, (550-int(imgwidth))/2, (550 - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
-                                                       550, 550)
+                                                       (thumbnail, (totalwidth-int(imgwidth))/2, (totalheight - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
+                                                       totalwidth, totalheight)
                         else:
                             back_layer = Image.new('RGBA', (panelwidth,panelheight), (204, 204, 204, 100))
                             output = StringIO.StringIO()
@@ -297,18 +301,18 @@ class SaveHandler(AuthHandler):
                             merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
                                                        (thumbnail, (panelwidth-int(imgwidth))/2, (panelheight - int(imgheight))/2, 1.0, images.TOP_LEFT)], 
                                                        panelwidth, panelheight)
-                            if rrindex == int(rows):
+                            if rrindex == int(columns):
                                 rrindex = 0
                                 rcindex = rcindex + 1
                             woffset = rrindex*panelwidth
-                            if rcindex == int(columns):
+                            if rcindex == int(rows):
                                 rcindex = 0
                                 
                             hoffset = rcindex*panelheight
                             logging.info("%stheju%s" %(rrindex,rcindex))
                             con_back_layer = images.composite([(con_back_layer, 0,0, 1.0, images.TOP_LEFT), 
                                                        (merged, woffset,hoffset, 1.0, images.TOP_LEFT)], 
-                                                       550, 600)
+                                                       totalwidth, totalheight)
                             merged = con_back_layer
                             rrindex = rrindex + 1
 
@@ -361,7 +365,7 @@ class SaveHandler(AuthHandler):
                         textlayers.append(text_layer)
                         merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
                                                    (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
-                                                   550, 550)
+                                                   totalwidth, totalheight)
 
                         
         #merged = images.crop(merged,float(selectionx),float(selectiony),
