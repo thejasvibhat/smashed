@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>http://www.smashed.in/</loc>
+  <changefreq>weekly</changefreq>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/auth</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/pages/terms</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/pages/privacy</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/pages/about</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/dea24008-272d-4410-8b52-343b44a75eba</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/307a7b36-0046-46eb-95e0-0aa599bf83cd</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/717147db-9cd8-413d-b378-435399b639aa</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/a6973741-d4ec-4b81-aeab-3a4e10e57cc8</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/36fe84c0-bdfa-43af-98d0-f9b8a6aed667</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/20ee1ce8-d65f-4611-b692-20138ce4c0ce</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/f4d472c3-f4ef-4014-b3e6-13f9151d5559</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/af1a1fb0-24c3-41f7-93ee-9a491591aaf3</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/db122058-d87b-4850-bb94-617d8304e331</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/b/c7e3dc14-a84f-4f7c-a7fb-df6743812f4b</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/456af03e-885d-42c9-9cfb-22ac72f8d520</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/ecaf662f-44df-48b0-b704-1822584bbde0</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/b7d1983a-5cbc-4b08-9274-1199f90a2012</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/a95439e7-27c9-4db5-b79c-5f37e25525b0</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/22070bce-c1b1-4e0b-adc6-d2b455fd3a80</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/a9046d04-7969-421f-b046-4049e377d9bb</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/267b7722-6697-43cb-b70c-ea3fa81c4955</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/122d1bac-5290-4d17-868b-be83e463d0fb</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/f7f356ea-1140-49f4-b639-9544d7db6a0b</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/763d7839-2cb0-4dc8-9066-0c130e4544d9</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/page/2</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/d2c47064-6d88-4f26-91e1-6f3b2b0f6de0</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/8e0f2eff-5f16-4b5a-b032-1ef30a9aa4ba</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/466d58a9-8260-4c84-af4d-e55bf98c1178</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/ce06515d-00d6-4789-8abc-757e1e7127ec</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/fab8dbb9-ff46-4e08-9e6c-e2afbb8c4204</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/f09e48bd-c2d3-40dc-87fc-3bf92cc698ff</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/42fd51ba-d3a7-4c8d-9a8e-524709afea0e</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/5d5ad0ae-2dbd-4d3b-a292-14c35e722df7</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/be52efba-be0a-456f-9120-9e73df5acbee</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/5485935a-ee75-48ea-9934-d88c48df79d1</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/page/1</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/page/3</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/06c0e0cd-e00a-40d1-b1a8-72d107869b45</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/fffe598c-7e09-4c15-a544-e1a57741c150</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/87958180-92e6-4d10-a33a-483872e63936</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>http://www.smashed.in/oh/d2c9fa3f-9384-498f-ad2d-49e708f15d5b</loc>
+  <changefreq>weekly</changefreq>
+  <priority>0.41</priority>
+</url>
+</urlset>

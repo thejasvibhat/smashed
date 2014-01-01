@@ -58,6 +58,14 @@ handlers:
   static_files: static/img/favicon.ico
   upload: static/img/favicon.ico
 
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
+- url: /sitemap.xml
+  static_files: sitemap.xml
+  upload: sitemap.xml
+
 - url: .*
   script: smashed.application
 

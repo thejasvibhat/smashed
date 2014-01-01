@@ -324,7 +324,7 @@ ul#gallery-list-memes li {
 .image-wrapper,.image-wrapper-normal{
 	display:block;
 	width:100%;
-	height:auto;
+	height:240px;
 	max-height:240px;
 }
 
