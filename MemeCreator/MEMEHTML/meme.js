@@ -99,7 +99,7 @@ function AddCaption()
     var base = $("#BaseCanvas");
     if(ohtype == "Conversation")
         base = $("#ConversationCanvas");
-    $(base).append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:550px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
+    $(base).append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:500px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;margin-left:0;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
     
     cuTextBox = $('#myText'+iTextCnt+'');     
     m_arrTextBoxes.push(cuTextBox);
@@ -521,8 +521,8 @@ function GridChange()
     
     var rows = $("#rows").val();
     var columns = $("#columns").val();
-    var cheight = 600/rows;
-    var cwidth = 550/columns;
+    var cheight = 500/rows;
+    var cwidth = 500/columns;
     //alert(cheight);
     $(canCon).height(cheight);
     $(canCon).width(cwidth);
@@ -556,8 +556,12 @@ function GridChange()
 
 function ConGridClicked(grid)
 {
-    if(!backImageCon)
+    if(!backImageCon) {
         backImageCon = $("#backImageCon").clone();
+	$('#backImageCon').attr('id','old');
+	$(backImageCon).attr('id','backImageCon');
+    }
+    $('#old').remove();	
     $.each(m_arrGrids,function(index,grid){
         var curImg = $(grid).find("#backImageCon");
         if(curImg.val() == 'default')
@@ -577,21 +581,6 @@ function ConGridClicked(grid)
 }
 function UpdateType(val)
 {
-    ohtype = val;   
-    if(val == "Conversation")
-    {
-        $("#conType").show();
-        $("#ConversationCanvas").show();
-        $("#BaseCanvas").hide();
-        GridChange();
-    }
-    else
-    {
-        $("#conType").hide();
-        $("#ConversationCanvas").hide();
-        $("#BaseCanvas").show();
-
-    }
 }
 function OnImageLoad()
 {
@@ -623,7 +612,11 @@ function OnImageLoadConGrid(curImageView)
         if(curImage.width() == 0)
             return;
         
-        
+        var ht = 'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px';
+            curImage.attr('style',ht);
+            var margin = 'margin:' +($(currentGrid).height() - curImage.height())/2+'px 0px 0px '+($(currentGrid).width() - curImage.width())/2+'px;'+'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px;position:absolute;';
+            curImage.attr('style',margin);
+        /*
         if((curImage.height()) > (curImage.width()))
         {     
             var ht = 'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px';                            
@@ -638,7 +631,7 @@ function OnImageLoadConGrid(curImageView)
             curImage.attr('style',wt);
             var margin = 'margin: '+($(currentGrid).height() - curImage.height())/2+'px 0px 0px 0px;'+'max-height:'+$(currentGrid).height()+'px;max-width:'+$(currentGrid).width()+'px;position:absolute;';                            
             curImage.attr('style',margin);
-        }
+        }*/
     }
 }
 function removeSelection()

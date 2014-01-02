@@ -238,6 +238,8 @@ function ohListInit()
 
 function recordOhInit()
 {
+	ohtype = "Conversation";	
+	GridChange();
 	$('#nav-oh-record').addClass ('nav-highlight');
 	GetUploadURL();
 	// initialize scrollable

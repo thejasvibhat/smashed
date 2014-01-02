@@ -212,7 +212,7 @@ class SkelList (webapp2.RequestHandler):
 
         for meme in memes:
             meme.thumburl = images.get_serving_url (meme.resid, size=100)
-            meme.url = images.get_serving_url (meme.resid, size=550)
+            meme.url = images.get_serving_url (meme.resid, size=500)
 
         path = os.path.join(os.path.dirname(__file__), 'templates/ohskel-list.tmpl')
         tclass = Template.compile (file = path)
@@ -242,18 +242,18 @@ class SaveHandler(AuthHandler):
             selectionheight = objects.get('height')
             rows = 1
             columns = 1
-            totalwidth = 550
-            totalheight = 550
-            panelwidth = 550
-            panelheight = 550
+            totalwidth = 500
+            totalheight = 500
+            panelwidth = 500
+            panelheight = 500
             otype = 'normal'
             if objects.get('type') == "conversation":
-                totalwidth = 550
-                totalheight = 600
+                totalwidth = 500
+                totalheight = 500
                 rows = objects.get('rows')
                 columns = objects.get('columns')
-                panelwidth = 550/int(columns)
-                panelheight = 600/int(rows)
+                panelwidth = 500/int(columns)
+                panelheight = 500/int(rows)
                 otype = 'conv'
                 con_back_layer = Image.new('RGBA', (totalwidth,totalheight), (204, 204, 204, 100))
                 output = StringIO.StringIO()
