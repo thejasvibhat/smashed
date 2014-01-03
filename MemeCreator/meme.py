@@ -238,22 +238,22 @@ class SaveHandler(AuthHandler):
         for objects in root:
             selectionx = objects.get('x')
             selectiony = objects.get('y')
-            selectionwidth = objects.get('width')
-            selectionheight = objects.get('height')
+            selectionwidth = int(objects.get('width'))
+            selectionheight = int(objects.get('height'))
             rows = 1
             columns = 1
-            totalwidth = 500
-            totalheight = 500
-            panelwidth = 500
-            panelheight = 500
+            totalwidth = selectionwidth
+            totalheight = selectionheight
+            panelwidth = selectionwidth
+            panelheight = selectionheight
             otype = 'normal'
             if objects.get('type') == "conversation":
-                totalwidth = 500
-                totalheight = 500
+                totalwidth = selectionwidth
+                totalheight = selectionheight
                 rows = objects.get('rows')
                 columns = objects.get('columns')
-                panelwidth = 500/int(columns)
-                panelheight = 500/int(rows)
+                panelwidth = selectionwidth/int(columns)
+                panelheight = selectionheight/int(rows)
                 otype = 'conv'
                 con_back_layer = Image.new('RGBA', (totalwidth,totalheight), (204, 204, 204, 100))
                 output = StringIO.StringIO()
@@ -371,7 +371,7 @@ class SaveHandler(AuthHandler):
         #merged = images.crop(merged,float(selectionx),float(selectiony),
         #                     float(selectionwidth),float(selectionheight))
         merged = images.crop(merged,float(selectionx),float(selectiony),
-                             float(selectionwidth),float(selectionheight))
+                             1.0,1.0)
         
         # save
         file_name = files.blobstore.create(mime_type='image/png')

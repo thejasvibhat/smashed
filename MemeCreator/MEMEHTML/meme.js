@@ -86,7 +86,13 @@ function reset()
     curfontWeight = "Normal";
     curfontStyle = "Normal";
 }
-
+function clear()
+{
+    iTextCnt = 0;
+	m_arrGrids.splice(0,m_arrGrids.length);
+	m_arrTextBoxes.splice(0,m_arrTextBoxes.length);
+	m_arrDemoBoxes.splice(0,m_arrDemoBoxes.length);
+}
 function AddCaption()
 {
     reset();
@@ -328,6 +334,7 @@ function ColorChanged(val)
 }
 function Save()
 {
+	$('#parentContainer').scrollTop(0);
     var base = $("#BaseCanvas");
     
     removeSelection();
@@ -344,8 +351,8 @@ function Save()
     }
     oObjetcs.setAttribute("x",curSelectionX);
     oObjetcs.setAttribute("y",curSelectionY);
-    oObjetcs.setAttribute("width",curSelectionWidth);
-    oObjetcs.setAttribute("height",curSelectionHeight);
+    oObjetcs.setAttribute("width",$(base).width());
+    oObjetcs.setAttribute("height",$(base).height());
     if(ohtype == "Conversation")
     {
         for(i=0;i<m_arrGrids.length;i++)
@@ -485,7 +492,7 @@ function UpdateStepperUpColumns()
     var value = targInput.val();
     value++;
     var min = 1;
-    var max = 4;
+    var max = 2;
     if ((value > min)&&(value <= max))
         targInput.val(value);
     GridChange();
@@ -496,7 +503,7 @@ function UpdateStepperDownColumns()
     var value = targInput.val();
     value--;
     var min = 1;
-    var max = 4;
+    var max = 2;
     if ((value < max)&&(value >= min))
         targInput.val(value);
     GridChange();
@@ -509,7 +516,8 @@ var ohtype;
 var backImageCon;
 function GridChange()
 {
-    m_arrGrids.splice(0,m_arrGrids.length);
+	
+    clear();
     if(!canCon)
     {
         canCon = $("#canCon");
@@ -523,6 +531,13 @@ function GridChange()
     var columns = $("#columns").val();
     var cheight = 500/rows;
     var cwidth = 500/columns;
+    if (parseInt(rows) > 2) {
+    	cheight = 250;
+    	$('#ConversationCanvas').css('height',cheight*parseInt(rows));
+    } else {
+    	$('#ConversationCanvas').css('height',500);
+    }
+   
     //alert(cheight);
     $(canCon).height(cheight);
     $(canCon).width(cwidth);
