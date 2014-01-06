@@ -343,7 +343,12 @@ function initialize() {
     		<div class = "col-lg-1 marginTopTen">
     			<input type = "hidden" id = "rid" value = ""/ >
     			<input type = "hidden" id = "descreview" value = ""/ >
-    			<input type = "button" class = "btn btn-success" value = "Update" onclick="UpdateReviewComments()" />
+                <div class = "row">
+                    <div class="col-lg-6" >
+                        <input type = "button" class = "btn btn-success" value = "Update" onclick="UpdateReviewComments()" />
+                        <input type = "button"  class = "btn btn-warning" value = "Add a Overheard" onclick="AddOverheard()" />
+                    </div>
+                </div>
     		</div>
     		
     		<div id = "spinner" class = "col-lg-11 loaderTop" style = "display:none;top:12px;">
@@ -378,3 +383,4 @@ function initialize() {
     
 
     <input type="hidden" id="reviewid" value="$reviewid" />
+    <input type="hidden" id="bid" value="$bid" />

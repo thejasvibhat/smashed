@@ -399,18 +399,25 @@ function Save()
     
     /* Spinners */
     $('#memeSpinner').fadeIn();
-    
+    var urloh =  '/api/oh/save';
+    if(fromBar == true)
+        urloh = '/api/oh/save?bid='+$("#bid").val();
     $.ajax({
       type: "POST",
       crossDomain: true,
-      url: '/api/oh/save',
+      url: urloh,
         data : {
             method : "Save",
             data : XMLToString(xmlDocument)
         },
 
     }).done(function ( datanew ) {
-        window.location = '/oh/'+datanew;
+        if(fromBar)
+        {
+            FromBar(datanew);
+        }
+        else
+            window.location = '/oh/'+datanew;
         //alert(datanew);
     });
 }

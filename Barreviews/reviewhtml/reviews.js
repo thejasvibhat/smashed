@@ -184,3 +184,38 @@ function toggleEditOption (ele)
     var parent = $(ele).parent().parent();
     $(parent).find('#bEditWrapper').toggle();
 }
+function InitBox()
+{
+    
+}
+var fromBar = false;
+function AddOverheard()
+{
+    fromBar = true;
+    $.ajax({
+               type: "GET",
+               url: "/oh/brecord",
+               success: function(response){
+                        $('body').append(response);
+                        $("#oh").dialog({
+                        height: 'auto',
+                        width: '100%',
+                        close:closedialog,
+                        minWidth: 1080,
+                        modal:true,
+                        position: 'center',
+                        resizable: false
+                   });
+
+        }
+    });
+    
+}
+function closedialog() {
+ $("#oh").remove();
+};
+function FromBar(id)
+{
+    closedialog();
+    alert(id);
+}

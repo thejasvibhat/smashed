@@ -3,6 +3,7 @@ import math
 import urllib
 import os
 import json
+import smashedmisc
 from facepy import GraphAPI
 from google.appengine.ext import ndb
 import uuid
@@ -40,13 +41,14 @@ def user_meme_dbkey(meme_userdbname=USER_MEME_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('user_meme_db', meme_userdbname)
 
-def SaveFinalMeme(userid,file_name,tags):
+def SaveFinalMeme(userid,file_name,tags,bid):
     usermeme = UserMemeDb(parent=user_meme_dbkey(USER_MEME_DB_NAME))
     usermeme.resid = str(uuid.uuid4()) 
     usermeme.blobid = file_name
     usermeme.userid = userid
     usermeme.shareid = ''
     usermeme.tags = tags
+    usermeme.bid = bid
     usermeme.commentid = CreateComment({}, 'init', userid)
     usermeme.put();
     return usermeme.resid;
@@ -225,6 +227,7 @@ class SaveHandler(AuthHandler):
     def post(self):
         userId = self.user_id
         root = ET.fromstring(self.request.get('data'))
+        bid = self.request.get('bid')
         remove_namespace(root,"http://www.w3.org/1999/xhtml")
         imgId = ''
         family = ''
@@ -379,21 +382,21 @@ class SaveHandler(AuthHandler):
             f.write(merged)
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
-        memeid = SaveFinalMeme(userId,blob_key,tags)
+        memeid = SaveFinalMeme(userId,blob_key,tags,bid)
         oauth_access_token = secrets.GetAccessToken() 
         graph = GraphAPI(oauth_access_token)
 
         # Get my latest posts
         # Post a photo of a parrot
-
-        urlfetch.set_default_fetch_deadline(45)
-        postid = graph.post(
-                       path = '/431907476935431/photos',
-                       message = 'Created from smashed.in. Go to www.smashed.in/oh/record and record what you heard!',
-                       url = 'http://www.smashed.in/res/download/%s' % blob_key
-                       )
-        #logging.info('theju/%s' % postid['id'])
-        UpdateFacebookId (memeid,postid['id'])
+        if smashedmisc.is_production == True:
+            urlfetch.set_default_fetch_deadline(45)
+            postid = graph.post(
+                           path = '/431907476935431/photos',
+                           message = 'Created from smashed.in. Go to www.smashed.in/oh/record and record what you heard!',
+                           url = 'http://www.smashed.in/res/download/%s' % blob_key
+                           )
+            #logging.info('theju/%s' % postid['id'])
+            UpdateFacebookId (memeid,postid['id'])
 
         self.response.write ('%s' % memeid)
         #self.redirect('/meme/store/memeview/%s' %memeid)

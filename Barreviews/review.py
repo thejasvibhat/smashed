@@ -116,7 +116,7 @@ class SceneHandler(AuthHandler):
                 desc = "<br />".join(userreviews[0].review.split("\n"))
                 c['description'] = '%s' %desc
                 c['reviewid'] = '%s' %review.reviewid
-
+                c['bid'] = '%s' %bid
                 c['images'] = review.images
                 
                 

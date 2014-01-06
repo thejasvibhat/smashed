@@ -37,6 +37,7 @@ class UserMemeDb(ndb.Model):
     shareid   = ndb.StringProperty()
     commentid = ndb.StringProperty()
     tags    = ndb.StringProperty(repeated=True)
+    bid = ndb.StringProperty()
 
 class SkelUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
   def post(self):
