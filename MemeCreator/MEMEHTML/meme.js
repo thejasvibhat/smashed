@@ -400,8 +400,14 @@ function Save()
     /* Spinners */
     $('#memeSpinner').fadeIn();
     var urloh =  '/api/oh/save';
-    if(fromBar == true)
-        urloh = '/api/oh/save?bid='+$("#bid").val();
+    if (typeof fromBar === 'undefined') {
+    // variable is undefined
+    }
+    else
+    {
+        if(fromBar == true)
+            urloh = '/api/oh/save?bid='+$("#bid").val();
+    }
     $.ajax({
       type: "POST",
       crossDomain: true,
@@ -412,12 +418,18 @@ function Save()
         },
 
     }).done(function ( datanew ) {
-        if(fromBar)
+        if (typeof fromBar === 'undefined')
         {
-            FromBar(datanew);
+            window.location = '/oh/'+datanew;
         }
         else
-            window.location = '/oh/'+datanew;
+        {
+            if(fromBar)
+            {
+                FromBar(datanew);
+            }
+        }
+            
         //alert(datanew);
     });
 }
