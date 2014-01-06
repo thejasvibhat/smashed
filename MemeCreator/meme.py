@@ -25,6 +25,7 @@ import xml.etree.ElementTree as ET
 
 from MemeCreator.storeimage import MemeDb
 from MemeCreator.storeimage import UserMemeDb
+
 from User.handlers import AuthHandler
 from Cheetah.Template import Template
 from skel.skel import Skel
@@ -222,7 +223,42 @@ class SkelList (webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'text/xml'
         self.response.write (tclass (searchList=template_values))
-              
+ 
+class ListBarOverheards(AuthHandler):
+    def get (self):
+        bid = self.request.get ("bid");
+        meme_query = UserMemeDb.query(UserMemeDb.bid == bid)
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
+        memes = meme_query.fetch(oLimit,offset=oOffset)
+        self.response.write('<memes>')
+        for meme in memes:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id (meme.userid)
+            #logging.info(userData)
+            self.response.write('<meme>')
+            self.response.write('<ts>')
+            self.response.write('%s' %meme.date)
+            self.response.write('</ts>')			
+            self.response.write('<icon>')
+            self.response.write('/res/icon/%s' %meme.blobid)
+            self.response.write('</icon>')
+            self.response.write('<url>')
+            self.response.write('/oh/%s' %meme.resid)
+            self.response.write('</url>')
+            
+            self.response.write('<creatorname>')
+            self.response.write('%s' %userData.name)
+            self.response.write('</creatorname>')
+
+            self.response.write('<creatoravatar>')
+            self.response.write('%s' %userData.avatar_url)
+            self.response.write('</creatoravatar>')
+
+            self.response.write('</meme>')
+        self.response.write('</memes>')
+            
+            
 class SaveHandler(AuthHandler):
     def post(self):
         userId = self.user_id
