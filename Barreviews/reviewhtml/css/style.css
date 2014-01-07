@@ -338,3 +338,8 @@ h3.coreheading
 {
     position:absolute;    
 }
+
+.customDialog
+{
+    z-index:10000 !important;
+}

@@ -194,6 +194,32 @@ function BInit()
 	{
 		getBarListing($(this).val());
 	});
+	/* Get OverHeards */
+	$.ajax({
+            type: 'GET',
+            url: '/api/b/overheards?bid='+$('#bid').val(),
+            success: getBarOverHeards,
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //TODO
+            }
+    }); 
+	
+}
+
+function getBarOverHeards(data)
+{
+	theXmlDoc = $.parseXML(data);
+    var theRow = $(theXmlDoc).find('meme').get();
+    $(theRow).each(function(i)
+    {
+    	i++;
+    	var icon = $(this).find("icon").text();
+    	var ele  = $('#bOhIndvTpl').clone().attr('id','bOhIndv_'+i);
+    	$(ele).find('img').attr('src',icon);
+    	$(ele).find('a').attr('href',icon);
+    	$('#OhAtContainer').append(ele);
+    	$(ele).show();
+    });
 }
 
 function reviewsInit()

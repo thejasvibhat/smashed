@@ -191,7 +191,9 @@ function InitBox()
 var fromBar = false;
 function AddOverheard()
 {
+	window.scrollTo(0, 0);
     fromBar = true;
+    
     $.ajax({
                type: "GET",
                url: "/oh/brecord",
@@ -199,12 +201,14 @@ function AddOverheard()
                         $('body').append(response);
                         $("#oh").dialog({
                         height: 'auto',
-                        width: '100%',
+                        width: '95%',
                         close:closedialog,
                         minWidth: 1080,
                         modal:true,
                         position: 'center',
-                        resizable: false
+                        resizable: false,
+                        draggable:false,
+                        dialogClass:"customDialog"
                    });
 
         }
@@ -217,5 +221,13 @@ function closedialog() {
 function FromBar(id)
 {
     closedialog();
-    alert(id);
+    $('#OhAtContainer').empty();
+    $.ajax({
+            type: 'GET',
+            url: '/api/b/overheards?bid='+$('#bid').val(),
+            success: getBarOverHeards,
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //TODO
+            }
+    }); 
 }

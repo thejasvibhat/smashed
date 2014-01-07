@@ -1795,4 +1795,24 @@ li
 	background:url(/static/skin/img/pattern1.png) repeat top left, url(/static/skin/img/green-bg.png) repeat top left;
 }
 
+.marginNone
+{
+	margin:0;
+}
 
+h3.headingSmall
+{
+	font-family:"rockwell",helvetica;
+	line-height:20px;
+	color:#666;
+	font-size:22px;
+}
+
+.bOhIndv
+{
+	height:auto;
+	box-shadow:1px 1px 2px #ddd;
+	-webkit-box-shadow:1px 1px 2px #ddd;
+	border-right:1px solid #ddd;
+	margin-bottom:10px;
+}

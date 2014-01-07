@@ -91,10 +91,12 @@ function initialize() {
 		                <div class = "marginTopTwenty"></div>
                 		<h4>Favorite Snacks</h4>
                 		<div class = "marginTopTen"></div>
-                		<ul>
-                    		<li>$snack1</li>
-                    		<li>$snack2</li>
-                		</ul>
+                		<div>
+                			$snack1
+                		</div>
+                		<div>
+                			$snack2
+                		</div>
            			</div>
    				</div>
    			</div> <!-- Scenes -->
@@ -113,7 +115,7 @@ function initialize() {
 	                        #end if
                         </div>
                         <div class = "col-lg-11 UspItem">
-                            Budget
+                            Wallet Friendly
                         </div>
                     </div>
                     
@@ -169,7 +171,7 @@ function initialize() {
 
                         </div>
                         <div class = "col-lg-11 UspItem">
-                            Lady Friendly
+                            Girl Friendly
                         </div>
                     </div>
                     
@@ -183,7 +185,7 @@ function initialize() {
 
                         </div>
                         <div class = "col-lg-11 UspItem">
-                            Fight Scene
+                            Noisy
                         </div>
                     </div>
     			</div>
@@ -231,7 +233,7 @@ function initialize() {
                         </div>
                         
                          <div class = "col-lg-11 UspItem ">
-                            Smoking on Table
+                            Smoking Section
                         </div>
                         
                     </div>
@@ -304,10 +306,23 @@ function initialize() {
             	<div id = "map_canvas" class = "GoogleMapContainer">
             	</div>
     		</div>
-    		<div class = "col-lg-6 whiteCanvas">
-    			$description 
+    		<div class = "col-lg-6 whiteCanvas marginTopFive">
+    			<div class = "row marginNone">
+    				<div class = "marginTopTen"></div>
+    				<h3 class = "headingSmall">Description</h3>
+    				$description 
+    			</div>
+    			<div class = "marginTopTwenty"></div>
+    			<h3 class = "headingSmall">OverHeards at $name</h3>
+    			<div id = "OhAtContainer" class = "row marginNone">
+    			</div>
+    			
+    			<div class = "paddingNone row marginNone">
+    				OverHeard anything at $name? Share it! &nbsp;&nbsp;
+    				<input type = "button"  class = "btn btn-warning" value = "Create!" onclick="AddOverheard()" />
+    			</div>
+    			<div class = "paddingBottomTen"></div>
     		</div>
-    		
     	</div>
     </div>
     
@@ -346,7 +361,6 @@ function initialize() {
                 <div class = "row">
                     <div class="col-lg-6" >
                         <input type = "button" class = "btn btn-success" value = "Update" onclick="UpdateReviewComments()" />
-                        <input type = "button"  class = "btn btn-warning" value = "Add a Overheard" onclick="AddOverheard()" />
                     </div>
                 </div>
     		</div>
@@ -384,3 +398,7 @@ function initialize() {
 
     <input type="hidden" id="reviewid" value="$reviewid" />
     <input type="hidden" id="bid" value="$bid" />
+    
+<div id = "bOhIndvTpl" class = "col-lg-3 bOhIndv" style = "display:none;">
+	<a data-lightbox="OverHeards" href = ""><img src = "" class = "img-responsive" /></a>
+</div>

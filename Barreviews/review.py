@@ -144,6 +144,7 @@ class SceneHandler(AuthHandler):
                     'img':   review.images,
                     'conturl':   '/b/%s' % review.bid,
                     'description': '%s' % desc,
+                    'bid':'%s' %bid,
                     }
                 
                 l_skel.addtohead (str((Template.compile(file=head_path) (searchList=template_values))))      
