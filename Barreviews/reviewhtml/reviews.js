@@ -191,6 +191,7 @@ function InitBox()
 var fromBar = false;
 function AddOverheard()
 {
+	$('#fullScreenLoader').show();
 	window.scrollTo(0, 0);
     fromBar = true;
     
@@ -201,7 +202,10 @@ function AddOverheard()
                         $('body').append(response);
                         $("#oh").dialog({
                         height: 'auto',
-                        width: '95%',
+                        width: 'auto',
+                        open: function( event, ui ) {
+                        	$('#fullScreenLoader').hide();
+                        },
                         close:closedialog,
                         minWidth: 1080,
                         modal:true,
@@ -231,3 +235,4 @@ function FromBar(id)
             }
     }); 
 }
+

@@ -20,7 +20,7 @@
   
   <div class = "col-lg-5">
     <h3 class = "rockwellTextBig">You might dig these..</h3>
-    <div id = "more_oh_container">
+    <div id = "more_oh_container" style = "max-height:500px;overflow-y:auto;">
       
     </div>
   </div>
@@ -54,7 +54,7 @@
 </div>
 
 <div class = "marginTopTwenty"></div>
-
+#if $isLoggedIn == "True" 
 <div class = "container" id='curContainer' >
   <div class = "col-lg-12 paddingNone reviewWhiteBoxSmall">
     <div class = "col-lg-1">
@@ -71,7 +71,14 @@
     </div>
   </div>
 </div>
-	
+#else
+<div class = "container">
+	<div class = "col-lg-12 whiteCanvas paddingNone" style = "padding:10px;">
+		You need to be logged in to comment &nbsp;&nbsp;
+    	<a onClick = "setRedirectUrl(this);" href = "javscript:void(0);" class = "btn btn-warning">Click Here</a>
+    </div>
+</div>
+#end if
 <div class = "marginTopTwenty"></div>    
 
 <input type="hidden" id="fcebookphoto" value="$shareid" />

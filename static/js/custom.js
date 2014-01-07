@@ -387,5 +387,16 @@ function shareSocial (a_url)
 {
 	window.open( a_url, "Smashed", "status = 1, height = 350, width =650, resizable = 0" );
 }
+
+function Login()
+{
+	window.location = "/auth";
+}
+
+function setRedirectUrl(a_ele)
+{
+	$(a_ele).attr('href','/auth?redirect_url='+window.location.href);
+	$(a_ele).click();
+}
 		
 

@@ -139,12 +139,12 @@ class SceneHandler(AuthHandler):
 				
                 c['usp1'] = "Bottle Rate"
                 c['usp2'] = "Lady Friendly"
+                c['isLoggedIn'] = '%s' %self.logged_in
                 template_values = {
                     'name':   review.name,
                     'img':   review.images,
                     'conturl':   '/b/%s' % review.bid,
-                    'description': '%s' % desc,
-                    'bid':'%s' %bid,
+                    'description': '%s' % desc
                     }
                 
                 l_skel.addtohead (str((Template.compile(file=head_path) (searchList=template_values))))      

@@ -122,7 +122,8 @@ class GetOh (AuthHandler):
             'conturl':   '/oh/%s' % meme.resid,
             'shareid':   '%s' % meme.shareid,
             'currentid': '%s' % meme.resid,
-            'commentid': '%s' % meme.commentid
+            'commentid': '%s' % meme.commentid,
+            'isLoggedIn': '%s' %self.logged_in
             }
 
 	#Head

@@ -20,10 +20,12 @@ from handlers import AuthHandler
 from skel.skel import Skel
 from webapp2_extras import auth, sessions, jinja2, routes
 
-class LandingPage (webapp2.RequestHandler):
+class LandingPage (AuthHandler):
 
     def get(self):
-
+        redirect_url = self.request.get("redirect_url")
+        if redirect_url != "":
+            self.session.add_flash (redirect_url,key='redirect_url')         
         path = os.path.join(os.path.dirname(__file__), 'templates/landingpage.tmpl')
         template_values = {'logout_url': '/auth/logout'}
         l_auth = auth.get_auth()

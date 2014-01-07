@@ -54,7 +54,7 @@ class BaseRequestHandler(webapp2.RequestHandler):
     # values.update(exception)
 
     l_skel = SkelErr()
-    l_skel.title = "Smashed.in :: Pukeee.. "
+    l_skel.title = "Smashed.in :: *Hic Hic*.. "
     l_skel.logged_in = self.logged_in
 
     message = "Have not found what you are looking for."
