@@ -236,3 +236,62 @@ function FromBar(id)
     }); 
 }
 
+function showBarOh(a_ele)
+{
+	var bid = $(a_ele).attr('value');
+	/* Get OverHeards */
+	var modal = $('#ohModalTpl').clone().attr('id','modal_'+bid);
+	$(modal).dialog({
+		height: 'auto',
+		width: 'auto',
+		open: function( event, ui ) {
+			var loader = $('#fullScreenLoader');
+			$(modal).append(loader);
+			$(loader).show();
+		},
+		close: function( event, ui ) {
+			$(modal).remove();
+		},
+		modal:true,
+		position: 'center',
+		resizable: false,
+		draggable:false,
+		dialogClass:"customDialogOh"
+   });
+   
+   $.ajax({
+            type: 'GET',
+            url: '/api/b/overheards?bid='+bid,
+            success: getBarOhModal,
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //TODO
+            }
+    }); 
+}
+
+function getBarOhModal (data)
+{
+	$('.fullScreenLoaderModal').hide();
+	theXmlDoc = $.parseXML(data);
+    var theRow = $(theXmlDoc).find('meme').get();
+    var len    = $(theXmlDoc).find('meme').length;
+    if (len == 0) {
+    	var noContent = $('#ohNoContent').clone();
+    	$('.oc').append(noContent);
+    	$(noContent).show();
+    }
+    $(theRow).each(function(i)
+    {
+    	i++;
+    	var icon = $(this).find("icon").text();
+    	var ele  = $('#ohThumbs').clone().attr('id','bOhIndv_'+i);
+    	$(ele).find('img').attr('src',icon);
+    	$(ele).find('a').attr('href',icon);
+    	$('.oc').append(ele);
+    	$(ele).show();
+    	if (i== len)
+    	{
+    		
+    	}
+    });
+}

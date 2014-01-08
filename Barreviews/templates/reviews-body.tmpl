@@ -26,7 +26,11 @@
 	  			</div>
 	  			<div class = "col-lg-3 marginTopTwenty">
 	    			<a href = "javascript:void(0);">
-	      				<img onCLick = 'showBarOnMapModal(this);' src = "/reviewhtml/assets/googlemap.jpg" width = "42" value="${r.latlon}" />
+	      				<img title = "Location" onCLick = 'showBarOnMapModal(this);' src = "/reviewhtml/assets/googlemap.jpg" width = "42" value="${r.latlon}" />
+	    			</a>
+	    			<div class = "marginTopTen"></div>
+	    			<a href = "javascript:void(0);">
+	    				<img title = "OverHeards" width = "42" onCLick = 'showBarOh(this);' src = "/assets/oh.png" value="${r.bid}" />
 	    			</a>
 	  			</div>
 			</div>
@@ -57,3 +61,20 @@
 <div id = "mapModal" style = "display:none;" title = "Location">
 	<div id = "map_canvas" style = "height:300px;"></div>
 </div>
+
+<div id = "ohModalTpl" style = "display:none;" title = "OverHeards">
+	<div id = "ohContainer" class = "oc">
+	</div>
+</div>
+
+<div id = "ohThumbs" class = "ohModalIndv" style = "display:none;">
+	<a class="thumb" href="">
+		<img src="" alt="" />
+	</a>
+</div>
+
+<div id = "ohNoContent" class = "alignCenter marginTopTwenty" style = "display:none;">
+	There are no OverHeards here Yet :(
+</div>
+
+<div id = "fullScreenLoader" class = "fullScreenLoaderModal" style = "display:none;"></div>

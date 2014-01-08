@@ -1828,3 +1828,28 @@ h3.headingSmall
     opacity:0.75;
     filter: alpha(opacity=75);
 }
+
+.fullScreenLoaderModal
+{
+	background: white url(/assets/pacman.gif) no-repeat center;
+    position:absolute;
+    top:0;
+    width:90%;
+    height:100%;
+    z-index:10000;
+    opacity:0.75;
+    filter: alpha(opacity=75);
+}
+
+.customDialogOh
+{
+	min-width:500px !important;
+    z-index:10000 !important;
+    top:60px !important;
+    overflow-x:hidden !important;
+}
+
+.ohModalIndv
+{
+	margin-bottom:10px;
+}
