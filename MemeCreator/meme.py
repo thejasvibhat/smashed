@@ -42,7 +42,7 @@ def user_meme_dbkey(meme_userdbname=USER_MEME_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('user_meme_db', meme_userdbname)
 
-def SaveFinalMeme(userid,file_name,tags,bid):
+def SaveFinalMeme(userid,file_name,tags,bid,mode):
     usermeme = UserMemeDb(parent=user_meme_dbkey(USER_MEME_DB_NAME))
     usermeme.resid = str(uuid.uuid4()) 
     usermeme.blobid = file_name
@@ -50,6 +50,7 @@ def SaveFinalMeme(userid,file_name,tags,bid):
     usermeme.shareid = ''
     usermeme.tags = tags
     usermeme.bid = bid
+    usermeme.mode = mode
     usermeme.commentid = CreateComment({}, 'init', userid)
     usermeme.put();
     return usermeme.resid;
@@ -203,15 +204,23 @@ class UploadFacebook(AuthHandler):
 			meme.put()
         self.response.write('%s' %shareid)
 
-class SkelList (webapp2.RequestHandler):
+class SkelList (AuthHandler):
     def get(self):
         tag = self.request.get('tag',default_value="auto")
+        mode = self.request.get('mode',default_value="public")
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
         if tag == "auto":
-            meme_query = MemeDb.query(ancestor=meme_dbkey(MEME_DB_NAME)).order(-MemeDb.date)
+            if mode == "public":
+                meme_query = MemeDb.query(MemeDb.mode == 'public').order(-MemeDb.date)
+            else:
+                meme_query = MemeDb.query(MemeDb.userid == self.user_id).order(-MemeDb.date)
         else:
-            meme_query = MemeDb.query(MemeDb.tags == tag).order(-MemeDb.date)
+            if mode == "public":
+                meme_query = MemeDb.query(ndb.AND(MemeDb.mode == 'public',MemeDb.tags == tag)).order(-MemeDb.date)
+            else:
+                meme_query = MemeDb.query(ndb.AND(MemeDb.userid == self.user_id,MemeDb.tags == tag)).order(-MemeDb.date)            
+            
         memes = meme_query.fetch(oLimit,offset=oOffset)
 
         for meme in memes:
@@ -265,6 +274,7 @@ class SaveHandler(AuthHandler):
         userId = self.user_id
         root = ET.fromstring(self.request.get('data'))
         bid = self.request.get('bid')
+        mode = self.request.get('mode',default_value="public")
         remove_namespace(root,"http://www.w3.org/1999/xhtml")
         imgId = ''
         family = ''
@@ -419,7 +429,7 @@ class SaveHandler(AuthHandler):
             f.write(merged)
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
-        memeid = SaveFinalMeme(userId,blob_key,tags,bid)
+        memeid = SaveFinalMeme(userId,blob_key,tags,bid,mode)
         oauth_access_token = secrets.GetAccessToken() 
         graph = GraphAPI(oauth_access_token)
 

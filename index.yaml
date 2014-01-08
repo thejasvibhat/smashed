@@ -29,7 +29,33 @@ indexes:
 
 - kind: MemeDb
   properties:
+  - name: mode
+  - name: date
+    direction: desc
+
+- kind: MemeDb
+  properties:
+  - name: mode
   - name: tags
+  - name: date
+    direction: desc
+
+- kind: MemeDb
+  properties:
+  - name: tags
+  - name: date
+    direction: desc
+
+- kind: MemeDb
+  properties:
+  - name: tags
+  - name: userid
+  - name: date
+    direction: desc
+
+- kind: MemeDb
+  properties:
+  - name: userid
   - name: date
     direction: desc
 

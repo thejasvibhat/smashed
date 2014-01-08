@@ -27,6 +27,8 @@ class MemeDb(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
     myid   = ndb.StringProperty()
     tags    = ndb.StringProperty(repeated=True)
+    userid   = ndb.IntegerProperty()
+    mode = ndb.StringProperty()
 
 class UserMemeDb(ndb.Model):
     """Models an individual Guestbook entry with author, content, and date."""
@@ -37,18 +39,21 @@ class UserMemeDb(ndb.Model):
     shareid   = ndb.StringProperty()
     commentid = ndb.StringProperty()
     tags    = ndb.StringProperty(repeated=True)
+    mode = ndb.StringProperty()
     bid = ndb.StringProperty()
 
 class SkelUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
   def post(self):
     upload_files = self.get_uploads('content')  # 'file' is file upload field in the form
-    tags          = self.request.get('tags')
+    tags         = self.request.get('tags')
+    mode  = self.request.get('pmode', default_value="public")
     blob_info = upload_files[0]
     meme = MemeDb(parent=meme_dbkey(MEME_DB_NAME))
-
+    meme.userid = self.user_id
     meme.resid = blob_info.key()
     meme.myid = str(meme.resid)
     meme.tags = tags.split(",")
+    meme.mode = mode
     meme.put()
 
     self.response.write ("")

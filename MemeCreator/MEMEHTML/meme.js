@@ -15,10 +15,20 @@ var curSelectionX = 0;
 var curSelectionY = 0;
 var curSelectionWidth = 1;
 var curSelectionHeight = 1;
+var privateMode = false;
+var init = false;
+function Init()
+{
+    $( "#accordion" ).accordion({
+      heightStyle: "content",
+         autoHeight: true,
+        collpsible: true, 
+    });
+}
 function UploadSkeleton()
 {
     
-    var options = {success:       SkeletonUploaded};
+    var options = {success:SkeletonUploaded};
     $('#uploadNewForm').ajaxForm(options);
     $('#uploadNewForm').submit();
 }
@@ -35,17 +45,60 @@ function CancelSaveSkel ()
 	$("#modalView").addClass('overlayout');
     $("#modalView").removeClass('popup');
 }
+function PrivateMode()
+{
+    privateMode = !privateMode;
+    if(privateMode)
+    {
+        $("#pmode").val("ON");
+        $("#pmode").removeClass("btn-warning");
+        $("#pmode").addClass("btn-success");     
+        $("#pmodeOverall").val("ON");
+        $("#pmodeOverall").removeClass("btn-warning");
+        $("#pmodeOverall").addClass("btn-success"); 
+        $("#pmodeOverall").attr("title","Click to enable Public mode");     
+        $("#privatemode").val("private");
+        $("#save").removeClass("btn-warning");
+        $("#save").addClass("btn-success"); 
 
+    }
+    else
+    {
+        $("#pmode").val("OFF");
+        $("#pmode").removeClass("btn-success");        
+        $("#pmode").addClass("btn-warning");
+        $("#pmodeOverall").val("OFF");
+        $("#pmodeOverall").removeClass("btn-success");            
+        $("#pmodeOverall").addClass("btn-warning");        
+        $("#pmodeOverall").attr("title","Click to enable Private mode");
+        $("#privatemode").val("public");
+        $("#save").removeClass("btn-success");            
+        $("#save").addClass("btn-warning");        
+        
+    }
+    
+}
 function SkeletonUploaded(data)
 {
     $('#uploadNewForm').remove();
-    var api = $(".itemsCore").empty();
-    GetThumbnails();
+    var api = $(".itemsCoreMine").empty();    
     GetUploadURL();
+    setTimeout(function () {
+            GetMyUploads();
+            if(privateMode)
+            {
+                GetMyUploads();
+            }
+            else
+            {
+                GetThumbnails();
+            }
+        }, 100);
+    
 }
 function UploadUrlSkeleton(data)
 {
-     var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /> </form>';
+     var html = '<form action="'+data+'" id="uploadNewForm" method="POST" enctype="multipart/form-data"><input type="file" name="content" class = "myFile" id="myFile" style="display:none;"/> <input type="hidden" id="tags" value="smashed,jaggesh" name = "tags" /><input type="hidden" name="pmode" id="privatemode" value="public" ></p></form>';
     $('body').append(html);     
 }
 function GetUploadURL()
@@ -209,15 +262,131 @@ function TagPressed(e){
       return false;
     }
   }
-function GetThumbnails(tags)
+function GetMyUploads(tags)
 {
-    $('.itemsCore').empty();
+    $('.itemsCoreMine').empty();
     var lUrl = "/api/oh/skel-list";
+    var data = {};
+    data.mode="mine";
     if(tags)
-        lUrl = "/api/oh/skel-list?tag="+tags;
+    {
+        data.tag=tags;
+    }
     $.ajax({
         url: lUrl,
         type: 'GET',
+        data: data,
+        crossDomain: true,
+    }).done(function ( data ) {
+	$(data).find("skel").each (function() {
+	    var id = $(this).find("id").text();
+	    var thumburl = $(this).find("thumburl").text();
+	    var url = $(this).find("url").text();
+
+	    html_id = id.replace (/[^\w\s]/gi, '');
+	    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass tilt" id="image_'+html_id+'" src="'+thumburl+'"/></div>';
+	    $('.itemsCoreMine').append(test);
+
+	    $( "#image_"+html_id ).click(function() {
+                curImage =  $("#backImage");
+                curImage.addClass('imagehide');
+                var iconsrc = this.src;
+                var src = iconsrc.replace("icon", "download");
+                var value = iconsrc.split("/").pop();
+                if(ohtype == "Conversation")
+                {
+                        $.each(m_arrGrids,function(index,grid){
+                            var curImg = $(grid).find("#backImageCon");
+                            if(curImg.val() == 'default')
+                            {
+                                curImg.attr('src', url);
+                                curImg.attr('sid', id);
+                                curImg.val('actual');
+                                $(grid).mouseenter(function(){
+                                    if(curImg.val() == 'actual')
+                                    {
+                                        var oPd = $("#removePanel").clone();
+                                        
+                                        $(grid).append(oPd);
+                                        $(oPd).show();
+                                    
+                                   
+                                        $(oPd).click(function(event){
+                                        
+                                            $(curImg).val('default');
+                                            curImg.attr('src', '/static/img/drophere.png');
+                                            $( grid ).find( "#removePanel" ).remove();
+                                        });
+                                    }
+                               
+                                });
+                                 $(grid).mouseleave(function() {
+                                    $( grid ).find( "#removePanel" ).remove();
+                                
+                                });
+                            }
+                        });
+                }
+                else
+                {
+                    $("#backImage").attr('src', url);        
+                }
+		
+                $("#BaseCanvas").addClass('load');  
+                $("#backImage").attr('value', id);
+                $('#saveButton').removeClass("disabled");   
+                $('#saveButton').addClass("enabled");   
+                $("#saveButton").removeAttr("disabled");
+	    });
+	    $( "#image_"+html_id ).load(function () {                
+                if((this.height) > (this.width))
+                {       
+		    $(this).removeClass("widthCLass");
+		    $(this).addClass("heightCLass");
+                }
+                else
+                {
+		    var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
+		    $(this).attr('style',margin);
+                }
+	    });
+
+	});
+    });
+    $( "#accordion" ).accordion({
+      heightStyle: "content",
+         autoHeight: true,
+        collpsible: true, 
+    });
+    $("#accordion").accordion("refresh");
+    return false;
+}
+function GetThumbnails(tags)
+{
+   /* if(init)
+    {
+        var active = $( "#accordion" ).accordion( "option", "active" );
+       // if(active == 1)
+        {
+            GetMyUploads(tags);  
+           // return;
+        }
+        
+    }*/
+    GetMyUploads(tags);  
+    init = true;
+    $('.itemsCore').empty();
+    var lUrl = "/api/oh/skel-list";
+    var data = {};
+    data.mode="public";
+    if(tags)
+    {
+        data.tag=tags;
+    }
+    $.ajax({
+        url: lUrl,
+        type: 'GET',
+        data: data,
         crossDomain: true,
     }).done(function ( data ) {
 	$(data).find("skel").each (function() {
@@ -295,6 +464,12 @@ function GetThumbnails(tags)
 
 	});
     });
+    $( "#accordion" ).accordion({
+      heightStyle: "content",
+         autoHeight: true,
+        collpsible: true, 
+    });
+    $("#accordion").accordion("refresh");
     return false;
 }
 
@@ -406,7 +581,7 @@ function Save()
     else
     {
         if(fromBar == true)
-            urloh = '/api/oh/save?bid='+$("#bid").val();
+            urloh = '/api/oh/save?bid='+$("#bid").val()+'&mode='+privateMode;
     }
     $.ajax({
       type: "POST",

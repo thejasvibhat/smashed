@@ -9,6 +9,12 @@
 		<div class = "col-lg-2">
 			<img src="" id="thumb1" class = "img-responsive" />
 		</div>     
+        <div class = "col-lg-4" style="text-align:right;">
+			<span class = "rockwellText">Private Mode</span>
+		</div>     
+        <div class = "col-lg-4">
+			<input type="button" class="btn btn-warning" id="pmode" value="OFF" onclick="PrivateMode();"/>
+		</div>     
 	</div>
     <div class = "marginTopTwenty"></div> 
     <input id='tags_2' type='text' class='tags' value="Smashed" ></p>
@@ -20,18 +26,29 @@
 
 <div class = "marginTopTwenty"></div> 
 
-<div class="container">
+<div class="container">    
   	<div class = "col-lg-3 whiteCanvas paddingBottom" style = "max-height:500px;overflow-y:auto;">
-	    <div class = "marginTen">
-			<span class = "rockwellTextBig cursorPointer" onclick="ChangeBackground();"> Upload new ( + )</span>
-		</div>
+        
+        <div class = "marginTen">
+            <span class = "rockwellTextBig cursorPointer" onclick="ChangeBackground();"> Upload new ( + )</span>
+        </div>
  	    <input type = "text" id="search" placeholder = "Search..." class = "form-control" onkeypress="TagPressed(event)" /> 
-  	    <div id="scrollable"> 
-    
-    		<!-- root element for the items -->
-    	    	<div class="itemsCore"> 
-    		</div>  
-  	    </div>  
+  	    <div id="accordion" >
+        <h3>Public</h3>
+                <div id="scrollable" style="max-height:330px;overflow-y:auto !important;"> 
+            
+                    <!-- root element for the items -->
+                        <div class="itemsCore"> 
+                    </div>  
+            </div>
+            <h3>My Uploads</h3>
+                <div id="scrollableMine"> 
+            
+                    <!-- root element for the items -->
+                        <div class="itemsCoreMine"> 
+                    </div>  
+                </div>  
+        </div> 
 	</div>	
     
         <div class = "col-lg-6" style =  "max-height:500px;overflow-y:auto;" id = "parentContainer">
@@ -45,6 +62,16 @@
         </div>
     
        <div class = "col-lg-3 whiteCanvas paddingBottom" style = "padding-left:0;">
+       <div class="row">
+            <div class = "col-lg-7" style="text-align:left;">
+                <span class = "rockwellText" style="vertical-align:middle;">Private Mode</span>
+            </div>     
+            <div class = "col-lg-2" style="text-align:left;padding-right:0px;">
+                <input type="button" class="btn btn-warning" id="pmodeOverall" value="OFF" onclick="PrivateMode();"/>
+            </div>     
+        </div>
+        <div class = "marginTopTen"></div> 
+        <div class = "sep"></div>
 	     <div class = "row" style = "margin:0;">
 	     <div class = "col-lg-6">
              	<label class = "labelBig">Rows </label>
@@ -119,7 +146,7 @@
 	  <div class = "col-lg-12">
               <input type="button" class = "btn btn-primary" value="Caption(+)" onclick="AddCaption();" />   
               <input type="button" class = "btn btn-danger" value="Remove" onclick="RemoveCaption();" />
-              <input type="button" class = "btn btn-success" value="Save" onclick="Save();" />  
+              <input type="button" id="save" class = "btn btn-warning" value="Save" onclick="Save();" />  
 	  </div>
           </div> 
           <!--<input type="button" class = "btn btn-warning" value="Crop" onclick="Crop();" />   -->
