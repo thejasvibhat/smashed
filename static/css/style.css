@@ -1630,7 +1630,7 @@ li
 .shareFB a,.shareFB a:hover
 {
         border-radius: 3px 3px 3px 3px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     display: block;
     font-weight: bold;
     height: 34px;
@@ -1649,7 +1649,7 @@ li
 .shareTwitter a ,.shareTwitter a:hover, .shareGoogle a, .shareGoogle a:hover
 {
     border-radius: 3px 3px 3px 3px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     display: block;
     font-weight: bold;
     height: 34px;

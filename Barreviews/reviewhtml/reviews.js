@@ -225,9 +225,23 @@ function getBarOhModal (data)
     {
     	i++;
     	var icon = $(this).find("icon").text();
+    	var url  = $(this).find("url").text();
+    	var arr  = url.split("/");
+    	var mid  = arr.pop();
     	var ele  = $('#ohThumbs').clone().attr('id','bOhIndv_'+i);
     	$(ele).find('img').attr('src',icon);
-    	$(ele).find('a').attr('href',icon);
+    	$(ele).find('.shareFB a').click(function()
+    	{
+    		shareOhOnFaceBook(mid);
+    	});
+    	$(ele).find('.shareTwitter a').click(function()
+    	{
+    		shareOhOnTwitter(mid);
+    	});
+    	$(ele).find('.shareGoogle a').click(function()
+    	{
+    		shareOhOnGoogle(mid);
+    	});
     	$('.oc').append(ele);
     	$(ele).show();
     	if (i== len)
