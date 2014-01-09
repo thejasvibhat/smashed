@@ -113,66 +113,7 @@ function ListLatestOh()
                }
     });
 }
-$(function () {
 
-    $.ajax({
-               type: "GET",
-               url: "/api/b/comments?reviewid="+$("#reviewid").val()+"&limit=10&offset=0",
-               success: function(response){
-                    oObj = $.parseJSON(response);
-                    if (oObj.curuserreview) {
-                   		$('#curEditContainer').show();
-                   		$('#curEditContainer').find('textarea').val(oObj.curuserreview.review);
-                   		$('#curEditContainer').find('#rid').val(oObj.curuserreview.reviewid);
-                   		$("#curEditContainer").find('#curcreatorname').html(oObj.curuser.username);
-                   	    $("#curEditContainer").find('#curcreatoravatar').attr('src',oObj.curuser.avatar);
-                   	    $("#curEditContainer").find('#rating').val(oObj.curuserreview.rating);
-                   	    $('#curEditContainer').find('#descreview').val(oObj.curuserreview.desreview);
-                    }
-                    else
-                    {
-                   		$('#curContainer').show();
-                   		$("#curContainer").find('#curcreatorname').html(oObj.curuser.username);
-                    	$("#curContainer").find('#curcreatoravatar').attr('src',oObj.curuser.avatar);
-                    }
-                    (oObj.reviews).forEach(function(eachRev) 
-                    {
-                        	if (eachRev.desreview != "1") {
-								var klon = $("#reviewItem" );
-								var container = $('#revContainer');
-								var oClone = klon.clone();
-								$(oClone).find('#creatorname').html(eachRev.username);
-								$(oClone).find('#creatoravatar').attr('src',eachRev.avatar);
-							   $(oClone).find('#creatordescription').html(eachRev.review);
-							   if(eachRev.rating == 1)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_0.png');
-							   if(eachRev.rating == 1.5)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_5.png');
-							   if(eachRev.rating == 2)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_0.png');
-							   if(eachRev.rating == 2.5)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_2_5.png');
-							   if(eachRev.rating == 3)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_0.png');
-							   if(eachRev.rating == 3.5)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_3_5.png');
-							   if(eachRev.rating == 4)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_0.png');
-							   if(eachRev.rating == 4.5)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_4_5.png');
-							   if(eachRev.rating == 5)
-								   $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_5_0.png');
-								$(container).prepend('<div class = "separator"></div>');
-								$(container).prepend(oClone);
-								$(oClone).show();
-							}
-	                      
-                    });
-                   
-
-               }
-    });
-});
 function editBar(ele)
 {
     var bid = $(ele).attr('value');

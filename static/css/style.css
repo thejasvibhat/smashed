@@ -56,6 +56,13 @@ textarea
 	border:1px solid #ddd !important;
 }
 
+a:focus
+{
+	outline:none !important;
+	position:relative;
+	top:1px;
+}
+
 /*
 Home
 ======================================= */
@@ -74,16 +81,14 @@ BG slider
 	margin:0;
 }
 
-.bg-slider{
-	background-position: top center;
-	background-repeat: no-repeat;
-	background-color:none;
-	background-attachment:fixed;	
-	width:100%;
-	height:100%;
-	position:absolute;
-	margin:0;
-	top:0;
+.bg-slider{	
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width:100%;
+  height:100%;
+  position:absolute;
 }
 
 /*
@@ -1697,12 +1702,7 @@ li
 	color:#666;
 	font-size:20px;
 }
-.rockwellText
-{
-	font-family:'rockwell',helvetica;
-	color:#146;
-	font-size:18px;
-}
+
 .marginTen
 {
 	margin:10px 0 10px 0;
@@ -1840,7 +1840,7 @@ h3.headingSmall
     position:absolute;
     top:0;
     width:90%;
-    height:100%;
+    overflow-y:auto;
     z-index:10000;
     opacity:0.75;
     filter: alpha(opacity=75);
@@ -1852,6 +1852,7 @@ h3.headingSmall
     z-index:10000 !important;
     top:60px !important;
     overflow-x:hidden !important;
+    max-height:100% !important;
 }
 
 .ohModalIndv
