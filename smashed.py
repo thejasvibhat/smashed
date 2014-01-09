@@ -59,7 +59,7 @@ routes = [
   webapp2.Route ('/', handler=LandingPage),
 
   routes.RedirectRoute ('/oh', handler=GetOhList, name = "oh", strict_slash=True),
-  routes.RedirectRoute ('/oh/page/<pagenum>', handler=GetOhList, name = "ohpage", strict_slash=True), 
+  routes.RedirectRoute ('/oh/page/<mode>/<pagenum>', handler=GetOhList, name = "ohpage", strict_slash=True), 
   webapp2.Route ('/oh/record', OhRecordHandler),    #oh creator (VIEW)
   webapp2.Route ('/oh/brecord', OhRecordBarHandler),    #oh creator (VIEW)
   webapp2.Route ('/oh/<resource>', GetOh),    #OH Single (VIEW)

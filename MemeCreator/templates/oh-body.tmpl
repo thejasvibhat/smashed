@@ -47,13 +47,13 @@
 #if $currentpage != 1
 #set $prevpagenum = $currentpage - 1
   <div class = "col-lg-1">
-    <a class = "btn btn-regular" href = "/oh/page/${prevpagenum}">&lt;&lt Prev</a>
+    <a class = "btn btn-regular" href = "/oh/page/$mode/${prevpagenum}">&lt;&lt Prev</a>
   </div>
 #end if
 #if $currentpage != $totalpagecount
 #set $nextpagenum = $currentpage + 1
   <div class = "col-lg-2">
-    <a class = "btn btn-regular" href = "/oh/page/${nextpagenum}">Next &gt;&gt;</a>
+    <a class = "btn btn-regular" href = "/oh/page/$mode/${nextpagenum}">Next &gt;&gt;</a>
   </div>
 #end if
 </div>

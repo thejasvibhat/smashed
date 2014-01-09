@@ -78,6 +78,12 @@ indexes:
     direction: desc
 
 - kind: UserMemeDb
+  properties:
+  - name: userid
+  - name: date
+    direction: desc
+
+- kind: UserMemeDb
   ancestor: yes
   properties:
   - name: date

@@ -138,7 +138,7 @@ class GetOh (AuthHandler):
         self.response.out.write(l_skel.gethtml())
 
 class GetOhList (AuthHandler):
-    def get(self, pagenum=1):
+    def get(self,mode='gallery', pagenum=1):
         pagenum = int(pagenum)
         l_skel = Skel()
         l_skel.title = "Smashed.in :: OverHeards"
@@ -153,14 +153,20 @@ class GetOhList (AuthHandler):
 
         #body
         path = os.path.join (os.path.dirname (__file__), 'templates/oh-body.tmpl')
-        meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
-        memes = meme_query.fetch()
+        if mode == "gallery":
+            meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+            memes = meme_query.fetch()
+        else:
+            meme_query = UserMemeDb.query(UserMemeDb.userid == self.user_id).order(-UserMemeDb.date)
+            memes = meme_query.fetch()
+            
         totalCount = len(memes)
 
         template_values = {
             "memes" : memes[offset:offset+items_per_page],
             "currentpage" : pagenum,
-            "totalpagecount" : math.ceil(totalCount / items_per_page)
+            "totalpagecount" : math.ceil(totalCount / items_per_page),
+            "mode" : mode
             }
 
         l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
