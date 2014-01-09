@@ -54,12 +54,13 @@ function PrivateMode()
         $("#pmode").removeClass("btn-warning");
         $("#pmode").addClass("btn-success");     
         $("#pmodeOverall").val("ON");
-        $("#pmodeOverall").removeClass("btn-warning");
-        $("#pmodeOverall").addClass("btn-success"); 
+        $("#pmodeOverall").removeClass("btn-success");
+        $("#pmodeOverall").addClass("btn-warning"); 
         $("#pmodeOverall").attr("title","Click to enable Public mode");     
         $("#privatemode").val("private");
-        $("#save").removeClass("btn-warning");
-        $("#save").addClass("btn-success"); 
+        $("#save").removeClass("btn-success");
+        $("#save").addClass("btn-warning");
+        $('#pmode').attr('checked',false);
 
     }
     else
@@ -68,12 +69,13 @@ function PrivateMode()
         $("#pmode").removeClass("btn-success");        
         $("#pmode").addClass("btn-warning");
         $("#pmodeOverall").val("OFF");
-        $("#pmodeOverall").removeClass("btn-success");            
-        $("#pmodeOverall").addClass("btn-warning");        
+        $("#pmodeOverall").removeClass("btn-warning");            
+        $("#pmodeOverall").addClass("btn-success");        
         $("#pmodeOverall").attr("title","Click to enable Private mode");
         $("#privatemode").val("public");
-        $("#save").removeClass("btn-success");            
-        $("#save").addClass("btn-warning");        
+        $("#save").removeClass("btn-warning");            
+        $("#save").addClass("btn-success");
+        $('#pmode').attr('checked',true);
         
     }
     

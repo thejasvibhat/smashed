@@ -1,163 +1,172 @@
-
 <script src="/static/js/waypoints.min.js"></script>
+
 <div id="modalView" class="overlayout dropdown-menu" style="top:15%;">
 	<div class = "alignCenter">
 		<span class = "rockwellTextBig">Add some cool tags to the image. </span>
 	</div>
 	<div class = "marginTopTwenty"></div>
-    <div class="row">
+	<div class="row">
 		<div class = "col-lg-2">
 			<img src="" id="thumb1" class = "img-responsive" />
 		</div>     
-        <div class = "col-lg-4" style="text-align:right;">
-			<span class = "rockwellText">Private Mode</span>
-		</div>     
-        <div class = "col-lg-4">
-			<input type="button" class="btn btn-warning" id="pmode" value="OFF" onclick="PrivateMode();"/>
-		</div>     
+		<div class = "col-lg-5 col-lg-offset-2">
+			<span class = "rockwellText">Upload Image to Gallery</span>&nbsp;
+			<input type="checkbox" id="pmode" checked = "true" onChange ="PrivateMode();"/>
+		</div>         
 	</div>
-    <div class = "marginTopTwenty"></div> 
-    <input id='tags_2' type='text' class='tags' value="Smashed" ></p>
-    <div class = "marginTopTwenty"></div> 
-    <input type="button" class="btn btn-success" value="Save" onclick="SaveSkel();"/>
+	<div class = "marginTopTwenty"></div> 
+	<input id='tags_2' type='text' class='tags' value="Smashed" ></p>
+	<div class = "marginTopTwenty"></div> 
+	<input type="button" class="btn btn-success" value="Save" onclick="SaveSkel();"/>
 	<input type="button" class="btn btn-danger" value="Cancel" onclick="CancelSaveSkel();"/>
-    <div class = "marginTopTwenty"></div> 
+	<div class = "marginTopTwenty"></div> 
 </div>
 
 <div class = "marginTopTwenty"></div> 
 
 <div class="container">    
-  	<div class = "col-lg-3 whiteCanvas paddingBottom" style = "max-height:500px;overflow-y:auto;">
-        
-        <div class = "marginTen">
-            <span class = "rockwellTextBig cursorPointer" onclick="ChangeBackground();"> Upload new ( + )</span>
-        </div>
- 	    <input type = "text" id="search" placeholder = "Search..." class = "form-control" onkeypress="TagPressed(event)" /> 
-  	    <div id="accordion" >
-        <h3>Public</h3>
-                <div id="scrollable" style="max-height:330px;overflow-y:auto !important;"> 
-            
-                    <!-- root element for the items -->
-                        <div class="itemsCore"> 
-                    </div>  
-            </div>
-            <h3>My Uploads</h3>
-                <div id="scrollableMine"> 
-            
-                    <!-- root element for the items -->
-                        <div class="itemsCoreMine"> 
-                    </div>  
-                </div>  
-        </div> 
-	</div>	
-    
-        <div class = "col-lg-6" style =  "max-height:500px;overflow-y:auto;" id = "parentContainer">
-                        
-            <div id="ConversationCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#cccccc;width:500px;min-height:500px;">   
-                <div id="canCon" style="background-color:#cccccc;width:500px;height:500px;" onclick="ConGridClicked(this)">
-                <!--img id="backImage" src="/static/img/drophere.png" onload="OnImageLoad()" --> 
-                </div>
-                <div class = "sepcon" id="sepcon"></div>  
-            </div>
-        </div>
-    
-       <div class = "col-lg-3 whiteCanvas paddingBottom" style = "padding-left:0;">
-       <div class="row">
-            <div class = "col-lg-7" style="text-align:left;">
-                <span class = "rockwellText" style="vertical-align:middle;">Private Mode</span>
-            </div>     
-            <div class = "col-lg-2" style="text-align:left;padding-right:0px;">
-                <input type="button" class="btn btn-warning" id="pmodeOverall" value="OFF" onclick="PrivateMode();"/>
-            </div>     
-        </div>
-        <div class = "marginTopTen"></div> 
-        <div class = "sep"></div>
-	     <div class = "row" style = "margin:0;">
-	     <div class = "col-lg-6">
-             	<label class = "labelBig">Rows </label>
-          	<dd class='stepper_widget' ><input id = "rows" style = "" type='text' class="form-control" placeholder="20"  value='1' class='min_1_max_4' onblur="RowCountChange(this.value);">  
-	      		<div class = "marginTopTen"></div> 
-              		<button class="upbutton" onclick="UpdateStepperUpRows();">+</button>
-              		<button class="dnbutton" onclick="UpdateStepperDownRows();">-</button>     
-          	</dd>             
-	     </div>
-	     <div class = "col-lg-6">
-             	<label class = "labelBig">Columns </label>
-          	<dd class='stepper_widget' ><input id = "columns" style = "" type='text' class="form-control" placeholder="20"  value='1' class='min_1_max_2' onblur="ColumnCountChange(this.value);">  
-	      	<div class = "marginTopTen"></div> 
-                <button class="upbutton" onclick="UpdateStepperUpColumns();">+</button>
-                <button class="dnbutton" onclick="UpdateStepperDownColumns();">-</button>     
-                </dd>             
-              </div>
-	      </div>
-	  <div class = "marginTopTen"></div>
-          <div class = "sep"></div>
-	   <div class = "row" style = "margin:0;">
-	   <div class = "col-lg-4">
-               <label class = "labelBig">Size</label>
-               <dd class='stepper_widget' ><input id = "fontSize" style = "" type='text' class="form-control" placeholder="20" id='fontSizeText' value='20' class='min_20_max_100' onblur="FontSizeChange(this.value);">  
-	      <div class = "marginTopTen"></div> 
-              <button class="upbutton" onclick="UpdateStepperUp();">+</button>
-              <button class="dnbutton" onclick="UpdateStepperDown();">-</button>     
-              </dd>             
-     	    </div>
-	    <div class = "col-lg-4"> 
-                <label class = "labelBig">Color</label>
-                <input id="color1" name="color1" type="text" value="#fff" onchange="ColorChanged(this.value);" />  
-            </div>
-            <div class = "col-lg-4">
-                <label class = "labelBig">Family</label>
-                <div>
-                <select  onchange="UpdateFamily(this.value);" style = "width:80px;">                        
-              	  <option>Impact</option>   
-                  <option>Arial</option>   
-                  <option>Verdana</option>                               
-                  <option>Times</option>   
-                  <option>Trebucet</option>   
-                </select>
-               </div>
-	    </div>
-	    </div>
-	  <div class = "marginTopTen"></div>
-          <div class = "sep"></div>        
-          <div class = "row" style = "margin:0;">
-          <div class = "col-lg-6">
-              <label class = "labelBig">Style</label>
-              <div>
-              <select id = "fontStyle" disabled = "disabled" onchange="UpdateFontStyle(this.value);">                        
-                  <option>Normal</option>
-                  <option>Italic</option>
-              </select>
-              </div>
-     	  </div>
-	  <div class = "col-lg-6"> 
-               <label class = "labelBig">Weight</label>
-              <div>
-              <select id = "fontWeight" disabled = "disabled" onchange="UpdateFontweight(this.value);">                        
-              	  <option>Normal</option>
-              	  <option>Bold</option>
-              </select>
-              </div>
-	  </div>
-	  </div>
-	  <div class = "marginTopTen"></div>
-          <div class = "sep"></div>
-          <div class = "row" style = "margin:0;">
-	  <div class = "col-lg-12">
-              <input type="button" class = "btn btn-primary" value="Caption(+)" onclick="AddCaption();" />   
-              <input type="button" class = "btn btn-danger" value="Remove" onclick="RemoveCaption();" />
-              <input type="button" id="save" class = "btn btn-warning" value="Save" onclick="Save();" />  
-	  </div>
-          </div> 
-          <!--<input type="button" class = "btn btn-warning" value="Crop" onclick="Crop();" />   -->
-      
-      
-      	  <div id = "memeSpinner" class = "col-lg-12 loaderTop marginTopTen" style = "padding:0;display:none;">
-	      <img src = "/assets/pacman.gif" />
-	      &nbsp;&nbsp;
-	      <span id = "spinnerMg">Recording your OverHeard.. Hang on!</span>
-          </div>  
-    </div>     
+	<div class = "col-lg-3 whiteCanvas paddingBottom" style = "max-height:500px;overflow-y:auto;">
+	<div class = "marginTen">
+		<span class = "rockwellTextBig cursorPointer" onclick="ChangeBackground();"> Upload new ( + )</span>
+	</div>
+	<input type = "text" id="search" placeholder = "Search..." class = "form-control" onkeypress="TagPressed(event)" /> 
+	<div id="accordion" >
+		<h3>Gallery</h3>
+		<div id="scrollable" style="max-height:330px;overflow-y:auto !important;"> 
+			<!-- root element for the items -->
+			<div class="itemsCore"> 
+			</div>  
+		</div>
+		<h3>My Uploads</h3>
+		<div id="scrollableMine"> 
+			<!-- root element for the items -->
+			<div class="itemsCoreMine"> 
+			</div>  
+		</div>  
+	</div> 
+</div>	
+
+<div class = "col-lg-6" style =  "max-height:500px;overflow-y:auto;position:relative;left:28px;" id = "parentContainer">
+	<div id="ConversationCanvas"  class="dottedBorder backgroundLoad imgParent" dropzone="copy" style="background-color:#cccccc;width:500px;min-height:500px;">   
+		<div id="canCon" style="background-color:#cccccc;width:500px;height:500px;" onclick="ConGridClicked(this)">
+		<!--img id="backImage" src="/static/img/drophere.png" onload="OnImageLoad()" --> 
+		</div>
+		<div class = "sepcon" id="sepcon"></div>  
+	</div>
+</div>
+
+<div class = "col-lg-3 whiteCanvas paddingBottom" style = "padding-left:0;">
+	<div class = "row" style = "margin:0;">
+		<div class = "col-lg-6">
+			<label class = "labelBig">Rows </label>
+			<dd class='stepper_widget' ><input id = "rows" style = "" type='text' class="form-control" placeholder="20"  value='1' class='min_1_max_4' onblur="RowCountChange(this.value);">  
+				<div class = "marginTopTen"></div> 
+				<button class="upbutton" onclick="UpdateStepperUpRows();">+</button>
+				<button class="dnbutton" onclick="UpdateStepperDownRows();">-</button>     
+			</dd>             
+		</div>
+		<div class = "col-lg-6">
+			<label class = "labelBig">Columns </label>
+			<dd class='stepper_widget' ><input id = "columns" style = "" type='text' class="form-control" placeholder="20"  value='1' class='min_1_max_2' onblur="ColumnCountChange(this.value);">  
+				<div class = "marginTopTen"></div> 
+				<button class="upbutton" onclick="UpdateStepperUpColumns();">+</button>
+				<button class="dnbutton" onclick="UpdateStepperDownColumns();">-</button>     
+			</dd>             
+		</div>
+	</div>
+	
+	<div class = "marginTopTen"></div>
+	<div class = "sep"></div>
+	
+	<div class = "row" style = "margin:0;">
+		<div class = "col-lg-4">
+			<label class = "labelBig">Size</label>
+			<dd class='stepper_widget' ><input id = "fontSize" style = "" type='text' class="form-control" placeholder="20" id='fontSizeText' value='20' class='min_20_max_100' onblur="FontSizeChange(this.value);">  
+				<div class = "marginTopTen"></div> 
+				<button class="upbutton" onclick="UpdateStepperUp();">+</button>
+				<button class="dnbutton" onclick="UpdateStepperDown();">-</button>     
+			</dd>             
+		</div>
+		<div class = "col-lg-4"> 
+			<label class = "labelBig">Color</label>
+			<input id="color1" name="color1" type="text" value="#fff" onchange="ColorChanged(this.value);" />  
+		</div>
+		<div class = "col-lg-4">
+			<label class = "labelBig">Family</label>
+			<div>
+				<select  onchange="UpdateFamily(this.value);" style = "width:80px;">                        
+					<option>Impact</option>   
+					<option>Arial</option>   
+					<option>Verdana</option>                               
+					<option>Times</option>   
+					<option>Trebucet</option>   
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class = "marginTopTen"></div>
+	<div class = "row" style = "margin:0;">
+		<div class = "col-lg-4">
+			<label class = "labelBig">Style</label>
+			<div>
+				<select id = "fontStyle" disabled = "disabled" onchange="UpdateFontStyle(this.value);">                        
+					<option>Normal</option>
+					<option>Italic</option>
+				</select>
+			</div>
+		</div>
+		<div class = "col-lg-4"> 
+			<label class = "labelBig">Weight</label>
+			<div>
+				<select id = "fontWeight" disabled = "disabled" onchange="UpdateFontweight(this.value);">                        
+					<option>Normal</option>
+					<option>Bold</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class = "marginTopTen"></div>
+	<div class = "sep"></div>
+	
+	<div class = "row" style = "margin:0;">
+		<div class = "col-lg-5">
+			<input type="button" class = "btn btn-primary" value="Caption(+)" onclick="AddCaption();" />   
+		</div>
+		<div class = "col-lg-5">
+			<input type="button" class = "btn btn-danger" value="Caption(-)" onclick="RemoveCaption();" />
+		</div>
+	</div>
+	
+	<div class = "marginTopTen"></div>
+	<div class = "sep"></div>
+	
+	<div class="row" style = "margin:0;">
+		<div class = "col-lg-7">
+			<span class = "rockwellText" style="vertical-align:middle;">Private Mode &nbsp;</span>
+			<a href = "javascript:void(0);" title = "OverHeards created on Private mode will not be posted on Smashed.in's Facebook album. It is visible only to you.The images used will not be uploaded to the public gallery.">(?)</a>
+		</div>     
+		<div class = "col-lg-5">
+			<input type="button" class="btn btn-success" id="pmodeOverall" value="OFF" onclick="PrivateMode();" style = "position:relative;bottom:5px;"/>
+		</div>     
+	</div>
+	
+	<div class = "marginTopTen"></div>
+	<div class = "col-lg-12">
+		<input type="button" id="save" class = "btn btn-success" value="Save" onclick="Save();" />  
+	</div>
+	
+	<div id = "memeSpinner" class = "col-lg-12 loaderTop marginTopTen" style = "display:none;">
+		<img src = "/assets/pacman.gif" />
+		&nbsp;&nbsp;
+		<span id = "spinnerMg">Recording your OverHeard...</span>
+	</div>  
+	
+</div> 
+
+
+</div>     
 </div>
 <img id="backImageCon" src="/static/img/drophere.png" style="display:none;position:absolute;" onLoad="OnImageLoadConGrid(this)" /> 
 
