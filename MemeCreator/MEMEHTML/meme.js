@@ -160,7 +160,7 @@ function AddCaption()
     var base = $("#BaseCanvas");
     if(ohtype == "Conversation")
         base = $("#ConversationCanvas");
-    $(base).append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:500px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;margin-left:0;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
+    $(base).append("<div class='demo"+iTextCnt+"' style='line-height:30px;width:500px;min-height:100px;x:0px;y:0px;position:absolute;top:"+top+"px;left:15px;margin-left:0;background-color:transparent;cursor:move;'><textarea placeholder = 'Add caption here'  id='myText"+iTextCnt+"' class='displayBlock' style='padding-left:42px;text-align:center;resize:none;width:100%;height:100%;x:0px;y:0px;position:absolute;top:0; border-color:transparent;background-color:transparent;overflow:hidden;border:none;cursor:move;text-shadow: 2px 2px #000;'></textarea></div>");  
     
     cuTextBox = $('#myText'+iTextCnt+'');     
     m_arrTextBoxes.push(cuTextBox);
@@ -513,7 +513,7 @@ function Save()
         oProperty.setAttribute("style",oTextBox.css("font-style"));
         oProperty.setAttribute("weight",oTextBox.css("font-weight"));
         oProperty.setAttribute("name",oTextBox.css("font-family"));
-        oProperty.setAttribute("left",m_arrDemoBoxes[i].css("left").split("p")[0] - $(base).position().left);
+        oProperty.setAttribute("left",m_arrDemoBoxes[i].css("left").split("p")[0] - $(base).position().left+42);
         oProperty.setAttribute("top",m_arrDemoBoxes[i].css("top").split("p")[0] - $(base).position().top);
         oProperty.setAttribute("width",oTextBox.width());
         oProperty.setAttribute("height",oTextBox.height());
