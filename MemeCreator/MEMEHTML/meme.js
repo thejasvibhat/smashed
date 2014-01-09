@@ -264,6 +264,82 @@ function TagPressed(e){
       return false;
     }
   }
+function HandleSkelClick(imageSkel,url,id)
+{
+    $(imageSkel ).click(function() {
+                curImage =  $("#backImage");
+                curImage.addClass('imagehide');
+                var iconsrc = this.src;
+                var src = iconsrc.replace("icon", "download");
+                var value = iconsrc.split("/").pop();
+                if(ohtype == "Conversation")
+                {
+                        $.each(m_arrGrids,function(index,grid){
+                            var curImg = $(grid).find("#backImageCon");
+                            if(curImg.val() == 'default')
+                            {
+                                curImg.attr('src', url);
+                                curImg.attr('sid', id);
+                                curImg.val('actual');
+                                $.each(m_arrGrids,function(griindex,gridtemp){
+                                    var newcurImg = $(gridtemp).find("#backImageCon");
+                                    if(newcurImg.val() == "undefined" || (newcurImg.val() != "actual"))
+                                    {
+                                        ReadyForSkel(gridtemp);
+                                        return false;
+                                    }
+                                });
+                                $(grid).mouseenter(function(){
+                                    if(curImg.val() == 'actual')
+                                    {
+                                        var oPd = $("#removePanel").clone();
+                                        
+                                        $(grid).append(oPd);
+                                        $(oPd).show();
+                                    
+                                   
+                                        $(oPd).click(function(event){
+                                        
+                                            $(curImg).val('default');
+                                            curImg.attr('src', '/static/img/drophere.png');
+                                            $( grid ).find( "#removePanel" ).remove();
+                                        });
+                                    }
+                               
+                                });
+                                 $(grid).mouseleave(function() {
+                                    $( grid ).find( "#removePanel" ).remove();
+                                
+                                });
+                                return false;
+                            }
+                            
+                        });
+                }
+                else
+                {
+                    $("#backImage").attr('src', url);        
+                }
+		
+                $("#BaseCanvas").addClass('load');  
+                $("#backImage").attr('value', id);
+                $('#saveButton').removeClass("disabled");   
+                $('#saveButton').addClass("enabled");   
+                $("#saveButton").removeAttr("disabled");
+	    });
+	    $(imageSkel ).load(function () {                
+                if((this.height) > (this.width))
+                {       
+		    $(this).removeClass("widthCLass");
+		    $(this).addClass("heightCLass");
+                }
+                else
+                {
+		    var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
+		    $(this).attr('style',margin);
+                }
+	    });
+}
 function GetMyUploads(tags)
 {
     $('.itemsCoreMine').empty();
@@ -288,70 +364,8 @@ function GetMyUploads(tags)
 	    html_id = id.replace (/[^\w\s]/gi, '');
 	    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass tilt" id="image_'+html_id+'" src="'+thumburl+'"/></div>';
 	    $('.itemsCoreMine').append(test);
-
-	    $( "#image_"+html_id ).click(function() {
-                curImage =  $("#backImage");
-                curImage.addClass('imagehide');
-                var iconsrc = this.src;
-                var src = iconsrc.replace("icon", "download");
-                var value = iconsrc.split("/").pop();
-                if(ohtype == "Conversation")
-                {
-                        $.each(m_arrGrids,function(index,grid){
-                            var curImg = $(grid).find("#backImageCon");
-                            if(curImg.val() == 'default')
-                            {
-                                curImg.attr('src', url);
-                                curImg.attr('sid', id);
-                                curImg.val('actual');
-                                $(grid).mouseenter(function(){
-                                    if(curImg.val() == 'actual')
-                                    {
-                                        var oPd = $("#removePanel").clone();
-                                        
-                                        $(grid).append(oPd);
-                                        $(oPd).show();
-                                    
-                                   
-                                        $(oPd).click(function(event){
-                                        
-                                            $(curImg).val('default');
-                                            curImg.attr('src', '/static/img/drophere.png');
-                                            $( grid ).find( "#removePanel" ).remove();
-                                        });
-                                    }
-                               
-                                });
-                                 $(grid).mouseleave(function() {
-                                    $( grid ).find( "#removePanel" ).remove();
-                                
-                                });
-                            }
-                        });
-                }
-                else
-                {
-                    $("#backImage").attr('src', url);        
-                }
-		
-                $("#BaseCanvas").addClass('load');  
-                $("#backImage").attr('value', id);
-                $('#saveButton').removeClass("disabled");   
-                $('#saveButton').addClass("enabled");   
-                $("#saveButton").removeAttr("disabled");
-	    });
-	    $( "#image_"+html_id ).load(function () {                
-                if((this.height) > (this.width))
-                {       
-		    $(this).removeClass("widthCLass");
-		    $(this).addClass("heightCLass");
-                }
-                else
-                {
-		    var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
-		    $(this).attr('style',margin);
-                }
-	    });
+        HandleSkelClick($( "#image_"+html_id ),url,id);
+	    
 
 	});
     });
@@ -400,69 +414,7 @@ function GetThumbnails(tags)
 	    var test = '<div class="scrollableDiv col-lg-5" ><img class="widthCLass tilt" id="image_'+html_id+'" src="'+thumburl+'"/></div>';
 	    $('.itemsCore').append(test);
 
-	    $( "#image_"+html_id ).click(function() {
-                curImage =  $("#backImage");
-                curImage.addClass('imagehide');
-                var iconsrc = this.src;
-                var src = iconsrc.replace("icon", "download");
-                var value = iconsrc.split("/").pop();
-                if(ohtype == "Conversation")
-                {
-                        $.each(m_arrGrids,function(index,grid){
-                            var curImg = $(grid).find("#backImageCon");
-                            if(curImg.val() == 'default')
-                            {
-                                curImg.attr('src', url);
-                                curImg.attr('sid', id);
-                                curImg.val('actual');
-                                $(grid).mouseenter(function(){
-                                    if(curImg.val() == 'actual')
-                                    {
-                                        var oPd = $("#removePanel").clone();
-                                        
-                                        $(grid).append(oPd);
-                                        $(oPd).show();
-                                    
-                                   
-                                        $(oPd).click(function(event){
-                                        
-                                            $(curImg).val('default');
-                                            curImg.attr('src', '/static/img/drophere.png');
-                                            $( grid ).find( "#removePanel" ).remove();
-                                        });
-                                    }
-                               
-                                });
-                                 $(grid).mouseleave(function() {
-                                    $( grid ).find( "#removePanel" ).remove();
-                                
-                                });
-                            }
-                        });
-                }
-                else
-                {
-                    $("#backImage").attr('src', url);        
-                }
-		
-                $("#BaseCanvas").addClass('load');  
-                $("#backImage").attr('value', id);
-                $('#saveButton').removeClass("disabled");   
-                $('#saveButton').addClass("enabled");   
-                $("#saveButton").removeAttr("disabled");
-	    });
-	    $( "#image_"+html_id ).load(function () {                
-                if((this.height) > (this.width))
-                {       
-		    $(this).removeClass("widthCLass");
-		    $(this).addClass("heightCLass");
-                }
-                else
-                {
-		    var margin = 'margin: '+(100 - this.height)/2+'px 0px 0px 0px;';                            
-		    $(this).attr('style',margin);
-                }
-	    });
+	    HandleSkelClick($( "#image_"+html_id ),url,id);
 
 	});
     });
@@ -764,18 +716,28 @@ function GridChange()
     }
     ConGridClicked(m_arrGrids[0])
 }
-
+function ReadyForSkel(grid)
+{
+        var imgsrc = $(backImageCon).clone();
+        //$(imgsrc).width($(currentGrid).width());
+        //$(imgsrc).height($(currentGrid).height());
+        imgsrc.val('default');
+        imgsrc.attr('src', '/static/img/drophere.png');
+        $(imgsrc).show();
+        $(grid).append(imgsrc);
+        currentGrid = grid;
+}
 function ConGridClicked(grid)
 {
     if(!backImageCon) {
         backImageCon = $("#backImageCon").clone();
-	$('#backImageCon').attr('id','old');
-	$(backImageCon).attr('id','backImageCon');
+        $('#backImageCon').attr('id','old');
+        $(backImageCon).attr('id','backImageCon');
     }
     $('#old').remove();	
-    $.each(m_arrGrids,function(index,grid){
-        var curImg = $(grid).find("#backImageCon");
-        if(curImg.val() == 'default')
+    $.each(m_arrGrids,function(index,gridtemp){
+        var curImg = $(gridtemp).find("#backImageCon");
+        if(curImg.val() != 'actual')
             curImg.remove();
     });
     currentGrid = grid;
