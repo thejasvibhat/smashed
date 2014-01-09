@@ -1479,8 +1479,8 @@ gridGoogleMapContainer
 
 .dottedBorder
 {
-    box-shadow:1px 1px 10px #2b2b2b;
-    -webkit-border-radius:1px 1px 10px #2b2b2b;
+    /*box-shadow:1px 1px 10px #2b2b2b;
+    -webkit-border-radius:1px 1px 10px #2b2b2b;*/
 }
 
 #backImage
