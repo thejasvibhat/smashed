@@ -14,6 +14,11 @@
 
       <div class = "col-lg-4">
 	  	<div class = "memeShareContainer">
+#if $meme.mode == 'private'
+      <div class="row" style="text-align:center;">
+        <img id='pvt' src="/static/img/private.png" style="width:50px;"/>
+      </div>
+#end if
 	  		<div class = "marginTopTen shareFB">
 #if $meme.mode == 'gallery'
                 <a onClick = "shareOhOnFaceBook('www.facebook.com/photo.php?fbid=${meme.shareid}','gallery');" href = "javascript:void(0);">Share on Facebook</a>
