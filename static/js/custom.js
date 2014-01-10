@@ -426,9 +426,14 @@ function drawMap (lat,lon)
 
 /* Share on social Networks */
 
-function shareOhOnFaceBook (a_id)
+function shareOhOnFaceBook (a_id,type)
 {
-	shareSocial('http://www.facebook.com/sharer.php?u=http://www.smashed.in/oh/'+a_id);
+    var shareurl = 'http://www.facebook.com/sharer.php?u=';
+    if(type == 'private')
+        shareurl = shareurl +  'http://www.smashed.in/oh/'+a_id;
+    else
+        shareurl = shareurl +  a_id;
+	shareSocial(shareurl);
 }
 
 function shareOhOnTwitter (a_id)

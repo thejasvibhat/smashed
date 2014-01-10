@@ -66,9 +66,9 @@ class ListMeme(webapp2.RequestHandler):
     def get(self):
         tag = self.request.get('tag',default_value="auto")        
         if tag == "auto":
-            meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+            meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
         else:
-            meme_query = UserMemeDb.query(UserMemeDb.tags == tag).order(-UserMemeDb.date)
+            meme_query = UserMemeDb.query(ndb.AND(UserMemeDb.mode == 'gallery' , UserMemeDb.tags == tag)).order(-UserMemeDb.date)
         
         oLimit = int(self.request.get("limit"))
         oOffset = int(self.request.get("offset"))
@@ -121,6 +121,8 @@ class GetOh (AuthHandler):
         template_values = {
             'memeurl':   '/res/download/%s' % meme.blobid,
             'conturl':   '/oh/%s' % meme.resid,
+            'localid':   '%s' % meme.resid,
+            'mode'   :   '%s' %meme.mode,
             'shareid':   '%s' % meme.shareid,
             'currentid': '%s' % meme.resid,
             'commentid': '%s' % meme.commentid,
@@ -154,7 +156,7 @@ class GetOhList (AuthHandler):
         #body
         path = os.path.join (os.path.dirname (__file__), 'templates/oh-body.tmpl')
         if mode == "gallery":
-            meme_query = UserMemeDb.query(ancestor=user_meme_dbkey(USER_MEME_DB_NAME)).order(-UserMemeDb.date)
+            meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
             memes = meme_query.fetch()
         else:
             meme_query = UserMemeDb.query(UserMemeDb.userid == self.user_id).order(-UserMemeDb.date)
@@ -280,7 +282,7 @@ class SaveHandler(AuthHandler):
         userId = self.user_id
         root = ET.fromstring(self.request.get('data'))
         bid = self.request.get('bid')
-        mode = self.request.get('mode',default_value="public")
+        mode = self.request.get('mode',default_value="gallery")
         remove_namespace(root,"http://www.w3.org/1999/xhtml")
         imgId = ''
         family = ''

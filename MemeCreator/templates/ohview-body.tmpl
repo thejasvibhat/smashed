@@ -6,7 +6,11 @@
     <div class = "col-lg-4">
       <div class = "memeShareContainer">
 	<div class = "marginTopTen shareFB">
-	  <a onClick = "shareOhOnFaceBook('$conturl');" href = "javascript:void(0);">Share on Facebook</a>
+#if $mode == 'gallery'
+    <a onClick = "shareOhOnFaceBook('www.facebook.com/photo.php?fbid=$shareid','gallery');" href = "javascript:void(0);">Share on Facebook</a>
+#else
+	  <a onClick = "shareOhOnFaceBook('$localid','private');" href = "javascript:void(0);">Share on Facebook</a>
+#end if
 	</div>
 	<div class = "marginTopTen shareTwitter">
 	  <a onClick = "shareOhOnTwitter('$conturl');" href = "javascript:void(0);">Share on Twitter</a>

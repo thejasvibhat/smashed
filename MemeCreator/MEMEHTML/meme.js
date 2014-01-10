@@ -528,14 +528,17 @@ function Save()
     
     /* Spinners */
     $('#memeSpinner').fadeIn();
-    var urloh =  '/api/oh/save';
+    var mode = 'gallery';
+    if(privateMode)
+        mode = 'private';
+    var urloh =  '/api/oh/save?mode='+mode;
     if (typeof fromBar === 'undefined') {
     // variable is undefined
     }
     else
     {
         if(fromBar == true)
-            urloh = '/api/oh/save?bid='+$("#bid").val()+'&mode='+privateMode;
+            urloh = '/api/oh/save?bid='+$("#bid").val()+'&mode='+mode;
     }
     $.ajax({
       type: "POST",

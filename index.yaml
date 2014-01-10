@@ -73,6 +73,19 @@ indexes:
 
 - kind: UserMemeDb
   properties:
+  - name: mode
+  - name: date
+    direction: desc
+
+- kind: UserMemeDb
+  properties:
+  - name: mode
+  - name: tags
+  - name: date
+    direction: desc
+
+- kind: UserMemeDb
+  properties:
   - name: tags
   - name: date
     direction: desc
