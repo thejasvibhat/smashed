@@ -1839,7 +1839,8 @@ h3.headingSmall
 	background: white url(/assets/pacman.gif) no-repeat center;
     position:absolute;
     top:0;
-    width:90%;
+    width:95%;
+    height:100%;
     overflow-y:auto;
     z-index:10000;
     opacity:0.75;
@@ -1850,7 +1851,7 @@ h3.headingSmall
 {
 	min-width:500px !important;
     z-index:10000 !important;
-    top:60px !important;
+    top:0px !important;
     overflow-x:hidden !important;
     max-height:100% !important;
 }
@@ -1858,4 +1859,21 @@ h3.headingSmall
 .ohModalIndv
 {
 	margin-bottom:10px;
+}
+
+#scrolltoTop{
+	display:none;
+	text-decoration:none;
+	z-index:10000;
+	position:fixed;
+	top:20px;
+	overflow:hidden;
+	width:45px;
+	height:45px;
+	border:none;
+	text-indent:-999px;
+	background-image:url(/static/img/ui.totop.png);
+	background-repeat:no-repeat;
+	background-position: top left;
+	background-color:none;
 }

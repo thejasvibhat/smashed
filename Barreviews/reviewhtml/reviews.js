@@ -200,14 +200,26 @@ function showBarOh(a_ele)
 		dialogClass:"customDialogOh"
    });
    
-   $.ajax({
+   $('.customDialogOh').scroll(function()
+   {
+    	if($('.customDialogOh').scrollTop() > 0)
+    	{
+    		$('.customDialogOh').find('#scrolltoTop').show();
+    	}
+    	else
+    	{
+    		$('.customDialogOh').find('#scrolltoTop').hide();
+    	}
+   });
+   
+    $.ajax({
             type: 'GET',
             url: '/api/b/overheards?bid='+bid,
             success: getBarOhModal,
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                         //TODO
             }
-    }); 
+    });
 }
 
 function getBarOhModal (data)
@@ -249,4 +261,9 @@ function getBarOhModal (data)
     		
     	}
     });
+}
+
+function scrollOhToTop (a_ele)
+{
+	$('.customDialogOh').scrollTop(0);
 }
