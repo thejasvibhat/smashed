@@ -4,10 +4,15 @@
       <img class = "img-responsive" src="$memeurl" onload="OnImageLoad();" > 
     </div>
     <div class = "col-lg-4">
-      <div class = "memeShareContainer">
+#if $mode == 'private'
+    <div class = "memeShareContainer" style="margin-top:60px;">
+#else
+    <div class = "memeShareContainer">
+#end if
+
 #if $mode == 'private'
       <div class="row" style="text-align:center;">
-        <img id='pvt' src="/static/img/private.png" style="width:50px;"/>
+        <img id='pvt' src="/static/img/private.jpg" style="width:100px;"/>
       </div>
 #end if
 	<div class = "marginTopTen shareFB">
