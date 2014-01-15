@@ -2,11 +2,23 @@
 
 <!-- Content -->    
 <div class = "container">
-  <div class = "col-lg-7">    
-  	<div class = "row">
+  <div class = "col-lg-7">   
+#if $isLoggedIn == "True"
+<div id="tabs" class = "row">
+<input type="hidden" id='tabvalue' value='$mode'/>
+  <ul>
+    <li><a href="#gallery"><span>Gallery</span></a></li>
+    <li><a href="#mine"><span>My Overheards</span></a></li>
+  </ul>
+<div id="gallery" style="visibility:hidden;position:absolute;">
+</div>
+</div>
+#end if
+
+  	<!--div class = "row">
    		<a href = "/oh">Gallery</a>
    		<a href = "/oh/page/mine/1">My OverHeards</a>
-  	</div>
+  	</div-->
     <div class = "marginTopTen"></div>
 #for $meme in $memes
     <div class = "row memeIndvItem">

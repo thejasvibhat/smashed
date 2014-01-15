@@ -168,7 +168,8 @@ class GetOhList (AuthHandler):
             "memes" : memes[offset:offset+items_per_page],
             "currentpage" : pagenum,
             "totalpagecount" : math.ceil(totalCount / items_per_page),
-            "mode" : mode
+            "mode" : mode,
+            'isLoggedIn': '%s' %self.logged_in
             }
 
         l_skel.addtobody (str((Template.compile(file=path)(searchList=template_values))))
