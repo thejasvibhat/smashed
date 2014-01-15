@@ -244,7 +244,7 @@ function getBarOhModal (data)
     	$(ele).find('img').attr('src',icon);
     	$(ele).find('.shareFB a').click(function()
     	{
-    		shareOhOnFaceBook(mid);
+    		shareOhOnFaceBook(mid,'private');
     	});
     	$(ele).find('.shareTwitter a').click(function()
     	{
