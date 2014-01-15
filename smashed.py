@@ -99,6 +99,7 @@ routes = [
   webapp2.Route ('/res/icon/<resource>', GetIcon), #OH res download (API/Path)
   webapp2.Route ('/gettoken', BaseRequestHandler), 
   webapp2.Route ('/storelocality', PushLocality), 
+  webapp2.Route ('/migrate', MigrationOH), 
 ]
 
 # webapp2 config
