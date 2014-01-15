@@ -22,6 +22,12 @@ def review_dbkey(review_dbname=REVIEW_DB_NAME):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('bars_db', review_dbname) 
 
+def GetBarName(bid):
+    review_query = ReviewDb.query(ReviewDb.bid == bid)
+    reviews = review_query.fetch(1)
+    for review in reviews:
+        return review.name
+    return 'theju'
 
 class ReviewHandler(AuthHandler):
     def get(self,pagenum=1):

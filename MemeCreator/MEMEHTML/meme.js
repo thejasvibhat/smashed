@@ -17,6 +17,27 @@ var curSelectionWidth = 1;
 var curSelectionHeight = 1;
 var privateMode = false;
 var init = false;
+
+var tabindex = 1;
+function TabsInit()
+{
+    if($('#tabvalue').val() == 'gallery')
+        tabindex = 0;
+    $('#tabs,#gallery').tabs({
+        active: tabindex,
+        activate: function(event, ui){
+          var curIndex = ui.newTab.index();
+          if(curIndex != tabindex)
+          {
+            if(curIndex == 0)
+                window.location = '/oh';
+            else
+                window.location = '/oh/page/mine/1';
+          }
+        }
+    });
+}
+
 function Init()
 {
     $( "#accordion" ).accordion({
@@ -893,6 +914,7 @@ function GetTickerInit()
 	   	$(oClone).find('#ticks').attr('href',$(this).find('url').text());
        	$(oClone).find('#creatorname').html($(this).find('creatorname').text());
 	   	$(oClone).find('#creatoravatar').attr('src',$(this).find('creatoravatar').text());
+        $(oClone).find('#ticktext').html($(this).find('ticktext').text());
 	   	$(container).prepend('<div class = "separator"></div>');
 	   	$(container).prepend(oClone);
 	   	$(oClone).show();
@@ -923,6 +945,7 @@ function GetTickerLatest()
 			$(oClone).find('#ticks').attr('href',$(theXmlDoc).find('url').text());
 			$(oClone).find('#creatorname').html($(theXmlDoc).find('creatorname').text());
 			$(oClone).find('#creatoravatar').attr('src',$(theXmlDoc).find('creatoravatar').text());
+           $(oClone).find('#ticktext').html($(this).find('ticktext').text());
 			$(container).prepend('<div class = "separator"></div>');
 			$(container).prepend(oClone);
 			$(oClone).show();

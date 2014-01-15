@@ -316,28 +316,11 @@ function reviewsInit()
 		getBarListing($(this).val());
 	});
 }
-var tabindex = 1;
+
 function ohListInit()
 {
 	$('#nav-oh').addClass ('nav-highlight');
-    if($('#tabvalue').val() == 'gallery')
-        tabindex = 0;
-    $('#tabs,#gallery').tabs({
-        active: tabindex,
-        activate: function(event, ui){
-          var curIndex = ui.newTab.index();
-          if(curIndex != tabindex)
-          {
-            if(curIndex == 0)
-                window.location = '/oh';
-            else
-                window.location = '/oh/page/mine/1';
-          }
-        }
-});
-
 }
-
 function recordOhInit()
 {
 	ohtype = "Conversation";	

@@ -51,7 +51,8 @@ function SaveComments()
 
 function GetRecommendedOh()
 {
-	var data = {'limit': '1000','offset':'0'};
+    tags = $("#tags").val();
+	var data = {'limit': '100','offset':'0','tag':tags};
 	$.ajax({
 	   type: "GET",
 	   url: "/api/oh/list",

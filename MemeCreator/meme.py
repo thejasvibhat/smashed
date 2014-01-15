@@ -22,7 +22,7 @@ from secrets import secrets
 from google.appengine.api import files
 
 import xml.etree.ElementTree as ET
-
+from Barreviews.review import GetBarName
 from MemeCreator.storeimage import MemeDb
 from MemeCreator.storeimage import UserMemeDb
 
@@ -62,22 +62,28 @@ def UpdateFacebookId(resid,postid):
         meme.shareid = postid
         meme.put();
 	
-class ListMeme(webapp2.RequestHandler):
+class ListMeme(AuthHandler):
     def get(self):
-        tag = self.request.get('tag',default_value="auto")        
+        tag = self.request.get('tag',default_value="auto")  
+        tags = tag.split(',')
         if tag == "auto":
             meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
         else:
-            meme_query = UserMemeDb.query(ndb.AND(UserMemeDb.mode == 'gallery' , UserMemeDb.tags == tag)).order(-UserMemeDb.date)
+            meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
+            meme_query = meme_query.filter(UserMemeDb.tags.IN(tags));
         
-        oLimit = int(self.request.get("limit"))
-        oOffset = int(self.request.get("offset"))
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
         memes = meme_query.fetch(oLimit,offset=oOffset)
         self.response.write('<memes>')
         for meme in memes:
             l_auth = auth.get_auth()
             userData = l_auth.store.user_model.get_by_id (meme.userid)
             #logging.info(userData)
+            tickText = ' Created an Overheard'
+            if self.logged_in == True:
+                if meme.bid != "":
+                    tickText = ' Overheard something in %s' %GetBarName(meme.bid)
             self.response.write('<meme>')
             self.response.write('<ts>')
             self.response.write('%s' %meme.date)
@@ -88,6 +94,9 @@ class ListMeme(webapp2.RequestHandler):
             self.response.write('<url>')
             self.response.write('/oh/%s' %meme.resid)
             self.response.write('</url>')
+            self.response.write('<ticktext>')
+            self.response.write('%s' %tickText)
+            self.response.write('</ticktext>')
             
             self.response.write('<creatorname>')
             self.response.write('%s' %userData.name)
@@ -126,7 +135,9 @@ class GetOh (AuthHandler):
             'shareid':   '%s' % meme.shareid,
             'currentid': '%s' % meme.resid,
             'commentid': '%s' % meme.commentid,
-            'isLoggedIn': '%s' %self.logged_in
+            'isLoggedIn': '%s' %self.logged_in,
+            'tags'      : ','.join(meme.tags)
+            
             }
 
 	#Head
@@ -216,6 +227,7 @@ class UploadFacebook(AuthHandler):
 class SkelList (AuthHandler):
     def get(self):
         tag = self.request.get('tag',default_value="auto")
+        tags = tag.split(',')
         mode = self.request.get('mode',default_value="public")
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
@@ -226,9 +238,11 @@ class SkelList (AuthHandler):
                 meme_query = MemeDb.query(MemeDb.userid == self.user_id).order(-MemeDb.date)
         else:
             if mode == "public":
-                meme_query = MemeDb.query(ndb.AND(MemeDb.mode == 'public',MemeDb.tags == tag)).order(-MemeDb.date)
+                meme_query = MemeDb.query(MemeDb.mode == 'public').order(-MemeDb.date)
+                meme_query = meme_query.filter(MemeDb.tags.IN(tags));
             else:
-                meme_query = MemeDb.query(ndb.AND(MemeDb.userid == self.user_id,MemeDb.tags == tag)).order(-MemeDb.date)            
+                meme_query = MemeDb.query(MemeDb.userid == self.user_id).order(-MemeDb.date)  
+                meme_query = meme_query.filter(MemeDb.tags.IN(tags));
             
         memes = meme_query.fetch(oLimit,offset=oOffset)
 
