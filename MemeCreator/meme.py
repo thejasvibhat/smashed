@@ -458,7 +458,7 @@ class SaveHandler(AuthHandler):
 
         # Get my latest posts
         # Post a photo of a parrot
-        if smashedmisc.is_production == True:
+        if smashedmisc.is_production () == True:
             urlfetch.set_default_fetch_deadline(45)
             postid = graph.post(
                            path = '/431907476935431/photos',
