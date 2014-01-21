@@ -1,6 +1,6 @@
 function SaveReviewComments()
 {
-    var data = {'rating': $("#rating").val(),'description': $("#curdescription").val(),'favsnack1': $('#snack1').val(),'favsnack2':$('#snack2').val(),'reviewid':$('#reviewid').val()};
+    var data = {'rating': $("#rating").val(),'description': encodeURIComponent($("#curdescription").val()),'favsnack1': $('#snack1').val(),'favsnack2':$('#snack2').val(),'reviewid':$('#reviewid').val()};
     console.log(data);
      $.ajax({
                type: "GET",
@@ -13,7 +13,7 @@ function SaveReviewComments()
                     $(oClone).find('#creatorname').html($("#curcreatorname").html());
                     $(oClone).find('#creatoravatar').attr('src',$('#curcreatoravatar').attr('src'));
                     $(oClone).find('#creatoravatar').attr('src',$("#curcreatorname").attr('src'));
-                   $(oClone).find('#creatordescription').html($("#curdescription").val());
+                   $(oClone).find('#creatordescription').html(decodeURIComponent($("#curdescription").val()));
                    if($("#rating").val() == 1)
                        $(oClone).find('#creatorrating').attr('src','/reviewhtml/assets/rate_1_0.png');
                    if($("#rating").val() == 1.5)
