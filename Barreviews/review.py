@@ -33,9 +33,7 @@ class ReviewHandler(AuthHandler):
     def get(self,pagenum=1):
         pagenum = int(pagenum)
         items_per_page = 12
-        offset = 0
-        if pagenum != 1:
-            offset = (pagenum * items_per_page) - 1
+        offset = (pagenum - 1) * items_per_page
  
         l_skel = Skel()
 	l_skel.title = "Smashed.in :: Latest Additions"
@@ -45,8 +43,10 @@ class ReviewHandler(AuthHandler):
 
         #Body
         review_query = ReviewDb.query(ancestor=review_dbkey(REVIEW_DB_NAME)).order(-ReviewDb.date)
-        reviews = review_query.fetch()
-        for review in reviews[offset:offset+items_per_page]:
+        total_items = review_query.count()
+
+        reviews = review_query.fetch(items_per_page, offset=offset)
+        for review in reviews:
             addressid = str(review.addressid)
             add_querry = LocationDb.query(LocationDb.addressid == addressid)
             addresses = add_querry.fetch()
@@ -59,10 +59,10 @@ class ReviewHandler(AuthHandler):
                 editPermission = 1
         
         template_values = {
-		"reviews" : reviews[offset:offset+items_per_page],
+		"reviews" : reviews,
 		"currentpage" : pagenum,
 		"userid": editPermission,
-		"totalpagecount" : math.ceil (len(reviews) / items_per_page)
+		"totalpagecount" : math.ceil (total_items / float(items_per_page))
 	}
         path = os.path.join (os.path.dirname (__file__), 'templates/reviews-body.tmpl')
         l_skel.addtobody (str((Template.compile(file=path) (searchList=template_values))))

@@ -38,6 +38,7 @@ class ListScenesHandler (webapp2.RequestHandler):
             self.response.write('</url>')
             self.response.write('</review>')
         self.response.write('</reviews>')
+        self.response.headers['Content-Type'] = 'text/xml'
 
 class ListComments(AuthHandler):
     def get (self):
