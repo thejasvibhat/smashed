@@ -259,6 +259,7 @@ header .navbar-nav > .dropdown > a .caret{
 
 .navbar-nav li{
 	border-left:2px solid #222;
+	padding:0 10px;
 }
 
 header .navbar-nav > .dropdown.active > a .caret, 

@@ -53,16 +53,16 @@
 	  	  </a>
           <div class="nav-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
-              <li><a id = "nav-home" href="/">Home</a></li>
-              <li><a id = "nav-reviews" href="/b">Reviews</a></li>
+              <li><span class="glyphicon glyphicon-home"></span><a id = "nav-home" href="/">Home</a></li>
+              <li><span class="glyphicon glyphicon-glass"></span><a id = "nav-reviews" href="/b">Reviews</a></li>
 #if $getVar("permissionAddBar", 0)
-              <li><a id = "nav-review-record" href="/b/record">Write Reviews</a></li>
+              <li><span class="glyphicon glyphicon-pencil"></span><a id = "nav-review-record" href="/b/record">Write Reviews</a></li>
 #end if
-              <li><a id = "nav-oh" href="/oh">OverHeards</a></li>
-              <li><a id = "nav-oh-record" href="/oh/record">Record OverHeards</a></li>
-              <li class = "search" id = "bSearch"><input type = "text" placeholder = "Search for a bar..." id = "bSearchInput" /></li>
+              <li><span class="glyphicon glyphicon-comment"></span><a id = "nav-oh" href="/oh">OverHeards</a></li>
+              <li><span class="glyphicon glyphicon-bullhorn"></span><a id = "nav-oh-record" href="/oh/record">Record OverHeards</a></li>
+              <li class = "search" id = "bSearch"><input type = "text" placeholder = "Search..." id = "bSearchInput" /></li>
 #if $logged_in
-			  <li><a href = "/auth/logout">Logout</a></li>			 
+			  <li><span class="glyphicon glyphicon-log-out"></span><a href = "/auth/logout">Logout</a></li>			 
 #end if
             </ul>
           </div><!-- End nav-collapse -->
