@@ -9,6 +9,7 @@
 	-o-transition: background-position 1s ease-out 0.3s;
 	-ms-transition: background-position 1s ease-out 0.3s;
 	transition: background-position 1s ease-out 0.3s;
+	color:#ef8405;
 }
 .da-slide{
 	position: absolute;
@@ -17,6 +18,7 @@
 	text-align:center;	
 	top: 0;
 	left: 5%;
+	color:#ef8405;
 }
 .da-slide.text-left{
 	text-align:left;	
@@ -37,19 +39,20 @@
 	position: absolute;
 	opacity: 0;
 	left: 0;
+	color:#ef8405;
 }
 .da-slider-fb .da-slide h2,
 .da-slider-fb .da-slide p,
 .da-slider-fb .da-slide .da-link{
 	left: 0;
 	opacity: 1;
+	color:#ef8405;
 }
 .da-slider-fb .da-slide .da-img{
 	left: 0;
 	opacity: 1;
 }
 .da-slide h2{
-	color: #fff;
 	font-size: 36px;
 	line-height:42px; 
 	width: 100%;
@@ -65,11 +68,9 @@
 .da-slide p{
 	width:100%;
 	top: 60px;
-	color: #fff;
 	height: 80px;
 	overflow: hidden;
 	text-align:center;
-	color:#fff;
 	font-size:18px;
 	line-height: 26px;
 	font-style:italic;

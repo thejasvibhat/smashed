@@ -462,5 +462,11 @@ function setRedirectUrl(a_ele)
 	$(a_ele).attr('href','/auth?redirect_url='+window.location.href);
 	$(a_ele).click();
 }
-		
+	
+function LandingInit()
+{
+	var height = $(window).height();
+	var margin = height / 2 - 140;
+	$('#landingText').css('margin-top',margin+'px');
+}
 

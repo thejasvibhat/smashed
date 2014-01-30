@@ -661,6 +661,11 @@ fieldset[disabled] .btn-default.active {
   border-bottom:3px solid #1e2024;
 }
 
+.btn-group a:hover
+{
+	color:#ef8405 !important;
+}
+
 .btn-dark.disabled,
 .btn-dark[disabled],
 fieldset[disabled] .btn-primary,
