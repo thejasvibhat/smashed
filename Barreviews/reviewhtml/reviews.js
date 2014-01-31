@@ -67,9 +67,10 @@ function ListLatestReviews()
                type: "GET",
                url: "/api/b/list?limit=10&offset=0",
                //url: "/reviews/scenes/listscenes?limit=2&offset=0",
+	       dataType:"xml",
                success: function(response){
-                    theXmlDoc = $.parseXML(response);
-                    var theRow = $(theXmlDoc).find('review').get();
+                    //theXmlDoc = $.parseXML(response);
+                    var theRow = $(response).find('review').get();
                     $(theRow).each(function(i) 
                     {
                         i++;
