@@ -156,9 +156,7 @@ class GetOhList (AuthHandler):
         l_skel = Skel()
         l_skel.title = "Smashed.in :: OverHeards"
         items_per_page = 10
-        offset = 0
-        if pagenum != 1:
-            offset = (pagenum * items_per_page) - 1
+        offset = (pagenum - 1) * items_per_page
 
         #Head
         head_path = os.path.join (os.path.dirname(__file__), 'templates/oh-head.tmpl')
@@ -168,17 +166,15 @@ class GetOhList (AuthHandler):
         path = os.path.join (os.path.dirname (__file__), 'templates/oh-body.tmpl')
         if mode == "gallery":
             meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
-            memes = meme_query.fetch()
         else:
             meme_query = UserMemeDb.query(UserMemeDb.userid == self.user_id).order(-UserMemeDb.date)
-            memes = meme_query.fetch()
+        total_items = meme_query.count()
+        memes = meme_query.fetch (items_per_page, offset=offset)
             
-        totalCount = len(memes)
-
         template_values = {
-            "memes" : memes[offset:offset+items_per_page],
+            "memes" : memes,
             "currentpage" : pagenum,
-            "totalpagecount" : math.ceil(totalCount / items_per_page),
+            "totalpagecount" : math.ceil(total_items / float(items_per_page)),
             "mode" : mode,
             'isLoggedIn': '%s' %self.logged_in
             }
