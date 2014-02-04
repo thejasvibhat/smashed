@@ -1878,3 +1878,9 @@ h3.headingSmall
 	background-position: top left;
 	background-color:none;
 }
+
+.moreOhIndv
+{
+	border-right:1px solid #ddd;
+	margin-bottom:10px;
+}

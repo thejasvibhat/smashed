@@ -67,7 +67,7 @@ function GetRecommendedOh()
 				var icon = $(this).find("icon").text();
 				var ele = $("#ohIndvItem").clone().attr('id','oh-'+i);
 				$(ele).find('img').attr('src',icon);
-				$(ele).find('a').attr('href',url);
+				$(ele).find('a').attr('href',icon);
 				$('#more_oh_container').append(ele);
 				$(ele).fadeIn();
 			});
