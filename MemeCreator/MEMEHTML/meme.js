@@ -364,7 +364,7 @@ function HandleSkelClick(imageSkel,url,id)
 function GetMyUploads(tags)
 {
     $('.itemsCoreMine').empty();
-    var lUrl = "/api/oh/skel-list";
+    var lUrl = "/api/oh/skel-list?limit=1000";
     var data = {};
     data.mode="mine";
     if(tags)
