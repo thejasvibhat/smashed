@@ -21,7 +21,7 @@ class LandingPage (AuthHandler):
             self.redirect('/b')
         else:
             l_skel = Skel()
-            l_skel.title = "Smashed.In :: Stand n Deliver"
+            l_skel.title = "Smashed.In"
 
             #Head
             head_path = os.path.join (os.path.dirname (__file__), 'templates/landing-head.tmpl')
