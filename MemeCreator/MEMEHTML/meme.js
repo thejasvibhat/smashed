@@ -413,7 +413,7 @@ function GetThumbnails(tags)
     GetMyUploads(tags);  
     init = true;
     $('.itemsCore').empty();
-    var lUrl = "/api/oh/skel-list";
+    var lUrl = "/api/oh/skel-list?limit=1000";
     var data = {};
     data.mode="public";
     if(tags)
