@@ -307,7 +307,130 @@ class BSaveHandler (blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
 
         self.redirect('/b/%s' % review.bid)
 
-    
+class GetBarDetails (AuthHandler):
+    def get(self,resource):
+        bid = resource
+        c = {}
+        rating = 0
+        totalReviews = 0
+        snack1 = ""
+        snack2 = ""
+        review_query = ReviewDb.query(ReviewDb.bid == bid)
+        reviews = review_query.fetch(1)
+        self.response.write('<reviews>')
+        for review in reviews:
+            revid = str(review.reviewid)
+            userreview_querry = CommentReviewDb.query(CommentReviewDb.parentid == revid)
+            userreviews = userreview_querry.fetch()
+            for userreview in userreviews:
+                rating += float(userreview.rating.strip())
+                totalReviews = totalReviews + 1
+                snack1 = userreview.snack1
+                snack2 = userreview.snack2
+            rating = rating/totalReviews
+            rating = 0.5 * math.ceil(2.0 * rating)
+            self.response.write('<review>')
+            self.response.write('<name>')
+            self.response.write('%s' %review.name)
+            self.response.write('</name>')
+            self.response.write('<icon1>')
+            self.response.write('/res/download/%s' % review.images[0])
+            self.response.write('</icon1>')
+            self.response.write('<icon2>')
+            self.response.write('/res/download/%s' % review.images[1])
+            self.response.write('</icon2>')
+            self.response.write('<icon3>')
+            self.response.write('/res/download/%s' % review.images[2])
+            self.response.write('</icon3>')
+            self.response.write('<icon4>')
+            self.response.write('/res/download/%s' % review.images[3])
+            self.response.write('</icon4>')
+            self.response.write('<icon5>')
+            self.response.write('/res/download/%s' % review.images[4])
+            self.response.write('</icon5>')
+            self.response.write('<icon6>')
+            self.response.write('/res/download/%s' % review.images[5])
+            self.response.write('</icon6>')
+            self.response.write('<url>')
+            self.response.write('/b/%s' % review.bid)
+            self.response.write('</url>')
+            self.response.write('<phone>')
+            self.response.write('%s' % review.phone)
+            self.response.write('</phone>')
+            self.response.write('<address>')
+            self.response.write('%s' % review.address)
+            self.response.write('</address>')
+            self.response.write('<rating>')
+            self.response.write('%s' % rating)
+            self.response.write('</rating>')
+            self.response.write('<description>')
+            self.response.write('%s' % review.description)
+            self.response.write('</description>')
+            
+            self.response.write('<budget>')
+            self.response.write('%s' % review.o_budget)
+            self.response.write('</budget>')
+			
+            self.response.write('<ac>')
+            self.response.write('%s' % review.o_ac)
+            self.response.write('</ac>')
+			
+            self.response.write('<carpark>')
+            self.response.write('%s' % review.o_carpark)
+            self.response.write('</carpark>')
+			
+            self.response.write('<bigscreen>')
+            self.response.write('%s' % review.o_bigscreen)
+            self.response.write('</bigscreen>')
+			
+            self.response.write('<ladyok>')
+            self.response.write('%s' % review.o_ladyok)
+            self.response.write('</ladyok>')
+			
+            self.response.write('<noisy>')
+            self.response.write('%s' % review.o_fightscene)
+            self.response.write('</noisy>')
+			
+            self.response.write('<musicvideo>')
+            self.response.write('%s' % review.o_musicvideo)
+            self.response.write('</musicvideo>')
+			
+            self.response.write('<clean>')
+            self.response.write('%s' % review.o_clean)
+            self.response.write('</clean>')
+			
+            self.response.write('<smoke>')
+            self.response.write('%s' % review.o_smoke)
+            self.response.write('</smoke>')
+			
+            self.response.write('<happyhours>')
+            self.response.write('%s' % review.o_happyhours)
+            self.response.write('</happyhours>')
+			
+            self.response.write('<cardaccepted>')
+            self.response.write('%s' % review.o_cardaccept)
+            self.response.write('</cardaccepted>')
+			
+            self.response.write('<events>')
+            self.response.write('%s' % review.o_events)
+            self.response.write('</events>')
+			
+            self.response.write('<cardaccepted>')
+            self.response.write('%s' % review.o_cardaccept)
+            self.response.write('</cardaccepted>')
+			
+            self.response.write('<snack1>')
+            self.response.write('%s' % snack1)
+            self.response.write('</snack1>')
+			
+            self.response.write('<snack2>')
+            self.response.write('%s' % snack2)
+            self.response.write('</snack2>')
+	
+            self.response.write('</review>')
+        self.response.write('</reviews>')
+        self.response.headers['Content-Type'] = 'text/xml'
+
 # application = webapp2.WSGIApplication([
 #     ('/reviews/store/uploadreview', MainPageStore),
 #     ('/reviews/store/upload', UploadHandler),

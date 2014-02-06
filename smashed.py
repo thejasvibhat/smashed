@@ -94,6 +94,7 @@ routes = [
   webapp2.Route ('/api/b/update', BSaveUpdateHandler),
   webapp2.Route ('/api/b/ajaxlist', AjaxLocality),
   webapp2.Route ('/api/b/delete', BDeleteHandler),
+  webapp2.Route ('/api/b/<resource>',GetBarDetails),
 
   webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
   webapp2.Route ('/res/icon/<resource>', GetIcon), #OH res download (API/Path)
