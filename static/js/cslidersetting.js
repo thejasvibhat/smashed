@@ -1,7 +1,7 @@
 			$(function() {
 			
 				$('#da-slider').cslider({
-					autoplay	: true,
+					autoplay	: false,
 					bgincrement	: 450
 				});
 			
