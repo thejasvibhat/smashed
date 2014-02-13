@@ -77,6 +77,8 @@ libraries:
   version: latest
 - name: webapp2
   version: latest
+- name: webob
+  version: latest
 
 pagespeed:
    domains_to_rewrite:
