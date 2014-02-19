@@ -66,6 +66,7 @@ routes = [
 
   webapp2.Route ('/api/oh/skel-preupload', SkelPreUploadHandler), #OH lib/skel upload URL creator (API)
   webapp2.Route ('/api/oh/skel-upload', SkelUploadHandler),    #oh lib/skel upload (API)
+  webapp2.Route ('/api/oh/skel-mob-upload', SkelMobileUploadHandler),    #oh lib/skel upload (API)
   webapp2.Route ('/api/oh/skel-list', SkelList), #OH lib/skel list (API)
   webapp2.Route ('/api/oh/comments', ListCommentsOh),
   webapp2.Route ('/api/oh/updatecomment', AddCommentOh),

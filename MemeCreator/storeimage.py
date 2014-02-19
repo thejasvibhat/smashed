@@ -1,8 +1,8 @@
 import webapp2
 import urllib
-
+import re,base64
 from google.appengine.ext import ndb
-
+from google.appengine.api import files
 from google.appengine.api import images
 
 from google.appengine.ext import db
@@ -57,3 +57,37 @@ class SkelUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
     meme.put()
 
     self.response.write ("")
+
+class SkelMobileUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
+  def post(self):
+    mode  = self.request.get('pmode', default_value="public")
+    tags  = self.request.get('tags', default_value="Smashed")
+    try:
+      data = self.request.get('imgdata')
+      data_to_64 = data
+      decoded = data_to_64.decode('base64')
+
+      # Create the file
+      file_name = files.blobstore.create(mime_type='image/png')
+
+      # Open the file and write to it
+      with files.open(file_name, 'a') as f:
+        f.write(decoded)          
+
+      # Finalize the file. Do this before attempting to read it.
+      files.finalize(file_name)
+
+      key = files.blobstore.get_blob_key(file_name)
+      meme = MemeDb(parent=meme_dbkey(MEME_DB_NAME))
+      meme.userid = self.user_id
+      meme.resid = key
+      meme.myid = str(meme.resid)
+      meme.tags = tags.split(",")
+      meme.mode = mode
+      meme.put()
+
+      self.response.write ("")
+
+    except Exception, e:      
+      print e
+

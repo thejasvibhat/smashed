@@ -515,6 +515,8 @@ class SaveHandlerMobile(AuthHandler):
             rrindex = 0
             rcindex = 0
             textindex = 0
+            toptexts = []
+            bottomtexts = []
             for texts in objects:                
                 if texts.tag == "imagebase": 
                     textindex = textindex + 1				
@@ -570,96 +572,102 @@ class SaveHandlerMobile(AuthHandler):
 
                 for child in texts:
                     if child.tag == "toptext":
-                        top = 20 + panelheight*(textindex - 1)
-                        left = 20
-                        width = panelwidth
-                        height = 50
-                        textVal = child.get('text')                        
-                        text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
-                        draw = ImageDraw.Draw(text_img)
-                        font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
-                        #width, height1 = font.getsize(textVal)
-                        apString = '' 
-                        lines = []
-                        for x in range(0, len(textVal)):
-                            tempString = apString
-                            apString = apString + '%s' %textVal[x]                            
-                            width1, height1 = font.getsize(apString)
-                            if width1 >= int(width):
-                                lines.append(tempString)
-                                apString = '%s' %textVal[x]
-                        if apString != '':
-                            lines.append(apString)
-                        #lines = textwrap.wrap(textVal, width = 10)
-                        y_text = 0
-                        for line in lines:
-                            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
-                            width1, height1 = font.getsize(line)
-                            offset = (int(width) - int(width1))/2
-                            draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
-                            draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
-                            draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
-                            draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
-                            draw.text((0+offset, y_text), line, font = font,fill=color)
-                            y_text += height1
-                        #draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
-                
-                        # no write access on GAE
-                        output = StringIO.StringIO()
-                        text_img.save(output, format="png")
-                        text_layer = output.getvalue()
-                        output.close()
-                        textlayers.append(text_layer)
-                        merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
-                                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
-                                                   totalwidth, totalheight)
-                    if child.tag == "bottomtext":
-                        left = 20
-                        top = panelheight*(textindex - 1) + panelheight - 20
-                        width = panelwidth
-                        height = 50
-                        textVal = child.get('text')                        
-                        text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
-                        draw = ImageDraw.Draw(text_img)
-                        font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
-                        #width, height1 = font.getsize(textVal)
-                        apString = '' 
-                        lines = []
-                        for x in range(0, len(textVal)):
-                            tempString = apString
-                            apString = apString + '%s' %textVal[x]                            
-                            width1, height1 = font.getsize(apString)
-                            if width1 >= int(width):
-                                lines.append(tempString)
-                                apString = '%s' %textVal[x]
-                        if apString != '':
-                            lines.append(apString)
-                        #lines = textwrap.wrap(textVal, width = 10)
-                        y_text = 0
-                        for line in lines:
-                            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
-                            width1, height1 = font.getsize(line)
-                            offset = (int(width) - int(width1))/2
-                            draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
-                            draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
-                            draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
-                            draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
-                            draw.text((0+offset, y_text), line, font = font,fill=color)
-                            y_text += height1
-                        #draw.text((0, 0), textVal, font=ImageFont.truetype(GetFontName(family,style,weight),int(size)),fill=color)
-                
-                        # no write access on GAE
-                        output = StringIO.StringIO()
-                        text_img.save(output, format="png")
-                        text_layer = output.getvalue()
-                        output.close()
-                        textlayers.append(text_layer)
-                        merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
-                                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
-                                                   totalwidth, totalheight)    
+                        toptexts.append(child.get('text'))
                         
-        #merged = images.crop(merged,float(selectionx),float(selectiony),
-        #                     float(selectionwidth),float(selectionheight))
+                    if child.tag == "bottomtext":
+                        bottomtexts.append(child.get('text'))
+
+        textindex = 1   
+        for bottomtext in bottomtexts:
+            top = panelheight*(textindex - 1) + panelheight - 60
+            left = 20
+            textindex = textindex + 1
+            logging.info("%stoptext" %top)
+            width = panelwidth
+            height = 50
+            textVal = bottomtext                       
+            text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(text_img)
+            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+            apString = '' 
+            lines = []
+            for x in range(0, len(textVal)):
+                tempString = apString
+                apString = apString + '%s' %textVal[x]                            
+                width1, height1 = font.getsize(apString)
+                if width1 >= int(width):
+                    lines.append(tempString)
+                    apString = '%s' %textVal[x]
+            if apString != '':
+                lines.append(apString)
+        #lines = textwrap.wrap(textVal, width = 10)
+            y_text = 0
+            for line in lines:
+                font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+                width1, height1 = font.getsize(line)
+                offset = (int(width) - int(width1))/2
+                draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((0+offset, y_text), line, font = font,fill=color)
+                y_text += height1
+
+        # no write access on GAE
+            output = StringIO.StringIO()
+            text_img.save(output, format="png")
+            text_layer = output.getvalue()
+            output.close()
+            textlayers.append(text_layer)
+            merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
+                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
+                                   totalwidth, totalheight)  
+
+        textindex = 1   
+        for toptext in toptexts:
+            top = 20 + panelheight*(textindex - 1)
+            left = 20
+            textindex = textindex + 1
+            logging.info("%stoptext" %top)
+            width = panelwidth
+            height = 50
+            textVal = toptext                      
+            text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(text_img)
+            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+            apString = '' 
+            lines = []
+            for x in range(0, len(textVal)):
+                tempString = apString
+                apString = apString + '%s' %textVal[x]                            
+                width1, height1 = font.getsize(apString)
+                if width1 >= int(width):
+                    lines.append(tempString)
+                    apString = '%s' %textVal[x]
+            if apString != '':
+                lines.append(apString)
+        #lines = textwrap.wrap(textVal, width = 10)
+            y_text = 0
+            for line in lines:
+                font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+                width1, height1 = font.getsize(line)
+                offset = (int(width) - int(width1))/2
+                draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((0+offset, y_text), line, font = font,fill=color)
+                y_text += height1
+
+        # no write access on GAE
+            output = StringIO.StringIO()
+            text_img.save(output, format="png")
+            text_layer = output.getvalue()
+            output.close()
+            textlayers.append(text_layer)
+            merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
+                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
+                                   totalwidth, totalheight)                 
         merged = images.crop(merged,float(0),float(0),
                              1.0,1.0)
         
@@ -675,15 +683,15 @@ class SaveHandlerMobile(AuthHandler):
 
         # Get my latest posts
         # Post a photo of a parrot
-        if smashedmisc.is_production () == True:
-            urlfetch.set_default_fetch_deadline(45)
-            postid = graph.post(
-                           path = '/431907476935431/photos',
-                           message = 'Created from smashed.in. Go to www.smashed.in/oh/record and record what you heard!',
-                           url = 'http://www.smashed.in/res/download/%s' % blob_key
-                           )
+        #if smashedmisc.is_production () == True:
+        #    urlfetch.set_default_fetch_deadline(45)
+        #    postid = graph.post(
+        #                   path = '/431907476935431/photos',
+        #                   message = 'Created from smashed.in. Go to www.smashed.in/oh/record and record what you heard!',
+        #                   url = 'http://www.smashed.in/res/download/%s' % blob_key
+        #                   )
             #logging.info('theju/%s' % postid['id'])
-            UpdateFacebookId (memeid,postid['id'])
+        #    UpdateFacebookId (memeid,postid['id'])
 
         self.response.write ('%s' % memeid)
         #self.redirect('/meme/store/memeview/%s' %memeid)
