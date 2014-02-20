@@ -683,15 +683,16 @@ class SaveHandlerMobile(AuthHandler):
 
         # Get my latest posts
         # Post a photo of a parrot
-        #if smashedmisc.is_production () == True:
-        #    urlfetch.set_default_fetch_deadline(45)
-        #    postid = graph.post(
-        #                   path = '/431907476935431/photos',
-        #                   message = 'Created from smashed.in. Go to www.smashed.in/oh/record and record what you heard!',
-        #                   url = 'http://www.smashed.in/res/download/%s' % blob_key
-        #                   )
+        if mode == "gallery":
+            if smashedmisc.is_production () == True:
+                urlfetch.set_default_fetch_deadline(45)
+                postid = graph.post(
+                               path = '/431907476935431/photos',
+                               message = 'Created from smashed.in. Go to www.smashed.in/oh/record and record what you heard!',
+                               url = 'http://www.smashed.in/res/download/%s' % blob_key
+                               )
             #logging.info('theju/%s' % postid['id'])
-        #    UpdateFacebookId (memeid,postid['id'])
+                UpdateFacebookId (memeid,postid['id'])
 
         self.response.write ('%s' % memeid)
         #self.redirect('/meme/store/memeview/%s' %memeid)

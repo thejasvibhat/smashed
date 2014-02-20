@@ -86,7 +86,7 @@ class SkelMobileUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHan
       meme.mode = mode
       meme.put()
 
-      self.response.write ("")
+      self.response.write ("%s" %meme.myid)
 
     except Exception, e:      
       print e
