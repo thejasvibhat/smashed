@@ -65,13 +65,21 @@ def UpdateFacebookId(resid,postid):
 class ListMeme(AuthHandler):
     def get(self):
         tag = self.request.get('tag',default_value="auto")  
+        mode = self.request.get('mode',default_value="gallery")
         tags = tag.split(',')
-        if tag == "auto":
-            meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
+        if mode == "gallery":
+            if tag == "auto":
+                meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
+            else:
+                meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
+                meme_query = meme_query.filter(UserMemeDb.tags.IN(tags));
         else:
-            meme_query = UserMemeDb.query(UserMemeDb.mode == 'gallery').order(-UserMemeDb.date)
-            meme_query = meme_query.filter(UserMemeDb.tags.IN(tags));
-        
+            if tag == "auto":
+                meme_query = UserMemeDb.query(UserMemeDb.userid == self.user_id).order(-UserMemeDb.date)
+            else:
+                meme_query = UserMemeDb.query(UserMemeDb.userid == self.user_id).order(-UserMemeDb.date)
+                meme_query = meme_query.filter(UserMemeDb.tags.IN(tags));
+
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
         memes = meme_query.fetch(oLimit,offset=oOffset)
