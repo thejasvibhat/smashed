@@ -18,7 +18,7 @@
 	text-align:center;	
 	top: 0;
 	left: 5%;
-	color:#ef8405;
+	color:#ffffff;/*#ef8405;*/
 }
 .da-slide.text-left{
 	text-align:left;	
@@ -39,14 +39,14 @@
 	position: absolute;
 	opacity: 0;
 	left: 0;
-	color:#ef8405;
+	color:#fff;/*#ef8405;*/
 }
 .da-slider-fb .da-slide h2,
 .da-slider-fb .da-slide p,
 .da-slider-fb .da-slide .da-link{
 	left: 0;
 	opacity: 1;
-	color:#ef8405;
+	color:#fff;/*#ef8405;*/
 }
 .da-slider-fb .da-slide .da-img{
 	left: 0;

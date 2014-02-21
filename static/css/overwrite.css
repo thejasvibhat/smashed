@@ -211,7 +211,7 @@ Navbar
   height: 70px;
   padding:0;
   margin-bottom: 0;
-  background-color: #2f343a;
+  background:url(/static/skin/img/blackorchid.png) repeat;
   border-bottom:5px solid #252525;
   border-radius: 0;
   width:100%;
