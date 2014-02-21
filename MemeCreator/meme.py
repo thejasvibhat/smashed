@@ -98,6 +98,7 @@ class ListMeme(AuthHandler):
 
             meme.icon_url = images.get_serving_url (meme.blobid, 500)
             meme.thumburl = images.get_serving_url (meme.blobid, 200)
+            meme.downloadurl = images.get_serving_url (meme.blobid)
                 
         path = os.path.join(os.path.dirname(__file__), 'templates/listmeme.tmpl')
         tclass = Template.compile (file = path)
