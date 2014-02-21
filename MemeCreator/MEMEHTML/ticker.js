@@ -6,8 +6,7 @@ setInterval(function() {
         crossDomain: true,
         
     }).done(function ( data ) {
-       // alert(data);
-	   theXmlDoc = $.parseXML(data);
+	   theXmlDoc = data;
 	   var theRow = $(theXmlDoc).find('ts').text();
 	   if(m_strCurTimeStamp == "")
 			m_strCurTimeStamp = theRow;

@@ -93,9 +93,8 @@ function ListLatestOh()
     $.ajax({
                type: "GET",
                url: "/api/oh/list?limit=10&offset=0",
-               //url: "/reviews/scenes/listscenes?limit=2&offset=0",
                success: function(response){
-                    theXmlDoc = $.parseXML(response);
+                    theXmlDoc = response;
                     var theRow = $(theXmlDoc).find('meme').get();
                    
                     $(theRow).each(function(i) 

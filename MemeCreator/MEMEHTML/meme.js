@@ -903,24 +903,21 @@ function GetTickerInit()
         crossDomain: true,
         
     }).done(function ( data ) {
-       // alert(data);
-	   theXmlDoc = $.parseXML(data);
-	   var theRow = $(theXmlDoc).find('meme').get();
-	  $(theRow).each(function(i) 
-	  {
-	   	var klon = $("#tickItem" );
-	   	var container = $('#tickerContainer');
-	   	var oClone = klon.clone();
-	   	$(oClone).find('#ticks').attr('href',$(this).find('url').text());
-       	$(oClone).find('#creatorname').html($(this).find('creatorname').text());
-	   	$(oClone).find('#creatoravatar').attr('src',$(this).find('creatoravatar').text());
-        $(oClone).find('#ticktext').html($(this).find('ticktext').text());
-	   	$(container).prepend('<div class = "separator"></div>');
-	   	$(container).prepend(oClone);
-	   	$(oClone).show();
-	  });
+	theXmlDoc = data;
+	var theRow = $(theXmlDoc).find('meme').get();
+	$(theRow).each(function(i) {
+	    var klon = $("#tickItem" );
+	    var container = $('#tickerContainer');
+	    var oClone = klon.clone();
+	    $(oClone).find('#ticks').attr('href',$(this).find('url').text());
+       	    $(oClone).find('#creatorname').html($(this).find('creatorname').text());
+	    $(oClone).find('#creatoravatar').attr('src',$(this).find('creatoravatar').text());
+            $(oClone).find('#ticktext').html($(this).find('ticktext').text());
+	    $(container).prepend('<div class = "separator"></div>');
+	    $(container).prepend(oClone);
+	    $(oClone).show();
+	});
     });
-    
 }
 
 function GetTickerLatest()
@@ -931,8 +928,7 @@ function GetTickerLatest()
         crossDomain: true,
         
     }).done(function ( data ) {
-       // alert(data);
-	   theXmlDoc = $.parseXML(data);
+	   theXmlDoc = data;
 	   var theRow = $(theXmlDoc).find('ts').text();
 	   if(m_strCurTimeStamp == "")
 			m_strCurTimeStamp = theRow;

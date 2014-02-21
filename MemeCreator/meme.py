@@ -83,39 +83,29 @@ class ListMeme(AuthHandler):
         oLimit = int(self.request.get("limit", default_value="10"))
         oOffset = int(self.request.get("offset", default_value="0"))
         memes = meme_query.fetch(oLimit,offset=oOffset)
-        self.response.write('<memes>')
+
         for meme in memes:
-            l_auth = auth.get_auth()
-            userData = l_auth.store.user_model.get_by_id (meme.userid)
-            #logging.info(userData)
-            tickText = ' Created an Overheard'
+            meme.tickText = ' Created an Overheard'
             if self.logged_in == True:
                 if meme.bid != "":
-                    tickText = ' Overheard something in %s' %GetBarName(meme.bid)
-            self.response.write('<meme>')
-            self.response.write('<ts>')
-            self.response.write('%s' %meme.date)
-            self.response.write('</ts>')			
-            self.response.write('<icon>')
-            self.response.write('/res/icon/%s' %meme.blobid)
-            self.response.write('</icon>')
-            self.response.write('<url>')
-            self.response.write('/oh/%s' %meme.resid)
-            self.response.write('</url>')
-            self.response.write('<ticktext>')
-            self.response.write('%s' %tickText)
-            self.response.write('</ticktext>')
-            
-            self.response.write('<creatorname>')
-            self.response.write('%s' %userData.name)
-            self.response.write('</creatorname>')
+                    meme.tickText = ' Overheard something in %s' %GetBarName(meme.bid)
 
-            self.response.write('<creatoravatar>')
-            self.response.write('%s' %userData.avatar_url)
-            self.response.write('</creatoravatar>')
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id (meme.userid)
 
-            self.response.write('</meme>')
-        self.response.write('</memes>')
+            meme.username = userData.name
+            meme.useravatar = userData.avatar_url
+
+            meme.icon_url = images.get_serving_url (meme.blobid, 500)
+            meme.thumburl = images.get_serving_url (meme.blobid, 200)
+                
+        path = os.path.join(os.path.dirname(__file__), 'templates/listmeme.tmpl')
+        tclass = Template.compile (file = path)
+        template_values = {"memes" : memes}
+
+        self.response.headers['Content-Type'] = 'text/xml'
+        self.response.write (tclass (searchList=template_values))
+
             
 class GetMeme(blobstore_handlers.BlobstoreDownloadHandler):
     def get(self, resource):

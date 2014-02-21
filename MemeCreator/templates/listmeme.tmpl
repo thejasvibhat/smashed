@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<memes>
+#for $meme in $memes
+    <meme>
+      <id>${meme.resid}</id>
+      <ts>${meme.date}</ts>
+      <icon>${meme.icon_url}</icon>
+      <thumburl>${meme.thumburl}</thumburl>
+      <url>/oh/${meme.resid}</url>
+      <ticktext>${meme.tickText}</ticktext>
+      <creatorname>${meme.username}</creatorname>
+      <creatoravatar>${meme.useravatar}</creatoravatar>
+    </meme>
+#end for
+</memes>

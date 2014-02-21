@@ -58,7 +58,7 @@ function GetRecommendedOh()
 	   url: "/api/oh/list",
 	   data:data,
 	   success: function(response){
-			theXmlDoc = $.parseXML(response);
+			theXmlDoc = response;
 			var theRow = $(theXmlDoc).find('meme').get();
 			$(theRow).each(function(i)
 			{
