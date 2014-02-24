@@ -55,6 +55,22 @@ def SaveFinalMeme(userid,file_name,tags,bid,mode):
     usermeme.put();
     return usermeme.resid;
 
+def SaveMobileFinalMeme(userid,file_name,tags,fsbid,mode):
+    usermeme = UserMemeDb(parent=user_meme_dbkey(USER_MEME_DB_NAME))
+    usermeme.resid = str(uuid.uuid4()) 
+    usermeme.blobid = file_name
+    usermeme.userid = userid
+    usermeme.shareid = ''
+    usermeme.tags = tags
+    usermeme.fsbid = fsbid
+    usermeme.fsbool = "true"
+    usermeme.mode = mode
+    usermeme.commentid = CreateComment({}, 'init', userid)
+    usermeme.put();
+    return usermeme.resid;
+
+
+
 def UpdateFacebookId(resid,postid):
     meme_query = UserMemeDb.query(UserMemeDb.resid == resid)
     memes = meme_query.fetch(1)
@@ -286,7 +302,42 @@ class ListBarOverheards(AuthHandler):
             self.response.write('</meme>')
         self.response.write('</memes>')
             
+class ListFsBarOverheards(AuthHandler):
+    def get (self):
+        fsbid = self.request.get ("fsbid");
+        meme_query = UserMemeDb.query(UserMemeDb.fsbid == fsbid)
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
+        memes = meme_query.fetch(oLimit,offset=oOffset)
+        self.response.write('<memes>')
+        for meme in memes:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id (meme.userid)
+            #logging.info(userData)
+            self.response.write('<meme>')
+            self.response.write('<ts>')
+            self.response.write('%s' %meme.date)
+            self.response.write('</ts>')			
+            self.response.write('<icon>')
+            self.response.write('/res/icon/%s' %meme.blobid)
+            self.response.write('</icon>')
+            self.response.write('<url>')
+            self.response.write('/oh/%s' %meme.resid)
+            self.response.write('</url>')
             
+            self.response.write('<creatorname>')
+            self.response.write('%s' %userData.name)
+            self.response.write('</creatorname>')
+
+            self.response.write('<creatoravatar>')
+            self.response.write('%s' %userData.avatar_url)
+            self.response.write('</creatoravatar>')
+
+            self.response.write('</meme>')
+        self.response.write('</memes>')         
+            
+
+        
 class SaveHandler(AuthHandler):
     def post(self):
         userId = self.user_id
@@ -471,6 +522,7 @@ class SaveHandlerMobile(AuthHandler):
         userId = self.user_id
         root = ET.fromstring(self.request.get('data'))
         mode = self.request.get('mode',default_value="gallery")
+        fsbid = self.request.get('fsbid',default_value="")
         remove_namespace(root,"http://www.w3.org/1999/xhtml")
         imgId = ''
         family = 'Impact'
@@ -676,7 +728,8 @@ class SaveHandlerMobile(AuthHandler):
             f.write(merged)
         files.finalize(file_name)     
         blob_key = files.blobstore.get_blob_key(file_name)           
-        memeid = SaveFinalMeme(userId,blob_key,tags,bid,mode)
+        #memeid = SaveFinalMeme(userId,blob_key,tags,bid,mode)
+        memeid = SaveMobileFinalMeme(userId,blob_key,tags,fsbid,mode)
         oauth_access_token = secrets.GetAccessToken() 
         graph = GraphAPI(oauth_access_token)
 

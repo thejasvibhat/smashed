@@ -41,6 +41,8 @@ class UserMemeDb(ndb.Model):
     tags    = ndb.StringProperty(repeated=True)
     mode = ndb.StringProperty()
     bid = ndb.StringProperty()
+    fsbid = ndb.StringProperty(default="")
+    fsbool = ndb.StringProperty(default="false")
 
 class SkelUploadHandler(blobstore_handlers.BlobstoreUploadHandler, AuthHandler):
   def post(self):

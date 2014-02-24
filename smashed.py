@@ -90,6 +90,7 @@ routes = [
   webapp2.Route ('/api/b/list', ListScenesHandler),
   webapp2.Route ('/api/b/comments', ListComments),
   webapp2.Route ('/api/b/overheards', ListBarOverheards),
+  webapp2.Route ('/api/b/fsoverheards', ListFsBarOverheards),
   webapp2.Route ('/api/b/updatecomment', AddComment),
   webapp2.Route ('/api/b/updateusercomment', UpdateComment),
   webapp2.Route ('/api/b/upload', BSaveHandler),
