@@ -746,7 +746,7 @@ class SaveHandlerMobile(AuthHandler):
             #logging.info('theju/%s' % postid['id'])
                 UpdateFacebookId (memeid,postid['id'])
 
-        self.response.write ('%s' % memeid)
+        self.response.write ('%s' % blob_key)
         #self.redirect('/meme/store/memeview/%s' %memeid)
     
 def GetFontName(oFamily,oStyle,oWeight):

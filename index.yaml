@@ -23,6 +23,11 @@ indexes:
 
 - kind: CommentReviewDb
   properties:
+  - name: fsbid
+  - name: date
+
+- kind: CommentReviewDb
+  properties:
   - name: parentid
   - name: date
     direction: desc

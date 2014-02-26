@@ -25,11 +25,21 @@ class CommentReviewDb(ndb.Model):
     parentid = ndb.StringProperty()
     review = ndb.StringProperty()
     rating = ndb.StringProperty()
+    fsbid = ndb.StringProperty()
+    fsbool = ndb.StringProperty(default="false")
     snack1 = ndb.StringProperty()
     snack2 = ndb.StringProperty()
     date = ndb.DateTimeProperty(auto_now_add=True)
     
-
+def CreateFsReview (reviewDict,parentid,userid):
+    review = CommentReviewDb(parent=review_dbkey(REVIEW_DB_NAME))
+    review.userid = userid
+    review.reviewid = str(uuid.uuid4())
+    review.fsbid = parentid
+    review.review = reviewDict.get('description')
+    review.rating = reviewDict.get('rating')
+    review.put()
+    return str(review.reviewid)
     
 def CreateReview (reviewDict,parentid,userid):
     review = CommentReviewDb(parent=review_dbkey(REVIEW_DB_NAME))
@@ -65,5 +75,10 @@ class AddComment (AuthHandler):
     def get(self):
         commentid = CreateReview(self.request, self.request.get('reviewid'), self.user_id)
         storereview.UpdateReviewRating(self.request.get('rating'),self.request.get('reviewid'))
+        self.response.write('%s' %commentid) 
+    
+class AddFsComment (AuthHandler):
+    def get(self):
+        commentid = CreateFsReview(self.request, self.request.get('fsbid'), self.user_id)
         self.response.write('%s' %commentid)     
         
