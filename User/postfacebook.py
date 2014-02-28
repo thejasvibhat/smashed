@@ -1,16 +1,27 @@
 import webapp2
 from User.handlers import AuthHandler
+from google.appengine.api import urlfetch
+import json
 from facepy import GraphAPI
 import handlers
 import logging
 import datetime
 class PostFacebook(AuthHandler):
   def get(self, provider):
-    logging.info(self.request.headers.get('Cookie'))
-    oauth_access_token = self.request.get("access_token")
-    graph = GraphAPI(oauth_access_token)
-    user_about_me = graph.get("/me")
-    on_signin(self,user_about_me,'',provider)
+    if provider == "google":
+        oauth_access_token = self.request.get("access_token")
+        url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=%s" %oauth_access_token
+        logging.info("theju %s"%url)
+        result = urlfetch.fetch(url)
+        if result.status_code == 200:
+            d = json.loads(result.content)
+            on_signin(self,d,'',provider)
+    else:
+        logging.info(self.request.headers.get('Cookie'))
+        oauth_access_token = self.request.get("access_token")
+        graph = GraphAPI(oauth_access_token)
+        user_about_me = graph.get("/me")
+        on_signin(self,user_about_me,'',provider)
     
 def on_signin(self, data, auth_info, provider):
     """Callback whenever a new or existing user is logging in.
