@@ -27,6 +27,7 @@ from Barreviews.review import SceneHandler
 from Barreviews.review import ReviewHandler
 from Barreviews.listreviews import ListComments
 from Barreviews.listreviews import ListFsComments
+from Barreviews.listreviews import ListPromoLatestFsComments
 from Barreviews.listreviews import AjaxLocality
 
 
@@ -93,6 +94,7 @@ routes = [
   webapp2.Route ('/api/b/fscomments', ListFsComments),
   webapp2.Route ('/api/b/overheards', ListBarOverheards),
   webapp2.Route ('/api/b/fsoverheards', ListFsBarOverheards),
+  webapp2.Route ('/api/b/fslatestcomments', ListPromoLatestFsComments),
   webapp2.Route ('/api/b/updatecomment', AddComment),
   webapp2.Route ('/api/b/updatefscomment', AddFsComment),
   webapp2.Route ('/api/b/updateusercomment', UpdateComment),

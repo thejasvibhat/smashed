@@ -90,6 +90,29 @@ class ListComments(AuthHandler):
         finalDict['reviews'] = allReviewsDict
         self.response.write(json.dumps(finalDict))
 
+class ListPromoLatestFsComments(AuthHandler):
+    def get (self):
+        userreview_querry = CommentReviewDb.query(ancestor=ndb.Key('bars_db_review','bars_db_review')).order(-CommentReviewDb.date)
+        oLimit = int(self.request.get("limit", default_value="10"))
+        oOffset = int(self.request.get("offset", default_value="0"))
+        userreviews = userreview_querry.fetch(oLimit,offset=oOffset)
+        finalDict = {}
+        reviewsDict = {}
+        allReviewsDict = []
+        for userreview in userreviews:
+            l_auth = auth.get_auth()
+            userData = l_auth.store.user_model.get_by_id(userreview.userid)
+            reviewsDict = {}
+            reviewsDict['rating'] = userreview.rating
+            reviewsDict['review'] = userreview.review
+            reviewsDict['barname'] = userreview.fsname
+            reviewsDict['username'] = userData.name
+            reviewsDict['avatar'] = userData.avatar_url
+            allReviewsDict.append(reviewsDict)
+        
+        finalDict['reviews'] = allReviewsDict
+        self.response.write(json.dumps(finalDict))
+
 class ListFsComments(AuthHandler):
     def get (self):
         resource = self.request.get ("fsbid");
