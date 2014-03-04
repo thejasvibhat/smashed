@@ -22,19 +22,19 @@ indexes:
   - name: date
 
 - kind: CommentReviewDb
-  ancestor: yes
   properties:
+  - name: parentid
+  - name: date
+
+- kind: CommentReviewDb
+  properties:
+  - name: parentid
   - name: date
     direction: desc
 
 - kind: CommentReviewDb
+  ancestor: yes
   properties:
-  - name: parentid
-  - name: date
-
-- kind: CommentReviewDb
-  properties:
-  - name: parentid
   - name: date
     direction: desc
 

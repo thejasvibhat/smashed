@@ -78,7 +78,13 @@ def on_signin(self, data, auth_info, provider):
     expires_date = datetime.datetime.utcnow() + datetime.timedelta(365)
     expires_str = expires_date.strftime("%d %b %Y %H:%M:%S GMT")
 #    self.response.headers.add_header("Expires", expires_str)
-    self.response.set_cookie('faceboologin', 'theju', expires=expires_date, path='/', domain='smashed.in')
-    self.response.write("<html><body>")
-    self.response.write("<p>Welcome to the Internet!</p>")
-    self.response.write("</body></html>")
+    reviewsDict = {}
+    #l_auth = self.auth.get_auth()
+    userData = user#l_auth.store.user_model.get_by_id(userreview.userid)
+    reviewsDict['username'] = userData.name
+    reviewsDict['avatar'] = userData.avatar_url
+    self.response.write(json.dumps(reviewsDict))
+#    self.response.set_cookie('faceboologin', 'theju', expires=expires_date, path='/', domain='smashed.in')
+#    self.response.write("<html><body>")
+#    self.response.write("<p>Welcome to the Internet!</p>")
+#    self.response.write("</body></html>")

@@ -106,7 +106,7 @@ class ListPromoLatestFsComments(AuthHandler):
             reviewsDict['rating'] = userreview.rating
             reviewsDict['review'] = userreview.review
             reviewsDict['barname'] = userreview.fsname
-            reviewsDict['username'] = userData.name
+            reviewsDict['username'] = userreview.username
             reviewsDict['avatar'] = userData.avatar_url
             allReviewsDict.append(reviewsDict)
         

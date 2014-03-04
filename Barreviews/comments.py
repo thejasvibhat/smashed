@@ -27,6 +27,7 @@ class CommentReviewDb(ndb.Model):
     rating = ndb.StringProperty()
     fsbid = ndb.StringProperty()
     fsname = ndb.StringProperty()
+    username = ndb.StringProperty()
     fsbool = ndb.StringProperty(default="false")
     snack1 = ndb.StringProperty()
     snack2 = ndb.StringProperty()
@@ -38,6 +39,7 @@ def CreateFsReview (reviewDict,parentid,userid):
     review.reviewid = str(uuid.uuid4())
     review.fsbid = parentid
     review.fsname = reviewDict.get('name')
+    review.username = reviewDict.get('username')
     review.review = reviewDict.get('description')
     review.rating = reviewDict.get('rating')
     review.put()
