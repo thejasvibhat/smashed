@@ -20,6 +20,7 @@ indexes:
   properties:
   - name: fsbid
   - name: date
+    direction: desc
 
 - kind: CommentReviewDb
   properties:
