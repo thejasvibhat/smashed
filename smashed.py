@@ -12,7 +12,9 @@ from Cheetah.Template import Template
 from User.handlers import AuthHandler
 from User.user import User
 from secrets import secrets
-
+from guru import XmppHandler
+from gcm import GcMStart,GcmRegister
+from guru import XmppPresenceHandler
 from MemeCreator.creatememe import *
 
 from MemeCreator.storeimage import *
@@ -102,6 +104,8 @@ routes = [
   webapp2.Route ('/api/b/update', BSaveUpdateHandler),
   webapp2.Route ('/api/b/ajaxlist', AjaxLocality),
   webapp2.Route ('/api/b/delete', BDeleteHandler),
+  webapp2.Route ('/api/b/gcm/register', GcmRegister),
+  webapp2.Route ('/api/b/gcm', GcMStart),
   webapp2.Route ('/api/b/<resource>',GetBarDetails),
 
   webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
@@ -109,6 +113,8 @@ routes = [
   webapp2.Route ('/gettoken', BaseRequestHandler), 
   webapp2.Route ('/storelocality', PushLocality), 
   webapp2.Route ('/migrate', MigrationOH), 
+  webapp2.Route ('/_ah/xmpp/message/chat/', XmppHandler),
+  webapp2.Route ('/_ah/xmpp/presence/(available|unavailable)/', XmppPresenceHandler),
 ]
 
 # webapp2 config

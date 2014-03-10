@@ -70,6 +70,10 @@ handlers:
   script: smashed.application
 
 
+inbound_services:
+- xmpp_message
+- xmpp_presence
+
 libraries:
 - name: PIL
   version: latest
