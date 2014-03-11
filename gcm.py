@@ -1,5 +1,5 @@
 import webapp2
-import sys, json, random,xmpp, string
+import sys, json, random, string
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 import logging
@@ -24,6 +24,7 @@ class GcmData(ndb.Model):
 class GcMStart(AuthHandler):
     def get(self):
         bid = self.request.get("bid")
+        bname = self.request.get("bname")
         regid = self.request.get("regid")
         message = self.request.get("message")
         userDetails = self.current_user
@@ -52,7 +53,7 @@ class GcMStart(AuthHandler):
         logging.info("%s" %registration_ids)
 
 	Bodyfields = {
-	      "data": {"live":message,"username":userDetails.name},
+	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname},
 	      "registration_ids": registration_ids
 	     }
 	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
