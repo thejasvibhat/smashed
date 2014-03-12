@@ -38,8 +38,8 @@ class GcMStart(AuthHandler):
             messages = push.messages
             usernames = push.usernames
             if len(messages) > 10:
-                messages.pop()
-                usernames.pop()
+                del messages[-1]
+                del usernames[-1]
                 messages.append(message)
                 usernames.append(userDetails.name)
                 push.messages = messages
