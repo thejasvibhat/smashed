@@ -132,7 +132,7 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
       user.populate(**_attrs)
       user.put()
       self.auth.set_session(
-        self.auth.store.user_to_dict(user))
+        self.auth.store.user_to_dict(user), remember=True)
       
     else:
       # check whether there's a user currently logged in
@@ -154,7 +154,7 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
         logging.info('Creating a brand new user')
         ok, user = self.auth.store.user_model.create_user(auth_id, **_attrs)
         if ok:
-          self.auth.set_session(self.auth.store.user_to_dict(user))
+          self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
 
     # Remember auth data during redirect, just for this demo. You wouldn't
     # normally do this.

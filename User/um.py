@@ -87,7 +87,8 @@ app_config = {
   },
   'webapp2_extras.auth': {
     'user_attributes': [],
-    'user_model' : User
+    'user_model' : User,
+    'token_max_age': 86400 * 365 * 4
   }
 }
 
