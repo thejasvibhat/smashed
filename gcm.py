@@ -37,6 +37,12 @@ class GcMStart(AuthHandler):
             for regs in push.regid:
                 if regs != regid:
                     registration_ids.append(regs)
+                else:
+                    exists = True
+            if exists == False:
+                push.regid.append(regid)
+                push.put()
+
             messages = push.messages
             usernames = push.usernames
             atplaces = push.atplaces
