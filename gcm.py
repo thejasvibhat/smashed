@@ -20,6 +20,7 @@ class GcmData(ndb.Model):
     regid = ndb.StringProperty(repeated=True)
     messages = ndb.StringProperty(repeated=True)
     usernames = ndb.StringProperty(repeated=True)
+    atplaces = ndb.StringProperty(repeated=True)
 
 class GcMStart(AuthHandler):
     def get(self):
@@ -27,6 +28,7 @@ class GcMStart(AuthHandler):
         bname = self.request.get("bname")
         regid = self.request.get("regid")
         message = self.request.get("message")
+        atplace = self.request.get("atplace")
         userDetails = self.current_user
         push_query = GcmData.query(GcmData.bid == bid)	
         pushes = push_query.fetch(1) 
@@ -37,23 +39,28 @@ class GcMStart(AuthHandler):
                     registration_ids.append(regs)
             messages = push.messages
             usernames = push.usernames
-            if len(messages) > 10:
+            atplaces = push.atplaces
+            if len(messages) > 20:
                 del messages[-1]
                 del usernames[-1]
+                del atplaces[-1]
                 messages.append(message)
                 usernames.append(userDetails.name)
+                atplaces.append(atplace)
                 push.messages = messages
                 push.usernames = usernames
+                push.atplaces = atplaces
                 push.put()
             else:
                 push.messages.append(message)
                 push.usernames.append(userDetails.name)
+                push.atplaces.append(atplace)
                 push.put()
 
         logging.info("%s" %registration_ids)
 
 	Bodyfields = {
-	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname},
+	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname,"atplace":atplace},
 	      "registration_ids": registration_ids
 	     }
 	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
@@ -95,6 +102,7 @@ class GcmRegister(webapp2.RequestHandler):
                 messageDict = {}
                 messageDict['message'] = message
                 messageDict['username'] = push.usernames[i]
+                messageDict['atplace'] = push.atplaces[i]
                 i = i + 1
                 allmessages.append(messageDict)
         finalDict['messages'] = allmessages
