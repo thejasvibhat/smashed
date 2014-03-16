@@ -21,6 +21,7 @@ class GcmData(ndb.Model):
     messages = ndb.StringProperty(repeated=True)
     usernames = ndb.StringProperty(repeated=True)
     atplaces = ndb.StringProperty(repeated=True)
+    userids = ndb.IntegerProperty(repeated=True)
 
 class GcMStart(AuthHandler):
     def get(self):
@@ -29,6 +30,7 @@ class GcMStart(AuthHandler):
         regid = self.request.get("regid")
         message = self.request.get("message")
         atplace = self.request.get("atplace")
+        userid = self.user_id
         userDetails = self.current_user
         push_query = GcmData.query(GcmData.bid == bid)	
         pushes = push_query.fetch(1) 
@@ -46,21 +48,26 @@ class GcMStart(AuthHandler):
             messages = push.messages
             usernames = push.usernames
             atplaces = push.atplaces
+            userids = push.userids
             if len(messages) > 20:
                 del messages[-1]
                 del usernames[-1]
                 del atplaces[-1]
+                del userids[-1]
                 messages.append(message)
                 usernames.append(userDetails.name)
                 atplaces.append(atplace)
+                userids.append(userid)
                 push.messages = messages
                 push.usernames = usernames
                 push.atplaces = atplaces
+                push.userids = userids
                 push.put()
             else:
                 push.messages.append(message)
                 push.usernames.append(userDetails.name)
                 push.atplaces.append(atplace)
+                push.userids.append(userid)
                 push.put()
 
         logging.info("%s" %registration_ids)
@@ -75,7 +82,7 @@ class GcMStart(AuthHandler):
 		        headers={'Content-Type': 'application/json','Authorization': 'key=AIzaSyBNnXeISW8-KfETBKE-r0ASytx4WyC6NTk'})
         self.response.out.write('Server response, status: ' + result.content )
   
-class GcmRegister(webapp2.RequestHandler):
+class GcmRegister(AuthHandler):
     def get(self):
         regid = self.request.get("regid");
         bid = self.request.get("bid")    
@@ -109,6 +116,10 @@ class GcmRegister(webapp2.RequestHandler):
                 messageDict['message'] = message
                 messageDict['username'] = push.usernames[i]
                 messageDict['atplace'] = push.atplaces[i]
+                if push.userids[i] == self.user_id:
+                    messageDict['self'] = 'true'
+                else:
+                    messageDict['self'] = 'false'
                 i = i + 1
                 allmessages.append(messageDict)
         finalDict['messages'] = allmessages
