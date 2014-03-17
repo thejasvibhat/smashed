@@ -20,10 +20,16 @@ class Permission (ndb.Model):
     #     if obj is not None:
     #         if obj.addBar == True:
     #             obj.editBar = True
-            
+
+class Instants (ndb.Model):
+    gcm_bids = ndb.StringProperty (repeated=True)
+    gcm_reg = ndb.StringProperty ()
+    gcm_lastseen = ndb.DateTimeProperty ()
+
 class User(Webapp2User):
     usertype = ndb.StringProperty (repeated=True)
     hasPermission = ndb.StructuredProperty (Permission)
+    instants = ndb.StructuredProperty (Instants)
 
     @classmethod
     def _post_get_hook(cls, key, future):

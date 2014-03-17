@@ -17,14 +17,15 @@ def push_dbkey(push_dbname="push_db"):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('push_db', "push_db")
 
+class InstantMesg (ndb.Model):
+    message = ndb.StringProperty(index=False)
+    atplace = ndb.StringProperty(index=False)
+    userid = ndb.IntegerProperty(index=False)
+    timestamps = ndb.DateTimeProperty(index=False)
+
 class GcmData(ndb.Model):
-    bid    = ndb.StringProperty()
-    regid = ndb.StringProperty(repeated=True)
-    messages = ndb.StringProperty(repeated=True)
-    usernames = ndb.StringProperty(repeated=True)
-    atplaces = ndb.StringProperty(repeated=True)
-    userids = ndb.IntegerProperty(repeated=True)
-    timestamps = ndb.DateTimeProperty(repeated=True)
+    bid  = ndb.StringProperty()
+    instants = ndb.StructuredProperty (InstantMesg, repeated=True)
 
 class GcMStart(AuthHandler):
     def get(self):
