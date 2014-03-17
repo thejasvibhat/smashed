@@ -23,8 +23,8 @@ class Permission (ndb.Model):
 
 class Instants (ndb.Model):
     gcm_bids = ndb.StringProperty (repeated=True)
-    gcm_reg = ndb.StringProperty ()
-    gcm_lastseen = ndb.DateTimeProperty ()
+    gcm_regid = ndb.StringProperty ()
+    gcm_lastseen = ndb.DateTimeProperty (auto_now_add=True)
 
 class User(Webapp2User):
     usertype = ndb.StringProperty (repeated=True)

@@ -3,9 +3,11 @@ import datetime
 import calendar
 import sys, json, random, string
 from google.appengine.api import urlfetch
+from webapp2_extras import auth, sessions
 from google.appengine.ext import ndb
 import logging
 from User.handlers import AuthHandler	
+from User.user import Instants,User
 SERVER = 'gcm.googleapis.com'
 PORT = 5235
 USERNAME = "849208174002"
@@ -18,10 +20,10 @@ def push_dbkey(push_dbname="push_db"):
     return ndb.Key('push_db', "push_db")
 
 class InstantMesg (ndb.Model):
-    message = ndb.StringProperty(index=False)
-    atplace = ndb.StringProperty(index=False)
-    userid = ndb.IntegerProperty(index=False)
-    timestamps = ndb.DateTimeProperty(index=False)
+    message = ndb.StringProperty(indexed=False)
+    atplace = ndb.StringProperty(indexed=False)
+    userid = ndb.IntegerProperty(indexed=False)
+    timestamp = ndb.DateTimeProperty(indexed=False)
 
 class GcmData(ndb.Model):
     bid  = ndb.StringProperty()
@@ -41,47 +43,26 @@ class GcMStart(AuthHandler):
         pushes = push_query.fetch(1) 
         registration_ids = []
         for push in pushes:
-            for regs in push.regid:
-                if regs != regid:
-                    registration_ids.append(regs)
-                else:
-                    exists = True
-            if exists == False:
-                push.regid.append(regid)
-                push.put()
+            instants = push.instants            
+            if len(instants) > 20:
+                del instants[-1]
+            instant = InstantMesg(message = message,atplace = atplace,userid=self.user_id,timestamp = timestamp)
+            instants.append(instant)
+            push.instants = instants
+            push.put()
 
-            messages = push.messages
-            usernames = push.usernames
-            atplaces = push.atplaces
-            userids = push.userids
-            timestamps = push.timestamps
-            if len(messages) > 20:
-                del messages[-1]
-                del usernames[-1]
-                del atplaces[-1]
-                del userids[-1]
-                del timestamps[-1]
-                messages.append(message)
-                usernames.append(userDetails.name)
-                atplaces.append(atplace)
-                userids.append(userid)
-                timestamps.append(timestamp)
-                push.messages = messages
-                push.usernames = usernames
-                push.atplaces = atplaces
-                push.userids = userids
-                push.timestamps = timestamps
-                push.put()
-            else:
-                push.messages.append(message)
-                push.usernames.append(userDetails.name)
-                push.atplaces.append(atplace)
-                push.userids.append(userid)
-                push.timestamps.append(timestamp)
-                push.put()
         secs = calendar.timegm(timestamp.timetuple())
+        
+#querry databse for registration ids
+        user_query = User.query(User.instants.gcm_bids == bid)
+        users = user_query.fetch() 	
+        for user in users:
+            if user.key.id() != self.user_id:
+                registration_ids.append(user.instants.gcm_regid)
         logging.info("%s" %registration_ids)
-
+	if len(registration_ids) == 0:
+            self.response.write("")
+            return
 	Bodyfields = {
 	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname,"atplace":atplace,"timestamp":secs},
 	      "registration_ids": registration_ids
@@ -95,45 +76,48 @@ class GcMStart(AuthHandler):
 class GcmRegister(AuthHandler):
     def get(self):
         regid = self.request.get("regid");
-        bid = self.request.get("bid")    
+        bid = self.request.get("bid") 
+        userid = self.user_id
+        if self.current_user.instants == None:
+            self.current_user.instants = Instants(gcm_bids = [""],gcm_regid = "")
+            self.current_user.put() 
+        self.current_user.instants.gcm_regid = regid
+        exists = False; 
+        for sbid in self.current_user.instants.gcm_bids:
+            if sbid == bid:
+                exists = True
+        if exists == False:
+            self.current_user.instants.gcm_bids.append(bid)
+        self.current_user.put() 
+
         push_query = GcmData.query(GcmData.bid == bid)	
         pushes = push_query.fetch(1) 
-        exists = False; 
-        bidexists = False;
 
-        for push in pushes:
-            bidexists = True
-            for regs in push.regid:
-                if regs == regid:                    
-                    exists = True
-            
-        if exists == False:
-            if bidexists == True:
-                for push in pushes:
-                    push.regid.append(regid)
-                    push.put()
-            else:
-                pushdb = GcmData(parent=push_dbkey("push_db"))
-                pushdb.regid.append(regid)
-                pushdb.bid = bid
-                pushdb.put()      
         finalDict = {}
         allmessages = []
+        bidExists = False;
         for push in pushes:
             i = 0
-            for message in push.messages:
+            bidExists = True
+            for instant in push.instants:
                 messageDict = {}
-                messageDict['message'] = message
-                messageDict['username'] = push.usernames[i]
-                messageDict['atplace'] = push.atplaces[i]
-                secs = calendar.timegm(push.timestamps[i].timetuple())
+                messageDict['message'] = instant.message
+                l_auth = auth.get_auth()
+                userData = l_auth.store.user_model.get_by_id(push.instants[i].userid)
+                messageDict['username'] = userData.name
+                messageDict['atplace'] = push.instants[i].atplace
+                secs = calendar.timegm(push.instants[i].timestamp.timetuple())
                 messageDict['timestamp'] = secs
-                if push.userids[i] == self.user_id:
+                if push.instants[i].userid == self.user_id:
                     messageDict['self'] = 'true'
                 else:
                     messageDict['self'] = 'false'
                 i = i + 1
                 allmessages.append(messageDict)
         finalDict['messages'] = allmessages
+        if bidExists == False:
+            pushdb = GcmData(parent=push_dbkey("push_db"))
+            pushdb.bid = bid
+            pushdb.put()    
         self.response.write(json.dumps(finalDict))	        
 
