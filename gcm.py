@@ -1,4 +1,6 @@
 import webapp2
+import datetime
+import calendar
 import sys, json, random, string
 from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
@@ -22,6 +24,7 @@ class GcmData(ndb.Model):
     usernames = ndb.StringProperty(repeated=True)
     atplaces = ndb.StringProperty(repeated=True)
     userids = ndb.IntegerProperty(repeated=True)
+    timestamps = ndb.DateTimeProperty(repeated=True)
 
 class GcMStart(AuthHandler):
     def get(self):
@@ -30,6 +33,7 @@ class GcMStart(AuthHandler):
         regid = self.request.get("regid")
         message = self.request.get("message")
         atplace = self.request.get("atplace")
+        timestamp = datetime.datetime.now()
         userid = self.user_id
         userDetails = self.current_user
         push_query = GcmData.query(GcmData.bid == bid)	
@@ -49,31 +53,36 @@ class GcMStart(AuthHandler):
             usernames = push.usernames
             atplaces = push.atplaces
             userids = push.userids
+            timestamps = push.timestamps
             if len(messages) > 20:
                 del messages[-1]
                 del usernames[-1]
                 del atplaces[-1]
                 del userids[-1]
+                del timestamps[-1]
                 messages.append(message)
                 usernames.append(userDetails.name)
                 atplaces.append(atplace)
                 userids.append(userid)
+                timestamps.append(timestamp)
                 push.messages = messages
                 push.usernames = usernames
                 push.atplaces = atplaces
                 push.userids = userids
+                push.timestamps = timestamps
                 push.put()
             else:
                 push.messages.append(message)
                 push.usernames.append(userDetails.name)
                 push.atplaces.append(atplace)
                 push.userids.append(userid)
+                push.timestamps.append(timestamp)
                 push.put()
-
+        secs = calendar.timegm(timestamp.timetuple())
         logging.info("%s" %registration_ids)
 
 	Bodyfields = {
-	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname,"atplace":atplace},
+	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname,"atplace":atplace,"timestamp":secs},
 	      "registration_ids": registration_ids
 	     }
 	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
@@ -116,6 +125,8 @@ class GcmRegister(AuthHandler):
                 messageDict['message'] = message
                 messageDict['username'] = push.usernames[i]
                 messageDict['atplace'] = push.atplaces[i]
+                secs = calendar.timegm(push.timestamps[i].timetuple())
+                messageDict['timestamp'] = secs
                 if push.userids[i] == self.user_id:
                     messageDict['self'] = 'true'
                 else:
