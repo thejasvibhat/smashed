@@ -3,7 +3,7 @@
   <div class = "col-lg-12 whiteCanvas">
     <h3>Write a review. Help others to put a scene</h3>
     <div class = "sep"></div>
-    <form id = "uploadReviewForm" action="$upload_url" method="POST" enctype="multipart/form-data" >
+    <form class = "go-right" id = "uploadReviewForm" action="$upload_url" method="POST" enctype="multipart/form-data" >
       <div class = "row">
 	<div class = "col-lg-12">
 	  <h4>Images</h4>
@@ -35,12 +35,14 @@
 	    Basic details. Won't take too long :)
 	  </div>
 	</div>
-	<div class = "col-lg-4">
-	  <input type = "text" name = "name" class = "form-control validate[required]" placeholder = "Bar Name" />
+	<div class = "col-lg-4 positionRelative">
+	  <input id = "name" type = "text" required name = "name" class = "form-control validate[required]">
+	   <label for="name">Bar Name</label>
 	</div>
 	
-	<div class = "col-lg-4">
-	  <input type = "text" name = "phone" class = "form-control" placeholder = "Phone" />
+	<div class = "col-lg-4 positionRelative">
+	  <input id = "phone" type = "text" required name = "phone" class = "form-control">
+	   <label for="phone">Phone</label>
 	</div>
 	<div class = "col-lg-4">
 	  <input id = "rating" type = "text" name = "rating" class = "form-control" value = "1"/>
@@ -49,7 +51,7 @@
 	
 	<div class = "col-lg-12">
 		<div class = "col-lg-6 paddingNone">
-			<input placeholder = "Addres..." name = "address" placeholder = "Area" class = "form-control validate[required]" id="addresspicker_map" />
+			<input placeholder = "Addres..." name = "address" class = "form-control validate[required]" id="addresspicker_map" />
 			<div class = "marginTopFive"></div>
 			<input placeholder = "Locality..." name = "locality" class = "form-control" id="locality" />
 			<div class = "marginTopFive"></div>
@@ -130,13 +132,13 @@
 	</div>
 	
 	<div class = "col-lg-6">
-	  <div><textarea class = "validate[required]" name = "description" placeholder = "General details about the place..." wrap = "none" style = "width:100%;" ></textarea>
+	  <div><textarea id = "description" class = "validate[required]" name = "description" wrap = "none" style = "width:100%;" ></textarea>
 	  </div>
 	  <div class = "marginTopFive">
-	    <input type = "text" name = "favsnack1" placeholder = "Favorite Snack 1" />
+	    <input type = "text" class = "form-control" name = "favsnack1" placeholder = "Favorite Snack 1" />
 	  </div>					
 	  <div class = "marginTopFive">
-	    <input type = "text" name = "favsnack2" placeholder = "Favorite Snack 2" />
+	    <input type = "text" class = "form-control" name = "favsnack2" placeholder = "Favorite Snack 2" />
 	  </div>
 	</div>
 	

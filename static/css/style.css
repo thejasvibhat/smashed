@@ -37,12 +37,14 @@ CSS structure
 
 ============================================================== */
 
+
 @font-face
 {
   font-family: rockwell;
   src: url('/assets/Rockwell.ttf'),
   url('/assets/Rockwell.eot'); /* IE9 */
 }
+
 
 @font-face
 {
@@ -362,7 +364,7 @@ ul#gallery-list-memes li {
     margin:10px 0 10px 0;
     color:#666666;
     font-size:20px;
-	font-family:"rockwell",helvetica;
+	font-family:"Kite One",sherif;
 }
 
 .img-title h6{
@@ -979,9 +981,26 @@ Error page
 Heading
 ======================================= */
 .heading{
-	text-transform:uppercase;
-	font-size:62px;
-	line-height:72px;
+	font-family: 'Kite One', sans-serif;
+	color:#666;
+	margin-top:20px;
+}
+
+.heading h1
+{
+	font-family: 'Kite One', sans-serif;
+	color:#666;
+	font-size:40px !important;
+}
+
+.sub h3
+{
+	display:inline-block;
+	font-family: 'Kite One', sans-serif;
+	color:#666;
+	font-size:22px;
+	margin-left:25px;
+
 }
 
 /*
@@ -1194,7 +1213,7 @@ Ui to top
 	  font-size: 14px;
 	  color: #fff;
 	  border-radius: 0;
-	  font-family:"rockwell",helvetica;
+	  font-family:"Kite One",sherif;
 	  font-style:italic;
 	  font-weight:bold;
 	  height:65px;
@@ -1211,15 +1230,12 @@ Custom responsive
 ======================================= */
 @media (min-width: 1200px) {
 	.navbar-nav > li > a {
-	 padding:10px 5px 10px 5px;
+	  
 	  margin:0;
-	  font-size: 16px;
-	  line-height: 50px;
+	  font-size: 14px;
 	  color: #fff;
 	  border-radius: 0;
-	  font-family:"Open Sans",helvetica;
-	  font-style:italic;
-	  font-weight:bold;
+	  font-family:"Kite One",sherif;
 	  display:inline-block;
 	}
 	.location{
@@ -1465,7 +1481,7 @@ ul#review-list-main li {
 
 .gridDetailContainer h3
 {
-    font-family:"rockwell",helvetica;
+    font-family:"Kite One",sherif;
     font-size:20px;
     line-height:normal;
 }
@@ -1499,7 +1515,7 @@ gridGoogleMapContainer
 
 .labelBig
 {
-    font-family:'rockwell',helvetica;
+    font-family:"Kite One",sherif;
     font-size:22px;
     color:#707070;
     padding:5px;
@@ -1536,7 +1552,7 @@ gridGoogleMapContainer
 
 .footer h3
 {
-    font-family:"rockwell",helvetica;
+    font-family:"Kite One",sherif;
     font-size:30px;
     text-transform:uppercase;
 }
@@ -1547,7 +1563,7 @@ gridGoogleMapContainer
     box-shadow:1px 1px 2px #ddd;
     -webkit-box-shadow:1px 1px 2px #ddd;
     padding:10px;
-    font-family:'rockwell',helvetica;
+    font-family:"Kite One",sherif;
     font-size:22px;
     color:#777;
 }
@@ -1583,10 +1599,13 @@ gridGoogleMapContainer
     -webkit-box-shadow:1px 1px 2px #ddd;
 }
 
+
 .whiteCanvas h3,.whiteCanvas h4
 {
-    font-family:"rockwell",helvetica;
+    font-family:"Kite One",sherif !important;
     color:#666;
+    text-transform:none !important;
+    font-weight:normal !important;
 }
 
 .paddingNone
@@ -1702,7 +1721,7 @@ li
 
 .rockwellTextBig
 {
-	font-family:'rockwell',helvetica;
+	font-family:"Kite One",sherif;
 	color:#666;
 	font-size:20px;
 }
@@ -1715,6 +1734,15 @@ li
 .alignCenter
 {
 	text-align:center;
+}
+
+.alignLeft
+{
+	text-align:left;
+}
+.alignRight
+{
+	text-align:right;
 }
 
 .marginRightTwenty
@@ -1769,7 +1797,8 @@ li
 
 .nav-highlight
 {
-	color:#ef8405 !important;
+	color:#fff !important;
+	text-decoration:underline;
 }
 
 .bEditWrapper
@@ -1823,7 +1852,7 @@ li
 
 h3.headingSmall
 {
-	font-family:"rockwell",helvetica;
+	font-family:"Kite One",sherif;
 	line-height:20px;
 	color:#666;
 	font-size:22px;
@@ -1916,4 +1945,132 @@ h3.headingSmall
 	width:100%;
 	top:0;
 	height:100%;
+}
+
+#uploadReviewForm > div {
+  position: relative;
+  overflow: hidden;
+}
+#uploadReviewForm input[type="text"], #uploadReviewForm textarea {
+  width: 100%;
+  background: none;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  outline: 0;
+}
+#uploadReviewForm input:valid, #uploadReviewForm textarea:valid {
+  background: white;
+}
+#uploadReviewForm input:focus, #uploadReviewForm textarea:focus {
+  
+}
+#uploadReviewForm input:focus + label, #uploadReviewForm textarea:focus + label {
+  background: #f06d06;
+  color: white;
+  font-size: 70%;
+  padding: 1px 1px;
+  height:30px;
+  z-index: 2;
+  text-transform: uppercase;
+  margin-left:-16px;
+  width:30%;
+  text-align:center;
+ 
+  
+}
+#uploadReviewForm label {
+  transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+  position: absolute;
+  color: #999;
+  padding: 5px 20px;
+}
+#uploadReviewForm textarea {
+  display: block;
+  resize: vertical;
+}
+
+#uploadReviewForm.go-right label {
+  top: 2px;
+  right: 100%;
+  width: 100%;
+  margin-right: -100%;
+  bottom: 2px;
+}
+#uploadReviewForm.go-right input:focus + label, #uploadReviewForm.go-right textarea:focus + label {
+  right: 0;
+  margin-right: 17px;
+  width: 40%;
+  padding-top: 5px;
+  
+}
+
+.positionRelative
+{
+	position:relative;
+}
+
+.positionAbsolute
+{
+	position:absolute;
+}
+
+#uploadReviewForm input:valid {
+  background: white;
+  
+}
+
+.landingSlide
+{
+	top:0;
+	left:10px;
+}
+
+.googlePlay
+{
+	margin-top:30px;
+}
+
+.greenStripTop
+{
+	background:#689154;
+	width:100%;
+	-webkit-box-shadow:1px 1px 2px #aaa;
+	box-shadow:1px 1px 2px #aaa;
+	margin-bottom:20px;
+}
+
+.greenStripTop a,.greenStripTop a:hover
+{
+	color:#fff;
+	font-family:"Kite One",sherif;
+}
+
+.loginBtn
+{
+	position:relative;
+	right:20px;
+}
+
+.smashedFooter
+{
+	background:#ddd;
+	border-top:1px solid aaa;
+	height:40px;
+	line-height:40px;
+	font-family:"Kite One",sherif;
+	position:fixed;
+	bottom:0;
+	width:100%;
+}
+
+.smashedFooter a,.smashedFooter a:hover
+{
+	color:#707070;
+}
+
+.paddingTopTen
+{
+	padding-top:10px;
 }

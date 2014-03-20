@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Smashed.in">
     <link rel="shortcut icon" href="/ico/favicon.png">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,700,300" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kite+One' rel='stylesheet' type='text/css'>
     <link href="/static/css/bootstrap.css" rel="stylesheet">
     <link href="/static/css/overwrite.css" rel="stylesheet">
     <link href="/static/css/font-awesome.css" rel="stylesheet">
@@ -49,12 +49,11 @@
       <div class="navbar">
         <div class="container">
           <a class="navbar-brand" href="/">
-	    	<img src="/static/img/slogo.png" alt="Smashed.in" width = "120" />
+	    	<img src="/static/img/s-app-icon.png" alt="Smashed.in" height = "40" style = "vertical-align:top;position:relative;top:5px;" />
 	  	  </a>
           <div class="nav-collapse collapse navbar-responsive-collapse">
             <ul class="nav navbar-nav">
               <li><span class="glyphicon glyphicon-home"></span><a id = "nav-home" href="/">Home</a></li>
-              <li><span class="glyphicon glyphicon-glass"></span><a id = "nav-reviews" href="/b">Reviews</a></li>
 #if $getVar("permissionAddBar", 0)
               <li><span class="glyphicon glyphicon-pencil"></span><a id = "nav-review-record" href="/b/record">Write Reviews</a></li>
 #end if
@@ -74,40 +73,32 @@
       $skelbody
     </div>
 
-    <div class = "footer">
-      <div class = "container">
-	<div class = "row">
-          <div class = "col-lg-4">
-            <h3>Quick Links</h3>
-            <ul>
-              <li><a href = "/b">Browse</a></li>
-              <li><a href = "/oh">Latest OverHeards</a></li>
-              <li><a href = "/b/record">Write a Review</a></li>
-              <li><a href = "/oh/record">Record a OverHeard</a></li>
-            </ul>
-          </div>
-          <div class = "col-lg-4">
-            <h3>Core Scenes</h3>
-            <ul>
-              <li><a href = "/pages/terms">Terms of use</a></li>
-              <li><a href = "/pages/privacy">Privacy policy</a></li>
-              <li><a href = "/pages/about">About us</a></li>
-            </ul>
-          </div>
-          <div class = "col-lg-4">
-            <h3>Connect</h3>
-            <a target = "_blank" href = "http://www.facebook.com/esmashedin"><img width = "48" src = "../../reviewhtml/assets/facebook.png" alt = "Facebook" /></a>
-            <a target = "_blank" href = "http://www.twitter.com/esmashedin"><img width = "48" src = "../../reviewhtml/assets/twitter.png" alt = "Twitter" /></a>
-            <a target = "_blank" href = "https://plus.google.com/107384932220592058336"><img width = "42" src = "../../reviewhtml/assets/gplus.png" alt = "Google +" /></a>
-            <div class = "marginTopTen"></div>
-            <span class = "connectNote">If you have any queries,suggestions or just want to say hello, drop us a message at <a href = "mailto:hello@smashed.in">hello@smashed.in</a></span>
-          </div>
-        </div>
-      </div>
-      <div align = "center">
-        Copyright &copy; 2013 Smashed.in. All rights reserved.
-      </div>
-    </div>
+    <div class = "smashedFooter">
+		<div class = "container">
+			<div class = "col-lg-4 row" style = "margin-left:30px;">
+				<div class = "col-lg-2">
+					<a href = "/pages/terms">Terms</a>
+				</div>
+				<div class = "col-lg-2">
+					<a href = "/pages/privacy">Privacy</a>
+				</div>
+			</div>
+			<div class = "col-lg-4">
+					Copyright &copy; 2014 Smashed.In. All rights reserved.
+			</div>
+			<div class = "col-lg-3" style = "margin-left:80px;text-align:right;padding-right:0;">
+				<div class = "col-lg-2">
+					<a href = "http://www.facebook.com/esmashedin" target = "_blank"><img alt = "Connect on Facebook" src = "/static/img/fbsmall.png" /></a>
+				</div>
+				<div class = "col-lg-2">
+					<a href = "http://www.twitter.com/esmashedin" target = "_blank"><img alt = "Follow us on Twitter" src = "/static/img/twittersmall.png" /></a>
+				</div>
+				<div class = "col-lg-2">
+					<a href = "https://plus.google.com/u/0/b/107384932220592058336/+SmashedIn/" target = "_blank"><img alt = "Follow us on Google+" src = "/static/img/gplussmall.png" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
   </body>
 

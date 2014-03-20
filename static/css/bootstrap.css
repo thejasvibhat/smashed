@@ -315,13 +315,13 @@ textarea {
 }
 
 a {
-  color: #EF8405;
+  color: #689154;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #EF8405;
+  color: #689154;
   text-decoration: underline;
 }
 
@@ -2578,7 +2578,7 @@ button.close {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 15px;
+  
 }
 
 .nav > li > a:hover,
@@ -2812,11 +2812,7 @@ button.close {
 }
 
 .navbar-nav > li > a {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  line-height: 50px;
   color: #777777;
-  border-radius: 4px;
 }
 
 .navbar-nav > li > a:hover,

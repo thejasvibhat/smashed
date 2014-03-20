@@ -18,7 +18,7 @@ def call_all(obj, *args, **kwargs):
 class LandingPage (AuthHandler):
     def get(self):
         if self.logged_in:
-            self.redirect('/b')
+            self.redirect('/oh')
         else:
             l_skel = Skel()
             l_skel.title = "Smashed.In"

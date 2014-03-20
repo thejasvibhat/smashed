@@ -465,8 +465,10 @@ function setRedirectUrl(a_ele)
 	
 function LandingInit()
 {
+	/*
 	var height = $(window).height();
 	var margin = height / 2 - 140;
 	$('#landingText').css('margin-top',margin+'px');
+	*/
 }
 
