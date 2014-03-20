@@ -470,5 +470,10 @@ function LandingInit()
 	var margin = height / 2 - 140;
 	$('#landingText').css('margin-top',margin+'px');
 	*/
+	if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+    	if(confirm("Download app?")) {
+        window.location.href= "market://details?id=com.smashedin.smashedin";
+    	}
+	}
 }
 
