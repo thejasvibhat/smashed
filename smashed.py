@@ -74,9 +74,12 @@ routes = [
   webapp2.Route ('/api/oh/skel-list', SkelList), #OH lib/skel list (API)
   webapp2.Route ('/api/oh/comments', ListCommentsOh),
   webapp2.Route ('/api/oh/updatecomment', AddCommentOh),
+  webapp2.Route ('/api/oh/gettaglist', ListTags),
 
   webapp2.Route ('/api/oh/save', SaveHandler), #OH Save (API)
   webapp2.Route ('/api/oh/savemobile', SaveHandlerMobile), #OH Save (API)
+  webapp2.Route ('/api/oh/getohinstant', GetOhInstant), #OH Save (API)
+
   webapp2.Route ('/api/oh/list', ListMeme), #OH List (API), Used for ticker
 
 

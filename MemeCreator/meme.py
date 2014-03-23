@@ -14,7 +14,7 @@ from google.appengine.api import urlfetch
 import StringIO
 import textwrap
 from google.appengine.ext import db
-
+from gcm import UpdateGCM
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from webapp2_extras import auth, sessions
@@ -78,6 +78,26 @@ def UpdateFacebookId(resid,postid):
         meme.shareid = postid
         meme.put();
 	
+def checkExists(tagsArrDict,tag):
+    for tagsDict in tagsArrDict:
+        if tagsDict['tag'] == tag:
+            return True
+    return False
+class ListTags(AuthHandler):
+    def get(self):
+        meme_query = MemeDb.query(MemeDb.mode == 'public').order(-MemeDb.date)    
+        memes = meme_query.fetch()
+        finalDict = {}
+        allTagsDict = []
+        for meme in memes:
+            tagDict = {}
+            for tag in meme.tags:
+                tagDict['tag'] = tag
+                if checkExists(allTagsDict,tag) == False:
+                    allTagsDict.append(tagDict)
+        finalDict['tags'] = allTagsDict
+        self.response.write(json.dumps(finalDict))	
+
 class ListMeme(AuthHandler):
     def get(self):
         tag = self.request.get('tag',default_value="auto")  
@@ -747,6 +767,183 @@ class SaveHandlerMobile(AuthHandler):
                 UpdateFacebookId (memeid,postid['id'])
 
         self.response.write ('%s' % blob_key)
+        #self.redirect('/meme/store/memeview/%s' %memeid)
+
+class GetOhInstant(AuthHandler):
+    def get(self):
+        userId = self.user_id
+        fsbid = self.request.get('fsbid',default_value="")
+        tag = self.request.get('tag')
+        mode = self.request.get('mode')
+        toptext = self.request.get('toptext')
+        bottomtext = self.request.get('bottomtext')
+        tags = tag.split(',')
+        imgId = ''
+        family = 'Impact'
+        size = '34'
+        bid=''
+        color = '#FFFFFF'
+        style = 'normal'
+        weight = 'normal'
+        shadowcolor = "black"
+        top = 20
+        left = 20
+        meme_query = MemeDb.query(MemeDb.mode == 'public').order(-MemeDb.date)
+        meme_query = meme_query.filter(MemeDb.tags.IN(tags));
+        memes = meme_query.fetch(1)
+        imgid = ""
+        for meme in memes:
+            imgid = meme.resid
+        if imgid == "":
+            self.response.write("NOTFOUND")
+            return
+        blob_reader = blobstore.BlobReader(imgid)
+        background = images.Image(blob_reader.read())
+        selectionwidth = 500
+        selectionheight = 500
+        textlayers = []
+        tags = []
+        if 1 == 1:
+            rows = 1
+            columns = 1
+            totalwidth = selectionwidth
+            totalheight = selectionheight
+            panelwidth = selectionwidth
+            panelheight = selectionheight
+            otype = 'normal'
+            woffset = 0
+            hofsset = 0
+            rrindex = 0
+            rcindex = 0
+            textindex = 0
+            toptexts = []
+            bottomtexts = []
+            imgwidth = 500
+            imgheight = 500
+            background.resize(width=int(imgwidth), height=int(imgheight))
+            background.im_feeling_lucky()
+            imgwidth = background.width
+            imgheight = background.height
+            thumbnail = background.execute_transforms(output_encoding=images.JPEG)
+            
+            back_layer = Image.new('RGBA', (totalwidth,totalheight), (204, 204, 204, 100))
+            output = StringIO.StringIO()
+            back_layer.save(output, format="png")
+            back_layer = output.getvalue()
+            output.close()               
+                            #merge
+            merged = images.composite([(back_layer, 0,0, 1.0, images.TOP_LEFT), 
+                                                       (thumbnail, (totalwidth-int(imgwidth))/2, (totalheight - int(imgheight))/2, 1.0, 							images.TOP_LEFT)], 
+                                                       totalwidth, totalheight)
+
+            toptexts.append(toptext)
+            bottomtexts.append(bottomtext)            
+
+        textindex = 1   
+        for bottomtext in bottomtexts:
+            top = panelheight*(textindex - 1) + panelheight - 60
+            left = 20
+            textindex = textindex + 1
+            logging.info("%stoptext" %top)
+            width = panelwidth
+            height = 50
+            textVal = bottomtext                       
+            text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(text_img)
+            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+            apString = '' 
+            lines = []
+            for x in range(0, len(textVal)):
+                tempString = apString
+                apString = apString + '%s' %textVal[x]                            
+                width1, height1 = font.getsize(apString)
+                if width1 >= int(width):
+                    lines.append(tempString)
+                    apString = '%s' %textVal[x]
+            if apString != '':
+                lines.append(apString)
+        #lines = textwrap.wrap(textVal, width = 10)
+            y_text = 0
+            for line in lines:
+                font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+                width1, height1 = font.getsize(line)
+                offset = (int(width) - int(width1))/2
+                draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((0+offset, y_text), line, font = font,fill=color)
+                y_text += height1
+
+        # no write access on GAE
+            output = StringIO.StringIO()
+            text_img.save(output, format="png")
+            text_layer = output.getvalue()
+            output.close()
+            textlayers.append(text_layer)
+            merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
+                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
+                                   totalwidth, totalheight)  
+
+        textindex = 1   
+        for toptext in toptexts:
+            top = 20 + panelheight*(textindex - 1)
+            left = 20
+            textindex = textindex + 1
+            logging.info("%stoptext" %top)
+            width = panelwidth
+            height = 50
+            textVal = toptext                      
+            text_img = Image.new('RGBA', (int(width),int(height)), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(text_img)
+            font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+            apString = '' 
+            lines = []
+            for x in range(0, len(textVal)):
+                tempString = apString
+                apString = apString + '%s' %textVal[x]                            
+                width1, height1 = font.getsize(apString)
+                if width1 >= int(width):
+                    lines.append(tempString)
+                    apString = '%s' %textVal[x]
+            if apString != '':
+                lines.append(apString)
+        #lines = textwrap.wrap(textVal, width = 10)
+            y_text = 0
+            for line in lines:
+                font=ImageFont.truetype(GetFontName(family,style,weight),int(size))
+                width1, height1 = font.getsize(line)
+                offset = (int(width) - int(width1))/2
+                draw.text((-2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text-2), line, font=font, fill=shadowcolor)
+                draw.text((-2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((+2+offset, y_text+2), line, font=font, fill=shadowcolor)
+                draw.text((0+offset, y_text), line, font = font,fill=color)
+                y_text += height1
+
+        # no write access on GAE
+            output = StringIO.StringIO()
+            text_img.save(output, format="png")
+            text_layer = output.getvalue()
+            output.close()
+            textlayers.append(text_layer)
+            merged = images.composite([(merged, 0,0, 1.0, images.TOP_LEFT), 
+                                   (text_layer,  int(float(left)),int(float(top)), 1.0, images.TOP_LEFT)], 
+                                   totalwidth, totalheight)                 
+        merged = images.crop(merged,float(0),float(0),
+                             1.0,1.0)
+        
+        # save
+        file_name = files.blobstore.create(mime_type='image/png')
+        with files.open(file_name, 'a') as f:
+            f.write(merged)
+        files.finalize(file_name)     
+        blob_key = files.blobstore.get_blob_key(file_name)           
+        #memeid = SaveFinalMeme(userId,blob_key,tags,bid,mode)
+        memeid = SaveMobileFinalMeme(userId,blob_key,tags,fsbid,mode)
+        url = images.get_serving_url (blob_key, 500)
+        UpdateGCM(self,'image',url)
+        self.response.write ('%s' % url)
         #self.redirect('/meme/store/memeview/%s' %memeid)
     
 def GetFontName(oFamily,oStyle,oWeight):
