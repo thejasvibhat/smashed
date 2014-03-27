@@ -1,4 +1,5 @@
 import webapp2
+import uuid
 import datetime
 import calendar
 import sys, json, random, string
@@ -19,6 +20,10 @@ def push_dbkey(push_dbname="push_db"):
     """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
     return ndb.Key('push_db', "push_db")
 
+def group_dbkey(group_dbname="group_db"):
+    """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
+    return ndb.Key('group_db', "group_db")
+
 class InstantMesg (ndb.Model):
     message = ndb.StringProperty(indexed=False)
     ohid = ndb.StringProperty()
@@ -29,6 +34,18 @@ class InstantMesg (ndb.Model):
 
 class GcmData(ndb.Model):
     bid  = ndb.StringProperty()
+    instants = ndb.StructuredProperty (InstantMesg, repeated=True)
+
+class FriendsData(ndb.Model):
+    state = ndb.StringProperty()
+    userid = ndb.IntegerProperty()
+
+
+class GroupData(ndb.Model):
+    uniqueid = ndb.StringProperty()
+    bid = ndb.StringProperty()
+    userid = ndb.IntegerProperty()
+    friends = ndb.StructuredProperty(FriendsData,repeated=True)
     instants = ndb.StructuredProperty (InstantMesg, repeated=True)
 
 def UpdateGCM(self,instanttype,ohurl):
@@ -75,11 +92,123 @@ def UpdateGCM(self,instanttype,ohurl):
 	#self.response.out.write('Server response, status: ' + result.content )
         return result
 
+class GroupGcmConfirm(AuthHandler):
+    def get(self):
+        state = self.request.get('state')
+        uniqueid = self.request.get('uniqueid')
+        userid = self.user_id
+        group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
+	groups = group_query.fetch(1) 
+	for group in groups:
+            for friend in group.friends:
+                if friend.userid == userid:
+                    friend.state = state
+            group.put()
+        self.response.write('')
+
+def UpdateGcmGroup(self,instanttype,ohurl):
+	uniqueid = self.request.get("uniqueid")
+	bname = self.request.get("bname")
+	message = self.request.get("message")
+	atplace = self.request.get("atplace")
+        bid = ''        
+	timestamp = datetime.datetime.now()
+	userid = self.user_id
+	userDetails = self.current_user
+	group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
+	groups = group_query.fetch(1) 
+	registration_ids = []
+        frienduserids = []
+	for group in groups:
+            bid = group.bid
+	    instants = group.instants            
+	    if len(instants) > 20:
+		del instants[-1]
+	    instant = InstantMesg(message = message,atplace = atplace,userid=self.user_id,timestamp = timestamp,instanttype = instanttype,ohid = ohurl)
+	    instants.append(instant)
+	    group.instants = instants
+            friends = group.friends
+            for friend in friends:
+                if friend.state == 'in':
+                    frienduserids.append(friend.userid)            
+	    group.put()
+
+	secs = calendar.timegm(timestamp.timetuple())
+
+	#querry databse for registration ids
+	user_query = User.query(User.instants.gcm_bids == bid)
+	users = user_query.fetch() 	
+	for user in users:
+	    if user.key.id() != self.user_id:
+                if user.key.id() in frienduserids:
+                    registration_ids.append(user.instants.gcm_regid)
+	logging.info("%s" %registration_ids)
+	if len(registration_ids) == 0:
+	    self.response.write("")
+	    return
+	Bodyfields = {
+	      "data": {"live":message,"username":userDetails.name,"bid":bid,"bname":bname,"atplace":atplace,"timestamp":secs,"instanttype":instanttype,'ohurl':ohurl,'uniqueid':uniqueid},
+	      "registration_ids": registration_ids
+	     }
+	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
+			payload=json.dumps(Bodyfields),
+			method=urlfetch.POST,
+			headers={'Content-Type': 'application/json','Authorization': 'key=AIzaSyBNnXeISW8-KfETBKE-r0ASytx4WyC6NTk'})
+	#self.response.out.write('Server response, status: ' + result.content )
+        return result
+
+class GroupGcmStart(AuthHandler):
+    def get(self):
+        result = UpdateGcmGroup(self,"text",'')
+        self.response.out.write('Server response, status: ' + result.content )
+        
 class GcMStart(AuthHandler):
     def get(self):
         result = UpdateGCM(self,"text",'')
         self.response.out.write('Server response, status: ' + result.content )
 
+class MyGroupRegister(AuthHandler):
+    def post(self):
+        bid = self.request.get("bid")
+        userStr = self.request.get("users")
+        logging.info('thejjejje %s' %userStr)
+        friends = json.loads(userStr)
+        groupDb = GroupData(parent=group_dbkey("group_db"))
+        groupDb.bid = bid
+        groupDb.uniqueid = str(uuid.uuid4()) 
+        groupDb.userid = self.user_id
+        frienduserids = []        
+        for friend in friends['friends']:
+            uid = friend['userid']
+            frienduserids.append(uid)
+            friendData = FriendsData(state = 'out',userid = uid)
+            groupDb.friends.append(friendData)
+        groupDb.put()
+	#querry databse for registration ids
+	user_query = User.query(User.instants.gcm_bids == bid)
+	users = user_query.fetch() 	
+        registration_ids = []
+	for user in users:
+	    if user.key.id() != self.user_id:
+                if user.key.id() in frienduserids:
+                    registration_ids.append(user.instants.gcm_regid)
+	logging.info("%s" %registration_ids)
+	if len(registration_ids) == 0:
+	    self.response.write("")
+	    return
+	Bodyfields = {
+	      "data": 				{"username":userDetails.name,"bname":bname,"atplace":atplace,"timestamp":secs,"instanttype":'request','uniqueid':uniqueid},
+	      "registration_ids": registration_ids
+	     }
+	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
+			payload=json.dumps(Bodyfields),
+			method=urlfetch.POST,
+			headers={'Content-Type': 'application/json','Authorization': 'key=AIzaSyBNnXeISW8-KfETBKE-r0ASytx4WyC6NTk'})
+	#self.response.out.write('Server response, status: ' + result.content )
+
+        self.response.write('%s' %groupDb.uniqueid)
+        
+        
 class GcmRegister(AuthHandler):
     def get(self):
         regid = self.request.get("regid");

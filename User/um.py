@@ -13,7 +13,7 @@ import logging
 
 from simpleauth import SimpleAuthHandler
 from Cheetah.Template import Template
-from postfacebook import PostFacebook
+from postfacebook import PostFacebook,GetMyFriends
 from user import User
 from secrets import secrets
 from handlers import AuthHandler
@@ -105,6 +105,8 @@ auth_routes = [
                  handler='handlers.AuthHandler:logout', name='logout', strict_slash=True),
   webapp2.Route ('/auth/post/<provider>',
                  handler=PostFacebook, name='auth_login'),
+  webapp2.Route ('/auth/facebook/getfriends',
+                 handler=GetMyFriends, name='auth_friends'),
 
   webapp2.Route ('/auth/<provider>',
                  handler='handlers.AuthHandler:_simple_auth', name='auth_login'),

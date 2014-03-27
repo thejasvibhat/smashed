@@ -23,6 +23,29 @@ class PostFacebook(AuthHandler):
         user_about_me = graph.get("/me")
         on_signin(self,user_about_me,'',provider)
     
+class GetMyFriends(AuthHandler):
+    def get(self):
+        oauth_access_token = self.request.get("access_token")
+        graph = GraphAPI(oauth_access_token)
+        myfriends = graph.get("/me/friends")
+        finalResult = {}
+        allFriends = []
+        for friend in myfriends['data']:
+            auth_id = '%s:%s' % ('facebook', friend['id'])
+            eachDict = {}
+            eachDict['name'] = friend['name']
+            eachDict['avatar'] = ''
+            eachDict['issmashed'] = 'false'
+            eachDict['id'] = friend['id']
+            user = self.auth.store.user_model.get_by_auth_id(auth_id)
+            if user:                
+                eachDict['name'] = user.name
+                eachDict['avatar'] = user.avatar_url
+                eachDict['issmashed'] = 'true'
+                eachDict['id'] = user.key.id()
+            allFriends.append(eachDict)
+        finalResult['friends'] = allFriends
+        self.response.write(json.dumps(finalResult))         
 def on_signin(self, data, auth_info, provider):
     """Callback whenever a new or existing user is logging in.
      data is a user info dictionary.
