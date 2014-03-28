@@ -95,8 +95,17 @@ def UpdateGCM(self,instanttype,ohurl):
 class GroupGcmConfirm(AuthHandler):
     def get(self):
         state = self.request.get('state')
+        regid = self.request.get('regid')
         uniqueid = self.request.get('uniqueid')
         userid = self.user_id
+        self.current_user.instants.gcm_regid = regid
+        exists = False; 
+        for sbid in self.current_user.instants.gcm_bids:
+            if sbid == bid:
+                exists = True
+        if exists == False:
+            self.current_user.instants.gcm_bids.append(bid)
+        self.current_user.put() 
         group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
 	groups = group_query.fetch(1) 
 	for group in groups:
@@ -124,7 +133,7 @@ def UpdateGcmGroup(self,instanttype,ohurl):
 	    instants = group.instants            
 	    if len(instants) > 20:
 		del instants[-1]
-	    instant = InstantMesg(message = message,atplace = atplace,userid=self.user_id,timestamp = timestamp,instanttype = instanttype,ohid = ohurl)
+	    instant = InstantMesg(message = message,atplace = atplace,userid=self.user_id,timestamp = timestamp,instanttype = instanttype,ohid = ohurl,gcmtype='group',uniqueid=uniqueid)
 	    instants.append(instant)
 	    group.instants = instants
             friends = group.friends
@@ -171,12 +180,15 @@ class MyGroupRegister(AuthHandler):
     def post(self):
         bid = self.request.get("bid")
         userStr = self.request.get("users")
+        bname = self.request.get("bname")
         logging.info('thejjejje %s' %userStr)
         friends = json.loads(userStr)
         groupDb = GroupData(parent=group_dbkey("group_db"))
         groupDb.bid = bid
-        groupDb.uniqueid = str(uuid.uuid4()) 
+        uniqueid = str(uuid.uuid4()) 
+        groupDb.uniqueid = uniqueid
         groupDb.userid = self.user_id
+        userDetails = self.current_user
         frienduserids = []        
         for friend in friends['friends']:
             uid = friend['userid']
@@ -197,7 +209,7 @@ class MyGroupRegister(AuthHandler):
 	    self.response.write("")
 	    return
 	Bodyfields = {
-	      "data": 				{"username":userDetails.name,"bname":bname,"atplace":atplace,"timestamp":secs,"instanttype":'request','uniqueid':uniqueid},
+	      "data":{"username":userDetails.name,"bname":bname,"instanttype":'request','uniqueid':uniqueid},
 	      "registration_ids": registration_ids
 	     }
 	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
