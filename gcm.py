@@ -31,7 +31,8 @@ class InstantMesg (ndb.Model):
     atplace = ndb.StringProperty(indexed=False)
     userid = ndb.IntegerProperty(indexed=False)
     timestamp = ndb.DateTimeProperty(indexed=False)
-
+    uniqueid = ndb.StringProperty()
+    gcmtype = ndb.StringProperty()
 class GcmData(ndb.Model):
     bid  = ndb.StringProperty()
     instants = ndb.StructuredProperty (InstantMesg, repeated=True)
@@ -98,6 +99,12 @@ class GroupGcmConfirm(AuthHandler):
         regid = self.request.get('regid')
         uniqueid = self.request.get('uniqueid')
         userid = self.user_id
+	group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
+	groups = group_query.fetch(1) 
+        bid = ''
+	for group in groups:
+            bid = group.bid
+
         self.current_user.instants.gcm_regid = regid
         exists = False; 
         for sbid in self.current_user.instants.gcm_bids:
@@ -107,13 +114,32 @@ class GroupGcmConfirm(AuthHandler):
             self.current_user.instants.gcm_bids.append(bid)
         self.current_user.put() 
         group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
-	groups = group_query.fetch(1) 
+	groups = group_query.fetch(1)
+        finalDict = {}
+        allFriends = [] 
 	for group in groups:
+            eachFriend = {}
+            if group.userid != userid:
+                l_auth = auth.get_auth()
+                userData = l_auth.store.user_model.get_by_id (group.userid)
+                if userData:
+                    eachFriend['name'] = userData.name
+                    eachFriend['avatar'] = userData.avatar_url
+                    allFriends.append(eachFriend)
             for friend in group.friends:
                 if friend.userid == userid:
                     friend.state = state
+                else:
+                    l_auth = auth.get_auth()
+                    userData = l_auth.store.user_model.get_by_id (friend.userid)
+                    if userData:
+                        eachFriend['name'] = userData.name
+                        eachFriend['avatar'] = userData.avatar_url
+                        allFriends.append(eachFriend)
             group.put()
-        self.response.write('')
+        finalDict['friends'] = allFriends
+        finalDict['bid'] = bid
+        self.response.write(json.dumps(finalDict))	        
 
 def UpdateGcmGroup(self,instanttype,ohurl):
 	uniqueid = self.request.get("uniqueid")
@@ -130,6 +156,10 @@ def UpdateGcmGroup(self,instanttype,ohurl):
         frienduserids = []
 	for group in groups:
             bid = group.bid
+            if group.userid != self.user_id:
+                l_auth = auth.get_auth()
+                userData = l_auth.store.user_model.get_by_id (group.userid)
+                registration_ids.append(userData.instants.gcm_regid)                            
 	    instants = group.instants            
 	    if len(instants) > 20:
 		del instants[-1]
@@ -139,18 +169,15 @@ def UpdateGcmGroup(self,instanttype,ohurl):
             friends = group.friends
             for friend in friends:
                 if friend.state == 'in':
-                    frienduserids.append(friend.userid)            
+                    frienduserids.append(friend.userid)
+                    if self.user_id != friend.userid:
+                        l_auth = auth.get_auth()
+                        userData = l_auth.store.user_model.get_by_id (friend.userid)
+                        registration_ids.append(userData.instants.gcm_regid)            
 	    group.put()
 
 	secs = calendar.timegm(timestamp.timetuple())
-
-	#querry databse for registration ids
-	user_query = User.query(User.instants.gcm_bids == bid)
-	users = user_query.fetch() 	
-	for user in users:
-	    if user.key.id() != self.user_id:
-                if user.key.id() in frienduserids:
-                    registration_ids.append(user.instants.gcm_regid)
+	logging.info("%s" %frienduserids)
 	logging.info("%s" %registration_ids)
 	if len(registration_ids) == 0:
 	    self.response.write("")
@@ -190,20 +217,19 @@ class MyGroupRegister(AuthHandler):
         groupDb.userid = self.user_id
         userDetails = self.current_user
         frienduserids = []        
+        registration_ids = []
         for friend in friends['friends']:
             uid = friend['userid']
             frienduserids.append(uid)
+            issmashed = friend['issmashed']
             friendData = FriendsData(state = 'out',userid = uid)
             groupDb.friends.append(friendData)
+            if issmashed == 'true':
+                l_auth = auth.get_auth()
+                userData = l_auth.store.user_model.get_by_id (uid)
+                registration_ids.append(userData.instants.gcm_regid)
         groupDb.put()
 	#querry databse for registration ids
-	user_query = User.query(User.instants.gcm_bids == bid)
-	users = user_query.fetch() 	
-        registration_ids = []
-	for user in users:
-	    if user.key.id() != self.user_id:
-                if user.key.id() in frienduserids:
-                    registration_ids.append(user.instants.gcm_regid)
 	logging.info("%s" %registration_ids)
 	if len(registration_ids) == 0:
 	    self.response.write("")

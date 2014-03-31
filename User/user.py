@@ -3,7 +3,7 @@
 
 from google.appengine.ext import ndb
 from webapp2_extras.appengine.auth.models import User as Webapp2User
-
+import logging
 #Move this to acl.py if it grows
 class Permission (ndb.Model):
     addBar = ndb.BooleanProperty(default=False, required=True)
@@ -34,7 +34,9 @@ class User(Webapp2User):
     @classmethod
     def _post_get_hook(cls, key, future):
         obj = future.get_result()
-        if obj.hasPermission is None:
+        if obj is None:
+            logging.info('No user found')
+        elif obj.hasPermission is None:
             obj.hasPermission = Permission()
         else:
             if obj.hasPermission.addBar == True:
