@@ -40,11 +40,12 @@ class GcmData(ndb.Model):
 class FriendsData(ndb.Model):
     state = ndb.StringProperty()
     userid = ndb.IntegerProperty()
-
+    issmashed = ndb.StringProperty()
 
 class GroupData(ndb.Model):
     uniqueid = ndb.StringProperty()
-    bid = ndb.StringProperty()
+    bid = ndb.StringProperty() 
+    bname = ndb.StringProperty()
     userid = ndb.IntegerProperty()
     friends = ndb.StructuredProperty(FriendsData,repeated=True)
     instants = ndb.StructuredProperty (InstantMesg, repeated=True)
@@ -93,6 +94,91 @@ def UpdateGCM(self,instanttype,ohurl):
 	#self.response.out.write('Server response, status: ' + result.content )
         return result
 
+class ExitGroup(AuthHandler):
+    def get(self):
+        uniqueid = self.request.get('uniqueid')
+	group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
+	groups = group_query.fetch(1) 
+        delsuccess = False
+        uid = self.user_id
+	for group in groups:
+            for friend in group.friends:
+                if friend.userid == uid:
+                    friend.state = "out"
+                    group.put()
+                    delsuccess = True
+        if delsuccess == True:
+             self.response.write('success')
+        else:
+             self.response.write('failure')
+
+
+class DeleteGroup(AuthHandler):
+    def get(self):
+        uniqueid = self.request.get('uniqueid')
+        userid = self.user_id
+	group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
+	groups = group_query.fetch(1) 
+        delsuccess = False
+        registration_ids = []
+	for group in groups:
+            if group.userid == userid:
+                for friend in group.friends:
+                    uid = friend.userid
+                    if friend.state == 'in':
+                        l_auth = auth.get_auth()
+                        userData = l_auth.store.user_model.get_by_id (uid)
+                        registration_ids.append(userData.instants.gcm_regid)
+                group.key.delete()
+                delsuccess = True
+	if len(registration_ids) != 0:
+	    Bodyfields = {
+	      "data":{"instanttype":'delete','uniqueid':uniqueid},
+	      "registration_ids": registration_ids
+	     }
+            result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
+			payload=json.dumps(Bodyfields),
+			method=urlfetch.POST,
+			headers={'Content-Type': 'application/json','Authorization': 'key=AIzaSyBNnXeISW8-KfETBKE-r0ASytx4WyC6NTk'})
+        if delsuccess == True:
+             self.response.write('success')
+        else:
+             self.response.write('failure')
+
+class ResendRequests(AuthHandler):
+    def get(self):
+        uniqueid = self.request.get('uniqueid')
+        userDetails = self.current_user
+	group_query = GroupData.query(GroupData.uniqueid == uniqueid)	
+	groups = group_query.fetch(1) 
+        registration_ids = []
+	for group in groups:
+            bid = group.bid
+            bname = group.bname
+            for friend in group.friends:
+                uid = friend.userid
+                if friend.issmashed == 'true':
+                    l_auth = auth.get_auth()
+                    userData = l_auth.store.user_model.get_by_id (uid)
+                    registration_ids.append(userData.instants.gcm_regid)
+
+	#querry databse for registration ids
+	logging.info("%s" %registration_ids)
+	if len(registration_ids) == 0:
+	    self.response.write("")
+	    return
+	Bodyfields = {
+	      "data":{"username":userDetails.name,"bname":bname,"instanttype":'request','uniqueid':uniqueid},
+	      "registration_ids": registration_ids
+	     }
+	result = urlfetch.fetch(url="https://android.googleapis.com/gcm/send",
+			payload=json.dumps(Bodyfields),
+			method=urlfetch.POST,
+			headers={'Content-Type': 'application/json','Authorization': 'key=AIzaSyBNnXeISW8-KfETBKE-r0ASytx4WyC6NTk'})
+	#self.response.out.write('Server response, status: ' + result.content )
+
+        self.response.write('%s' %uniqueid)
+        
 class GroupGcmConfirm(AuthHandler):
     def get(self):
         state = self.request.get('state')
@@ -212,6 +298,7 @@ class MyGroupRegister(AuthHandler):
         friends = json.loads(userStr)
         groupDb = GroupData(parent=group_dbkey("group_db"))
         groupDb.bid = bid
+        groupDb.bname = bname
         uniqueid = str(uuid.uuid4()) 
         groupDb.uniqueid = uniqueid
         groupDb.userid = self.user_id
@@ -222,7 +309,7 @@ class MyGroupRegister(AuthHandler):
             uid = friend['userid']
             frienduserids.append(uid)
             issmashed = friend['issmashed']
-            friendData = FriendsData(state = 'out',userid = uid)
+            friendData = FriendsData(state = 'out',userid = uid,issmashed = issmashed)
             groupDb.friends.append(friendData)
             if issmashed == 'true':
                 l_auth = auth.get_auth()

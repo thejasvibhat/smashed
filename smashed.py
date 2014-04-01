@@ -13,7 +13,7 @@ from User.handlers import AuthHandler
 from User.user import User
 from secrets import secrets
 from guru import XmppHandler
-from gcm import GcMStart,GcmRegister,GroupGcmStart,GroupGcmConfirm,MyGroupRegister
+from gcm import GcMStart,GcmRegister,GroupGcmStart,GroupGcmConfirm,MyGroupRegister,DeleteGroup,ExitGroup,ResendRequests
 from guru import XmppPresenceHandler
 from MemeCreator.creatememe import *
 
@@ -112,6 +112,9 @@ routes = [
   webapp2.Route ('/api/b/gcm/groupregister', MyGroupRegister),
   webapp2.Route ('/api/b/gcm/groupconfirm', GroupGcmConfirm),
   webapp2.Route ('/api/b/gcm/group', GroupGcmStart),
+  webapp2.Route ('/api/b/gcm/groupdelete', DeleteGroup),
+  webapp2.Route ('/api/b/gcm/groupexit', ExitGroup),
+  webapp2.Route ('/api/b/gcm/groupresend', ResendRequests),
   webapp2.Route ('/api/b/<resource>',GetBarDetails),
 
   webapp2.Route ('/res/download/<resource>', GetRes), #OH res download (API/Path)
