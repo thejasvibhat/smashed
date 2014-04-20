@@ -319,7 +319,7 @@ class MyGroupRegister(AuthHandler):
 	#querry databse for registration ids
 	logging.info("%s" %registration_ids)
 	if len(registration_ids) == 0:
-	    self.response.write("")
+	    self.response.write('%s' %uniqueid)
 	    return
 	Bodyfields = {
 	      "data":{"username":userDetails.name,"bname":bname,"instanttype":'request','uniqueid':uniqueid},
@@ -331,7 +331,7 @@ class MyGroupRegister(AuthHandler):
 			headers={'Content-Type': 'application/json','Authorization': 'key=AIzaSyBNnXeISW8-KfETBKE-r0ASytx4WyC6NTk'})
 	#self.response.out.write('Server response, status: ' + result.content )
 
-        self.response.write('%s' %groupDb.uniqueid)
+        self.response.write('%s' %uniqueid)
         
         
 class GcmRegister(AuthHandler):
